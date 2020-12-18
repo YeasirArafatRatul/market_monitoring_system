@@ -19,7 +19,7 @@ from .forms import UserRegisterForm, UserLoginForm
 
 
 class HomeView(TemplateView):
-    template_name = 'accounts/login.html'
+    template_name = 'dashboard/dashboard.html'
 
 
 # Create your views here.
