@@ -51,8 +51,6 @@ class UserProfileManager(models.Manager):
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
-    image = models.ImageField(blank=True, null=True,
-                              default='avatar.png', upload_to='profile_pics')
     division = models.CharField(
         max_length=30, null=True, blank=True)
     district = models.CharField(
