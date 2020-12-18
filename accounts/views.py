@@ -18,15 +18,10 @@ from accounts.models import User
 from .forms import UserRegisterForm, UserLoginForm
 
 
-<<<<<<< HEAD
-class HomeView(TemplateView):
-    template_name = 'dashboard/dashboard.html'
-=======
 class HomeView(ListView):
     model = User
     template_name = 'dashboard/dashboard.html'
     context_object_name = 'user'
->>>>>>> bb51b58ea57439b377808cbed67f42bcc4ce3739
 
 
 # Create your views here.
