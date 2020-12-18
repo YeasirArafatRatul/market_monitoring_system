@@ -339,12 +339,12 @@
               >
               <img
                 class="img-profile rounded-circle"
-                src="{% static 'img/dashboard/undraw_profile.svg' %}"
+                src="{{ request.user.userprofile.image.url }}"
               />
             </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">
                                         <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
                                     </a>
                                     <a class="dropdown-item" href="#">

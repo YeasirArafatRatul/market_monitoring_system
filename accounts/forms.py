@@ -111,4 +111,31 @@ class UserLoginForm(forms.Form):
     def get_user(self):
         return self.user
 
+class UserUpdateForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+        widgets = {
+            'username': TextInput(attrs={'class': 'input', 'placeholder': 'Username'}),
+            'email': EmailInput(attrs={'class': 'input', 'placeholder': 'email'}),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        del self.fields['password']
+ 
+
+class UserProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude =('user',)
+        fields = ('image','division','district','upazila','industry_type',)
+        widgets = {
+            'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
+            'division': TextInput(attrs={'class': 'input', 'placeholder': ''}),
+            'district': TextInput(attrs={'class': 'input', 'placeholder': ''}),
+            'upazila': TextInput(attrs={'class': 'input', 'placeholder': ''})
+        }
+
 

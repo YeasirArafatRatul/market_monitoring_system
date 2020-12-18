@@ -14,8 +14,9 @@ from django.utils.decorators import method_decorator
 from django.db import IntegrityError
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from accounts.models import User
+from accounts.models import User, UserProfile
 from .forms import UserRegisterForm, UserLoginForm
+from accounts.forms import UserProfileUpdateForm, UserUpdateForm
 
 
 class HomeView(ListView):
@@ -107,3 +108,72 @@ class LogoutView(RedirectView):
         auth.logout(request)
         messages.success(request, 'You are now logged out')
         return super(LogoutView, self).get(request, *args, **kwargs)
+
+@login_required(login_url='/login')
+def profile(request):
+    current_user = request.user
+    profile = UserProfile.objects.get(user_id=current_user.id)
+
+
+
+    context = {
+               'profile': profile,
+               }
+    return render(request, 'accounts/demo_profile.html', context)
+
+
+
+
+@login_required(login_url='/login')
+def user_update(request):
+    if request.method == "POST":
+        user_form = UserUpdateForm(
+                request.POST, instance=request.user)
+
+        profile_form = UserProfileUpdateForm(
+                request.POST, request.FILES, instance=request.user.userprofile)
+  
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(
+                request, "Your Profile is updated successfully")
+            return redirect('accounts:home')
+    else:
+      
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = UserProfileUpdateForm(
+                instance=request.user.userprofile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+
+    }
+
+    return render(request, 'accounts/user_update.html', context)
+
+
+@login_required(login_url='/login')  # Check login
+def password_change(request):
+    url = request.META.get("HTTP_REFERER")
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(
+                request, 'Your password was successfully updated!')
+            return redirect('accounts:my-profile')
+        else:
+            return render(request, 'accounts/password_change.html', {'form': form})
+            # messages.error(
+            #     request, 'Error' + str(form.errors))
+            # return HttpResponseRedirect(url)
+    else:
+        category = JobCategory.objects.all()
+        setting = Setting.objects.filter(status=True).first()
+        form = PasswordChangeForm(request.user)
+        return render(request, 'accounts/password_change.html', {'form': form, 'categories': category, 'settings': setting,
+                                                                 })
+
