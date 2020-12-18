@@ -34,10 +34,7 @@
             <div class="heading">
                 <h3>Market Monitoring System</h3>
             </div>
-            <div class="form-container100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="{% static 'img/img-01.png' %}" alt="IMG" />
-                </div>
+
                 {% if form.errors %} {% for field in form %} {% for error in field.errors %}
                 <div class="alert alert-danger alert-dismissable">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -49,13 +46,19 @@
                     <strong>{{ error|escape }}</strong>
                 </div>
                 {% endfor %} {% endif %}
+            <div class="form-container100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="{% static 'img/img-01.png' %}" alt="IMG" />
+                </div>
+
+
                 <form class="login100-form validate-form" action="" method="POST">
                     {% csrf_token %}
                     <span class="login100-form-title"> Login </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                         <label class='label'>Enter Email</label> {{form.email}}
-                        <input class="input100" type="text" name="email" placeholder="Email" /> {{form.email}}
+                        <!-- <input class="input100" type="text" name="email" placeholder="Email" /> {{form.email}} -->
                         <!-- <span class="focus-input100"></span>
                         <span class="symbol-input100"> 
                         <i class="fa fa-envelope" aria-hidden="true"></i>-->
@@ -64,7 +67,7 @@
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
                         <label class='label'>Enter Password</label>
-                        <input class="input100" type="password" name="pass" placeholder="Password" /> {{form.password}}
+                        <!-- <input class="input100" type="password" name="pass" placeholder="Password" /> -->{{form.password}} 
                         <!--<span class="focus-input100"></span>
                         <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i> -->
@@ -173,5 +176,12 @@
       $(thisAlert).removeClass("alert-validate");
     }
   })(jQuery);
+</script>
+<script>
+  $(".alert-danger")
+    .fadeTo(4000, 500)
+    .slideUp(1000, function () {
+      $(".alert-danger").slideUp(500);
+    });
 </script>
 {% endblock %}
