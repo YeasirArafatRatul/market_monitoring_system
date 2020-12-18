@@ -5,7 +5,10 @@
 <!--=============================-->
 {% block fileSpecificCss %}
 <!--=============================-->
-<link rel="stylesheet" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}" />
+<link
+  rel="stylesheet"
+  href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}"
+/>
 <!--============================-->
 <link rel="stylesheet" href="{% static 'vendor/select2/select2.min.css' %}" />
 
@@ -20,93 +23,130 @@
 <!--============================-->
 {% block content %}
 <div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <div class="heading">
-                <h3>Market Monitoring System</h3>
-            </div>
-            <div class="form-container100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="{% static 'img/img-01.png' %}" alt="IMG" />
-                </div>
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="heading">
+        <h3>Market Monitoring System</h3>
+      </div>
+      <!-- FOR ERRORS -->
+      {% if form.errors %} {% for field in form %}
+      <!--  -->
+      {% for error in field.errors %}
+      <div class="wrap-input100 alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+          >&times;</a
+        >
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %} {% endfor %}
+      <!--  -->
+      {% for error in form.non_field_errors %}
+      <div class="wrap-input100 alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+          >&times;</a
+        >
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %} {% endif %}
 
-                <!-- FOR ERRORS -->
-                {% if form.errors %} {% for field in form %} {% for error in field.errors %}
-                <div class=" wrap-input100 alert alert-danger alert-dismissable">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{ error|escape }}</strong>
-                </div>
-                {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
-                <div class="wrap-input100 alert alert-danger alert-dismissable">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{ error|escape }}</strong>
-                </div>
-                {% endfor %} {% endif %}
+      <!-- ERROR END -->
+      <div class="form-container100">
+        <div class="login100-pic js-tilt" data-tilt>
+          <img src="{% static 'img/img-01.png' %}" alt="IMG" />
+        </div>
 
-                <!-- ERROR END -->
-                <form class="login100-form validate-form" action="" method="POST">
-                    <fieldset class="form-group">
-                        {% csrf_token %}
-                        <span class="login100-form-title"> Create Account </span>
-                        <div class="wrap-input100 validate-input" data-validate="Valid username is required">
-                            <label class='label'>Enter Username</label>
-                            <!-- <input class="input" type="text" name="username" placeholder="Enter Username"> -->
-                            {{form.username}}
-                            <!-- <span class="focus-input100"></span>
+        <form class="login100-form validate-form" action="" method="POST">
+          <fieldset class="form-group">
+            {% csrf_token %}
+            <span class="login100-form-title"> Create Account </span>
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Valid username is required"
+            >
+              <label class="label">Enter Username</label>
+              <!-- <input class="input" type="text" name="username" placeholder="Enter Username"> -->
+              {{form.username}}
+              <!-- <span class="focus-input100"></span>
                         <span class="symbol-input100"><i class="fa fa-user-o" aria-hidden="true"></i></span> -->
-                        </div>
+            </div>
 
-                        <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                            <label class='label'>Enter Email</label> {{form.email}}
-                            <!-- <input class="input" type="text" name="email" placeholder="Enter Email">
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Valid email is required: ex@abc.xyz"
+            >
+              <label class="label">Enter Email</label> {{form.email}}
+              <!-- <input class="input" type="text" name="email" placeholder="Enter Email">
                        <span class="focus-input100"></span>
                         <span class="symbol-input100"><i class="fa fa-envelope-o" aria-hidden="true"></i></span> -->
-                        </div>
+            </div>
 
-                        <div class="wrap-input100 validate-input" data-validate="Valid trade licence is required">
-                            <!-- <i class="fa fa-id-card-o" aria-hidden="true"><span></span></i> -->
-                            <label class='label'> Trade License Number</label> {{ form.trade_license_no }}
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Valid trade licence is required"
+            >
+              <!-- <i class="fa fa-id-card-o" aria-hidden="true"><span></span></i> -->
+              <label class="label"> Trade License Number</label>
+              <!--  -->
+              {{ form.trade_license_no }}
 
-                            <!-- <input class="input" type="number" name="trade" placeholder="Enter Trade Licence Number" />
+              <!-- <input class="input" type="number" name="trade" placeholder="Enter Trade Licence Number" />
                     <span class="focus-input100"></span>
                         <span class="symbol-input100"><i class="fa fa-id-card-o" aria-hidden="true"></i></span> -->
-                        </div>
+            </div>
 
-                        <!--  -->
-                        <div class="wrap-input100 validate-input" data-validate="Select is required">
-
-                            <label class='label'> Select Your Role</label> <br> {{form.role}}
-                            <!-- <span class="focus-input100"></span>
+            <!--  -->
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Select is required"
+            >
+              <label class="label"> Select Your Role</label> <br />
+              {{form.role}}
+              <!-- <span class="focus-input100"></span>
                         <span class="symbol-input100"><i class="fa fa-user-secret" aria-hidden="true"></i></span> -->
-                        </div>
-                        <!--  -->
-                        <div class="wrap-input100 validate-input" data-validate="Password is required">
-                            <label class='label'> Password</label> {{ form.password1 }}
-                            <!-- <input class="input100" type="password" name="pass" placeholder="Password" />
+            </div>
+            <!--  -->
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Password is required"
+            >
+              <label class="label"> Password</label>
+              <!--  -->
+              {{ form.password1 }}
+              <!-- <input class="input100" type="password" name="pass" placeholder="Password" />
                         <span class="focus-input100"></span>
                         <span class="symbol-input100"><i class="fa fa-lock" aria-hidden="true"></i></span> -->
-                        </div>
+            </div>
 
-                        <div class="wrap-input100 validate-input" data-validate="Password is not matched">
-                            <label class='label'> Confirm Password</label> {{ form.password2 }}
-                            <!-- <input class="input100" type="password" name="confirmPassword" placeholder="Confirm Password" />
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Password is not matched"
+            >
+              <label class="label"> Confirm Password</label>
+              <!--  -->
+              {{ form.password2 }}
+              <!-- <input class="input100" type="password" name="confirmPassword" placeholder="Confirm Password" />
                         <span class="focus-input100"></span>
                         <span class="symbol-input100"><i class="fa fa-lock" aria-hidden="true"></i></span></div> -->
-                        </div>
-                        <button type="submit" class="login100-form-btn">Register</button>
-                        <!-- <div class="container-login100-form-btn">
+            </div>
+            <button type="submit" class="login100-form-btn">Register</button>
+            <!-- <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">Register</button>
                     </div> -->
-                        <div class="text-center p-t-12">
-                            <span class="txt1"> Already have an account? </span>
-                            <br />
-                            <a style="font-size: medium" class="txt2" href="{% url 'accounts:login' %}">Login</a>
-                        </div>
-                    </fieldset>
-                </form>
+            <div class="text-center p-t-12">
+              <span class="txt1"> Already have an account? </span>
+              <br />
+              <a
+                style="font-size: medium"
+                class="txt2"
+                href="{% url 'accounts:login' %}"
+                >Login</a
+              >
             </div>
-        </div>
+          </fieldset>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}
 <!--============================-->
@@ -117,5 +157,12 @@
 <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
 <!--====================================-->
 <script src="{% static 'vendor/tilt/tilt.jquery.min.js' %}"></script>
+<script>
+  $(".alert-danger")
+    .fadeTo(2000, 500)
+    .slideUp(500, function () {
+      $(".alert-danger").slideUp(500);
+    });
+</script>
 
 {% endblock %}
