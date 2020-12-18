@@ -27,7 +27,7 @@
     <!-- Sidebar - Brand -->
     <a
       class="sidebar-brand d-flex align-items-center justify-content-center"
-      href="index.html"
+      href="#"
     >
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fa fa-modx"></i>
@@ -40,10 +40,42 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-      <a class="nav-link" href="index.html">
-        <i class="fa fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a
-      >
+      <div class="row gutters-sm justify-content-center mt-2">
+        <div class="col-md-10 mb-3">
+          <div
+            class="card rounded shadow-sm"
+            style="background: inherit; border: none"
+          >
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img
+                  src="{{ request.user.userprofile.image.url }}"
+                  alt="Admin"
+                  class="rounded-circle"
+                  width="150"
+                />
+                <div class="mt-3">
+                  <h4 class="text-white mb-1">{{ request.user.username }}</h4>
+                  <p class="text-white mb-1">{{ request.user.role }}</p>
+                  <p class="text-white-50 font-size-sm">
+                    Type: {{ request.user.userprofile.industry_type }}
+                  </p>
+                  <p class="text-white-50 font-size-sm">
+                    L/N: {{ request.user.trade_license_no }}
+                  </p>
+                  <p class="text-white-50 font-size-sm">
+                    {{ request.user.userprofile.upazila }},
+                    <!--  -->
+                    {{ request.user.userprofile.district }},
+                    <!--  -->
+                    {{ request.user.userprofile.division }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </li>
 
     <!-- Divider -->
