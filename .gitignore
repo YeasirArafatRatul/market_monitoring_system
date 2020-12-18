@@ -262,6 +262,6 @@ __pycache__/
 
 mms/staticfiles
 
-db.sqlite3
+.db.sqlite3
 
 
