@@ -9,6 +9,9 @@
 <!--=============================-->
 <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
 <!-- ============================= -->
+<!--=============================-->
+<link rel="stylesheet" href="{% static 'css/accounts/main.css' %}" />
+<!-- ============================= -->
 
 <!--============================-->
 {% endblock %}
@@ -542,11 +545,18 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-          <a
+          <!-- <a
             href="{% url 'lenden:add-product' %}"
             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
             ><i class="fa fa-add fa-sm text-white-50"></i> Add Product</a
+          > -->
+          <button
+            data-toggle="modal"
+            data-target="#productModal"
+            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           >
+            <i class="fa fa-add fa-sm text-white-50"></i> Add Product
+          </button>
         </div>
 
         <!-- Content Row -->
@@ -675,7 +685,7 @@
             <div class="card mb-2 py-1 border-left-primary">
               <div class="card-body" style="padding: 0.3rem 1rem">
                 <div class="row">
-                  <div class="col-lg-2">Name</div>
+                  <div class="col-lg-2 text-black">Name</div>
                   <div class="col-lg-2">Quantity</div>
                   <div class="col-lg-2">Imported From</div>
                   <div class="col-lg-2">Clearance No</div>
@@ -762,6 +772,64 @@
   </div>
 </div>
 
+<div
+  class="modal fade"
+  id="productModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3
+          class="modal-title login100-form-title"
+          style="color: #0a0a0f; padding-bottom: 1rem; padding-top: 1rem"
+          id="exampleModalLabel"
+        >
+          Add Product
+        </h3>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              placeholder="Enter email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+              placeholder="Password"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+          Cancel
+        </button>
+        <button class="btn btn-primary" type="button">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!--============================-->
 {% endblock %}
 <!--============================-->

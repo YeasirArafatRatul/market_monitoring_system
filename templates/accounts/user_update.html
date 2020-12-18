@@ -1,27 +1,29 @@
-{%extends 'base.html' %} {% load static %} {% load crispy_forms_filters %}
+{%extends 'base.html' %} {% load static %}
+<!--  -->
+{% load crispy_forms_filters %}
 <!-- title -->
-{% block title %} Profile Update {{settings.siteTitle}} {% endblock %} {% block styles %}
+{% block title %} Profile Update {% endblock %} {% block styles %}
 <style>
-    /* CUSTOMIZED BY ME */
-    
-    .col-lg-10 {
-        margin-top: 25px;
-    }
-    
-    .row {
-        margin: 0 15px;
-        display: block;
-    }
-    
-    .login-title {
-        text-align: center;
-    }
-    
-    .form-group {
-        margin-bottom: 1rem;
-        margin-left: 1.5rem;
-    }
-    /* .login-form input {
+  /* CUSTOMIZED BY ME */
+
+  .col-lg-10 {
+    margin-top: 25px;
+  }
+
+  .row {
+    margin: 0 15px;
+    display: block;
+  }
+
+  .login-title {
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    margin-left: 1.5rem;
+  }
+  /* .login-form input {
         width: 100%;
         background-color: transparent;
         border: 1px solid #ffc06f;
@@ -35,68 +37,75 @@
         height: 3.2em;
     }
      */
-    
-    button,
-    input,
-    optgroup,
-    select,
-    textarea {
-        margin: 0;
-        padding-left: 1em;
-        width: 100%;
-        background-color: rgb(238, 238, 238);
-        border: 2px solid #ffc06f;
-        border-radius: 5px;
-        line-height: 23px;
-        margin-bottom: 15px;
-        column-gap: 1.5rem;
-        height: 2.8em;
-    }
-    
-    input[type='file'] {
-        font-size: 0.8rem;
-        padding: .5em;
-    }
-    
-    .btn {
-        font-size: .85rem;
-        margin: 0 auto !important;
-    }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    margin: 0;
+    padding-left: 1em;
+    width: 100%;
+    background-color: rgb(238, 238, 238);
+    border: 2px solid #ffc06f;
+    border-radius: 5px;
+    line-height: 23px;
+    margin-bottom: 15px;
+    column-gap: 1.5rem;
+    height: 2.8em;
+  }
+
+  input[type="file"] {
+    font-size: 0.8rem;
+    padding: 0.5em;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    margin: 0 auto !important;
+  }
 </style>
 {% endblock %}
 <!-- MainBody -->
 {% block content %}
 
 <div class="page-section mb-60">
-    <div class="container">
-        <div class="col-lg-10 mx-auto">
-            {% if form.errors %} {% for field in form %} {% for error in field.errors %}
-            <div class="alert alert-danger alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>{{ error|escape }}</strong>
+  <div class="container">
+    <div class="col-lg-10 mx-auto">
+      {% if form.errors %} {% for field in form %}
+      <!--  -->
+      {% for error in field.errors %}
+      <div class="alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+          >&times;</a
+        >
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
+      <div class="alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+          >&times;</a
+        >
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %} {% endif %}
+      <form action="#" method="POST" enctype="multipart/form-data">
+        <div class="login-form">
+          <h4 class="login-title">Change Your Password</h4>
+          <div class="row">
+            <fieldset class="form-group">
+              {% csrf_token %} {{ user_form|crispy }} {{ profile_form|crispy }}
+            </fieldset>
+            <div class="col-sm-4">
+              <button class="btn btn-outline-white-primary" type="submit">
+                Update
+              </button>
             </div>
-            {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
-            <div class="alert alert-danger alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>{{ error|escape }}</strong>
-            </div>
-            {% endfor %} {% endif %}
-            <form action="#" method="POST" enctype="multipart/form-data">
-                <div class="login-form">
-                    <h4 class="login-title">Change Your Password</h4>
-                    <div class="row">
-                        <fieldset class="form-group">
-                            {% csrf_token %} {{ user_form|crispy }} {{ profile_form|crispy }}
-                        </fieldset>
-                        <div class="col-sm-4">
-                            <button class="btn btn-outline-white-primary" type='submit'>Update</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+          </div>
         </div>
+      </form>
     </div>
+  </div>
 </div>
-
 
 {% endblock %}
