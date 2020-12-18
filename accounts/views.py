@@ -16,12 +16,20 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from accounts.models import User
 from .forms import *
+from lenden.models import Product
 
 
 class HomeView(ListView):
     model = User
     template_name = 'dashboard/dashboard.html'
     context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # AYUB - Loop Through The 'products' list in template
+        context['products'] = Product.objects.filter(owner_id = self.request.user.id).order_by('-id')[:8]
+        # print(context)
+        return context
 
 
 # Create your views here.
