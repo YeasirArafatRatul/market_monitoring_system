@@ -19,8 +19,7 @@ from .forms import UserRegisterForm, UserLoginForm
 
 
 class HomeView(TemplateView):
-    template_name = 'accounts/register.html'
-
+    template_name = 'accounts/login.html'
 
 
 # Create your views here.
@@ -28,7 +27,7 @@ class UserRegisterView(CreateView):
     model = User
     form_class = UserRegisterForm
     template_name = 'accounts/register.html'
-    success_url = '/'
+    success_url = 'home'
 
     extra_context = {
         'title': 'Register'
@@ -52,7 +51,6 @@ class UserRegisterView(CreateView):
             return redirect('accounts:login')
         else:
             return render(request, 'accounts/register.html', {'form': form})
-
 
 
 # ---------------------------------------------------------------
@@ -95,7 +93,6 @@ class LoginView(FormView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-
 class LogoutView(RedirectView):
     """
     Provides users the ability to logout
@@ -106,6 +103,3 @@ class LogoutView(RedirectView):
         auth.logout(request)
         messages.success(request, 'You are now logged out')
         return super(LogoutView, self).get(request, *args, **kwargs)
-
- 
-
