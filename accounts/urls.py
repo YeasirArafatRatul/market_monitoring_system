@@ -9,11 +9,11 @@ app_name = "accounts"
 
 
 urlpatterns = [
-     path('home/', HomeView.as_view(), name = 'home'),
-     path('register/', UserRegisterView.as_view(),
+    path('', HomeView.as_view(), name='home'),
+    path('register/', UserRegisterView.as_view(),
          name='register'),
-     
-     path('login/', LoginView.as_view(),
+
+    path('login/', LoginView.as_view(),
          name='login'),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
