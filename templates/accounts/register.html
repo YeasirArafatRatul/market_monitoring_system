@@ -5,7 +5,10 @@
 <!--=============================-->
 {% block fileSpecificCss %}
 <!--=============================-->
-<link rel="stylesheet" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}" />
+<link
+  rel="stylesheet"
+  href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}"
+/>
 <!--============================-->
 <link rel="stylesheet" href="{% static 'vendor/select2/select2.min.css' %}" />
 
@@ -20,28 +23,37 @@
 <!--============================-->
 {% block content %}
 <div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <div class="heading">
-                <h3>Market Monitoring System</h3>
-            </div>
-            <div class="form-container100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="{% static 'img/img-01.png' %}" alt="IMG" />
-                </div>
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="heading">
+        <h3>Market Monitoring System</h3>
+      </div>
+      <!-- FOR ERRORS -->
+      {% if form.errors %} {% for field in form %}
+      <!--  -->
+      {% for error in field.errors %}
+      <div class="wrap-input100 alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+          >&times;</a
+        >
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %} {% endfor %}
+      <!--  -->
+      {% for error in form.non_field_errors %}
+      <div class="wrap-input100 alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+          >&times;</a
+        >
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %} {% endif %}
 
-                <!-- FOR ERRORS -->
-                {% if form.errors %} {% for field in form %} {% for error in field.errors %}
-                <div class=" wrap-input100 alert alert-danger alert-dismissable">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{ error|escape }}</strong>
-                </div>
-                {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
-                <div class="wrap-input100 alert alert-danger alert-dismissable">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{ error|escape }}</strong>
-                </div>
-                {% endfor %} {% endif %}
+      <!-- ERROR END -->
+      <div class="form-container100">
+        <div class="login100-pic js-tilt" data-tilt>
+          <img src="{% static 'img/img-01.png' %}" alt="IMG" />
+        </div>
 
                 <!-- ERROR END -->
                 <form class="login100-form validate-form" action="" method="POST">
@@ -103,8 +115,11 @@
                     </div>
                 </form>
             </div>
-        </div>
+          </fieldset>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}
 <!--============================-->
@@ -115,5 +130,12 @@
 <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
 <!--====================================-->
 <script src="{% static 'vendor/tilt/tilt.jquery.min.js' %}"></script>
+<script>
+  $(".alert-danger")
+    .fadeTo(4000, 500)
+    .slideUp(1000, function () {
+      $(".alert-danger").slideUp(500);
+    });
+</script>
 
 {% endblock %}

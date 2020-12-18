@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages, auth
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import CreateView, FormView, RedirectView, TemplateView, DetailView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
@@ -18,8 +18,10 @@ from accounts.models import User
 from .forms import UserRegisterForm, UserLoginForm
 
 
-class HomeView(TemplateView):
-    template_name = 'accounts/login.html'
+class HomeView(ListView):
+    model = User
+    template_name = 'dashboard/dashboard.html'
+    context_object_name = 'user'
 
 
 # Create your views here.
@@ -62,7 +64,7 @@ class LoginView(FormView):
     """
         Provides the ability to login as a user with an email and password
     """
-    success_url = '/'
+    success_url = reverse_lazy('accounts:home')
     form_class = UserLoginForm
     template_name = 'accounts/login.html'
 
@@ -72,6 +74,7 @@ class LoginView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
+            # return redirect('accounts:home')
             return HttpResponseRedirect(self.get_success_url())
         return super().dispatch(self.request, *args, **kwargs)
 
