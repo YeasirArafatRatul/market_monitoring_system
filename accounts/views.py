@@ -12,6 +12,7 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.db import IntegrityError
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from accounts.models import User
@@ -66,6 +67,11 @@ class UserRegisterView(CreateView):
 # ---------------------------------------------------------------
 #  LOGIN - LOGOUT
 # ---------------------------------------------------------------
+
+class CustomLoginView(SuccessMessageMixin, LoginView):
+    template_name = 'accounts/login.html'
+    success_url = reverse_lazy('home')
+    success_message = "Welcome To Market Monitoring System"
 
 
 class LoginView(FormView):
@@ -147,7 +153,7 @@ def user_update(request):
             profile_form.save()
             messages.success(
                 request, "Your Profile is updated successfully")
-            return redirect('accounts:profile')
+            return redirect('accounts:home')
     else:
        
         user_form = UserUpdateForm(instance=request.user)
@@ -174,16 +180,14 @@ def password_change(request):
             update_session_auth_hash(request, user)  # Important!
             messages.success(
                 request, 'Your password was successfully updated!')
-            return redirect('accounts:my-profile')
+            return redirect('accounts:home')
         else:
             return render(request, 'accounts/password_change.html', {'form': form})
             # messages.error(
             #     request, 'Error' + str(form.errors))
             # return HttpResponseRedirect(url)
     else:
-        category = JobCategory.objects.all()
-        setting = Setting.objects.filter(status=True).first()
         form = PasswordChangeForm(request.user)
-        return render(request, 'accounts/password_change.html', {'form': form, 'categories': category, 'settings': setting,
+        return render(request, 'accounts/password_change.html', {'form': form
                                                                  })
 

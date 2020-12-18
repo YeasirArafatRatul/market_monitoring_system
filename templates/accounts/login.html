@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %}
+{% extends 'base.html' %} {% load static %}{% load crispy_forms_filters %}
 
 <!--============================-->
 {% block title %} Login {% endblock %}
@@ -35,17 +35,17 @@
                 <h3>Market Monitoring System</h3>
             </div>
 
-                {% if form.errors %} {% for field in form %} {% for error in field.errors %}
-                <div class="alert alert-danger alert-dismissable">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{ error|escape }}</strong>
-                </div>
-                {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
-                <div class="alert alert-danger alert-dismissable">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{ error|escape }}</strong>
-                </div>
-                {% endfor %} {% endif %}
+            {% if form.errors %} {% for field in form %} {% for error in field.errors %}
+            <div class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% endif %}
             <div class="form-container100">
                 <div class="login100-pic js-tilt" data-tilt>
                     <img src="{% static 'img/img-01.png' %}" alt="IMG" />
@@ -57,21 +57,21 @@
                     <span class="login100-form-title"> Login </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        <label class='label'>Enter Email</label> {{form.email}}
-                        <!-- <input class="input100" type="text" name="email" placeholder="Email" /> {{form.email}} -->
+                        <label class='label'>Enter Email</label>{{form.email}}
+                        <!-- <input class="input100" type="text" name="email" placeholder="Email" /> -->
                         <!-- <span class="focus-input100"></span>
                         <span class="symbol-input100"> 
-                        <i class="fa fa-envelope" aria-hidden="true"></i>-->
-                        </span>
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>-->
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <label class='label'>Enter Password</label>
-                        <!-- <input class="input100" type="password" name="pass" placeholder="Password" /> -->{{form.password}} 
+                        <label class='label'>Enter Password</label>{{form.password}}
+                        <!-- <input class="input100" type="password" name="pass" placeholder="Password" /> -->
                         <!--<span class="focus-input100"></span>
                         <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i> -->
-                        </span>
+                        <i class="fa fa-lock" aria-hidden="true"></i> 
+                        </span>-->
                     </div>
 
                     <div class="container-login100-form-btn">

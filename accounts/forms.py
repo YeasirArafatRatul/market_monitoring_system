@@ -4,7 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.forms import TextInput, EmailInput, Select, FileInput
 from accounts.models import User, UserProfile
-
+from django.contrib.auth.views import LogoutView, LoginView
+from django.urls import reverse_lazy
 
 class UserRegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
@@ -74,6 +75,9 @@ class UserRegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+
 
 
 class UserLoginForm(forms.Form):

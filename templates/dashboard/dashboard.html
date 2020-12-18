@@ -22,7 +22,7 @@
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fa fa-modx"></i>
             </div>
@@ -34,9 +34,34 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="index.html">
-                <i class="fa fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+            <div class="row gutters-sm justify-content-center mt-2">
+                <div class="col-md-10 mb-3">
+                    <div class="card rounded shadow-sm" style="background: inherit; border: none">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="{{ request.user.userprofile.image.url }}" alt="Admin" class="rounded-circle" width="150" />
+                                <div class="mt-3">
+                                    <h4 class="text-white mb-1">{{ request.user.username }}</h4>
+                                    <p class="text-white mb-1">{{ request.user.role }}</p>
+                                    <p class="text-white-50 font-size-sm">
+                                        Type: {{ request.user.userprofile.industry_type }}
+                                    </p>
+                                    <p class="text-white-50 font-size-sm">
+                                        L/N: {{ request.user.trade_license_no }}
+                                    </p>
+                                    <p class="text-white-50 font-size-sm">
+                                        {{ request.user.userprofile.upazila }},
+                                        <!--  -->
+                                        {{ request.user.userprofile.district }},
+                                        <!--  -->
+                                        {{ request.user.userprofile.division }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </li>
 
         <!-- Divider -->
@@ -344,8 +369,8 @@
             </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+                                    <a class="dropdown-item" href="{% url 'accounts:profile-update' %}">
+                                        <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Edit Profile
                                     </a>
                                     <a class="dropdown-item" href="#">
                                         <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
@@ -368,8 +393,7 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa fa-download fa-sm text-white-50"></i> Generate
-            Report</a
+                    <a href="{% url 'lenden:add-product' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa fa-add fa-sm text-white-50"></i> Add Product</a
           >
         </div>
 
@@ -501,14 +525,17 @@
                 <div class="row">
                   <div class="col-lg-2">Name</div>
                   <div class="col-lg-2">Quantity</div>
-                  <div class="col-lg-2">Unit</div>
                   <div class="col-lg-2">Imported From</div>
+                  <div class="col-lg-2">Clearance No</div>
                   <div class="col-lg-2">Clearance No</div>
                   <div class="col-lg-2">Import Date</div>
                 </div>
               </div>
             </div>
-            {% for product in products %}
+          </div>
+
+          {% for product in products %}
+          <div class="col-lg-12">
             <div class="card mb-2 py-1 border-left-primary">
               <div class="card-body" style="padding: 0.3rem 1rem">
                 <div class="row">
@@ -519,12 +546,12 @@
                   <div class="col-lg-2">{{product.customs_clearance_no}}</div>
                   <div class="col-lg-2">{{product.import_date}}</div>
                 </div>
-                </div>
+              </div>
             </div>
-            {% endfor %}
-            </div>
+          </div>
+          {% endfor %}
         </div>
-    
+      </div>
       <!-- /.container-fluid -->
     </div>
     <!-- End of Main Content -->
