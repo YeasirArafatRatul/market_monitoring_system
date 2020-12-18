@@ -9,9 +9,9 @@ from accounts.models import User, UserProfile
 class UserRegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['username'].label = "Userame"
+        self.fields['username'].label = "Username"
         self.fields['email'].label = "Email"
-        self.fields['trade_license_no'].label = "Email"
+        self.fields['trade_license_no'].label = "Trade License No"
         self.fields['role'].label = "Who Are You?"
         self.fields['password1'].label = "Password"
         self.fields['password2'].label = "Confirm Password"
