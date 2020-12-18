@@ -262,8 +262,9 @@ __pycache__/
 
 mms/staticfiles
 
-*.db.sqlite3
-
+.DS_Store
+*.sqlite3
+media/
+*.pyc
 *.db
-
-*.sqlite3 
+*.pid

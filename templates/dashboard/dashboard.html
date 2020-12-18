@@ -629,108 +629,32 @@
           </div>
         </div>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0" />
+
+        <!-- Page Heading -->
+        <h1 style="margin-top: 3rem" class="h3 mb-1 text-gray-800">
+          {{ request.user.username }} Product List
+        </h1>
+        <p class="mb-4">Here, all your products/items.</p>
         <!-- Content Row -->
-
         <div class="row">
-          <!-- Area Chart -->
-          <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-              <!-- Card Header - Dropdown -->
-              <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-              >
-                <h6 class="m-0 font-weight-bold text-primary">
-                  Seller Overview
-                </h6>
-                <div class="dropdown no-arrow">
-                  <a
-                    class="dropdown-toggle"
-                    href="#"
-                    role="button"
-                    id="dropdownMenuLink"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                    aria-labelledby="dropdownMenuLink"
-                  >
-                    <div class="dropdown-header">Dropdown Header:</div>
-                    <a class="dropdown-item" href="#">Lorem.</a>
-                    <a class="dropdown-item" href="#">Lorem.</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </div>
-              </div>
-              <!-- Card Body -->
-              <div class="card-body">
-                <div class="chart-area">
-                  <canvas id="myAreaChart"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pie Chart -->
-          <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-              <!-- Card Header - Dropdown -->
-              <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-              >
-                <h6 class="m-0 font-weight-bold text-primary">
-                  Retailer Sources
-                </h6>
-                <div class="dropdown no-arrow">
-                  <a
-                    class="dropdown-toggle"
-                    href="#"
-                    role="button"
-                    id="dropdownMenuLink"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                    aria-labelledby="dropdownMenuLink"
-                  >
-                    <div class="dropdown-header">Dropdown Header:</div>
-                    <a class="dropdown-item" href="#">Lorem.</a>
-                    <a class="dropdown-item" href="#">Lorem.</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </div>
-              </div>
-              <!-- Card Body -->
-              <div class="card-body">
-                <div class="chart-pie pt-4 pb-2">
-                  <canvas id="myPieChart"></canvas>
-                </div>
-                <div class="mt-4 text-center small">
-                  <span class="mr-2">
-                    <i class="fa fa-circle text-primary"></i> Direct
-                  </span>
-                  <span class="mr-2">
-                    <i class="fa fa-circle text-success"></i> Social
-                  </span>
-                  <span class="mr-2">
-                    <i class="fa fa-circle text-info"></i> Referral
-                  </span>
+          <!-- Border Left Utilities -->
+          <div class="col-lg-12">
+            <div class="card mb-2 py-1 border-left-primary">
+              <div class="card-body" style="padding: 0.3rem 1rem">
+                <div class="row">
+                  <div class="col-lg-2">Name</div>
+                  <div class="col-lg-2">Quantity</div>
+                  <div class="col-lg-2">Imported From</div>
+                  <div class="col-lg-2">Clearance No</div>
+                  <div class="col-lg-2">Clearance No</div>
+                  <div class="col-lg-2">Import Date</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Content Row -->
       </div>
       <!-- /.container-fluid -->
     </div>
