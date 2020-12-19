@@ -34,8 +34,7 @@ def home(request):
             request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(
             request.POST, request.FILES, instance=request.user.userprofile)
-        product_form = AddProductForm(
-            request.POST)
+        product_form = AddProductForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
@@ -47,7 +46,7 @@ def home(request):
         if product_form.is_valid():
             product_form.instance.owner = request.user
             product_form.save()
-            print('____________________I AM SAVED__________________')
+            print('____________________I AM SAVED_________________')
             messages.success(
                 request, "New Product is Added")
             return redirect('accounts:home')
