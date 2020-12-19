@@ -68,37 +68,37 @@ def home(request):
     return render(request, 'dashboard/dashboard.html', context)
 
 
-class HomeView(FormView, ListView):
-    model = User
-    template_name = 'dashboard/dashboard.html'
-    context_object_name = 'user'
+# class HomeView(FormView, ListView):
+#     model = User
+#     template_name = 'dashboard/dashboard.html'
+#     context_object_name = 'user'
 
-    def post(self, request, *args, **kwargs):
-        if self.request.method == "POST":
-            user_form = UserUpdateForm(
-                self.request.POST, instance=self.request.user)
-            profile_form = ProfileUpdateForm(
-                self.request.POST, self.request.FILES, instance=self.request.user.userprofile)
+#     def post(self, request, *args, **kwargs):
+#         if self.request.method == "POST":
+#             user_form = UserUpdateForm(
+#                 self.request.POST, instance=self.request.user)
+#             profile_form = ProfileUpdateForm(
+#                 self.request.POST, self.request.FILES, instance=self.request.user.userprofile)
 
-            if user_form.is_valid() and profile_form.is_valid():
-                user_form.save()
-                profile_form.save()
-                messages.success(
-                    self.request, "Your Profile is updated successfully")
-            return redirect('accounts:home')
-        else:
-            user_form = UserUpdateForm(instance=self.request.user)
-            profile_form = ProfileUpdateForm(
-                instance=self.request.user.userprofile)
+#             if user_form.is_valid() and profile_form.is_valid():
+#                 user_form.save()
+#                 profile_form.save()
+#                 messages.success(
+#                     self.request, "Your Profile is updated successfully")
+#             return redirect('accounts:home')
+#         else:
+#             user_form = UserUpdateForm(instance=self.request.user)
+#             profile_form = ProfileUpdateForm(
+#                 instance=self.request.user.userprofile)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.filter(
-            owner_id=self.request.user.id).order_by('-id')[:8]
-        context['user_form'] = UserUpdateForm(instance=self.request.user)
-        context['profile_form'] = ProfileUpdateForm(
-            instance=self.request.user.userprofile)
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['products'] = Product.objects.filter(
+#             owner_id=self.request.user.id).order_by('-id')[:8]
+#         context['user_form'] = UserUpdateForm(instance=self.request.user)
+#         context['profile_form'] = ProfileUpdateForm(
+#             instance=self.request.user.userprofile)
+#         return context
 
 
 # Create your views here.
