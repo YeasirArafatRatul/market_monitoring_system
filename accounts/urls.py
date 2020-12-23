@@ -9,17 +9,17 @@ app_name = "accounts"
 
 
 urlpatterns = [
-    path('home/',home, name='home'),
+    path('home/', home, name='home'),
     path('register/', UserRegisterView.as_view(),
          name='register'),
 
-    path('', LoginView.as_view(),
+    path('login/', LoginView.as_view(),
          name='login'),
     path('logout', LogoutView.as_view(), name='logout'),
-   path('profile/', profile,
+    path('profile/', profile,
          name='profile'),
-  path('profile-update/', user_update,
+    path('profile-update/', user_update,
          name='profile-update'),
-         path('password-change', password_change,name='password-change')
+    path('password-change', password_change, name='password-change')
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

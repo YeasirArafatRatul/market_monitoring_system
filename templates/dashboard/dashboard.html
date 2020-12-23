@@ -3,9 +3,10 @@
 {% block title %} Dashboard {%endblock %}
 <!--  -->
 
+<!-- CSS -->
 <!-- ============================= -->
 {% block fileSpecificCss %}
-
+ 
 <!--=============================-->
 <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
 <!-- ============================= -->
@@ -14,6 +15,7 @@
 <!-- ============================= -->
 
 <!--============================-->
+<!--  -->
 {% endblock %}
 <!--============================-->
 <!--============================-->
@@ -43,6 +45,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img src="{{ request.user.userprofile.image.url }}" alt="Admin" class="rounded-circle" width="150" />
+                                <!--  -->
                                 <button data-toggle="modal" data-target="#profileModal" class="d-none d-sm-inline-block border-success mt-1 btn btn-sm btn-primary shadow-sm">
                   EDIT
                 </button>
@@ -546,7 +549,7 @@
                             </h3>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" style="margin-left: 4rem; align-self: center;">
                             <form action="#" method="POST"> {% csrf_token %}
 
                                 <div class="form-group">
@@ -599,7 +602,7 @@
                             </h3>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" style="margin-left: 4rem; align-self: center;"">
                             <form action="#" method="POST" enctype="multipart/form-data"> {% csrf_token %} {{ user_form|crispy }} {{ profile_form|crispy }}
                                 <!-- <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
@@ -645,7 +648,9 @@
             <script src="{% static 'js/dashboard/demo/chart-pie-demo.js' %}"></script>
 
             <!--============================-->
-
+<script>
+    
+</script>
             <!--============================-->
 
             <!--============================-->

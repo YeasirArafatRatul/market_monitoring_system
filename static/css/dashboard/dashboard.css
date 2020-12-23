@@ -248,6 +248,8 @@ th {
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
+  color: #182027 !important;
+  font-weight: bold;
 }
 
 button {
