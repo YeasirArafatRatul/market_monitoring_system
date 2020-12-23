@@ -3,7 +3,7 @@ from django.views.generic import CreateView, FormView, RedirectView, TemplateVie
 from django.views.generic.edit import DeleteView
 from accounts.models import User
 from lenden.models import *
-from django.db.models import Sum
+from django.db.models import Avg, Sum
 # Create your views here.
 
 
@@ -19,7 +19,13 @@ class ChalanListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["total"] = Chalan.objects.all().aggregate(Sum('quantity'))
+        context['total'] = Chalan.objects.filter(product=self.id
+                                                 ).aggregate(Sum('quantity'))['quantity__sum']
+        context['average_price'] = Chalan.objects.filter(product=self.id
+                                                         ).aggregate(Avg('price'))['price__avg']
+        context['unit_of_total'] = Chalan.objects.filter(
+            product=self.id).first()
+
         return context
 
 
