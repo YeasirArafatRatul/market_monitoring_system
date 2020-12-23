@@ -26,7 +26,7 @@ def home(request):
 
     current_user = request.user
     profile = UserProfile.objects.get(user_id=current_user.id)
-    products = Product.objects.filter(
+    chalans = Chalan.objects.filter(
         owner_id=request.user.id).order_by('-id')[:8]
 
     if request.method == "POST":
@@ -34,7 +34,7 @@ def home(request):
             request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(
             request.POST, request.FILES, instance=request.user.userprofile)
-        product_form = AddProductForm(request.POST)
+        product_form = AddChalanForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
@@ -54,12 +54,12 @@ def home(request):
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.userprofile)
-        product_form = AddProductForm(
+        product_form = AddChalanForm(
             request.POST)
 
     context = {
         'user': current_user,
-        'products': products,
+        'chalans': chalans,
         'user_form': user_form,
         'profile_form': profile_form,
         'product_form': product_form,
@@ -183,7 +183,7 @@ class LogoutView(RedirectView):
     """
     Provides users the ability to logout
     """
-    url = '/login'
+    url = '/'
 
     def get(self, request, *args, **kwargs):
         auth.logout(request)
@@ -199,8 +199,6 @@ def profile(request):
 
     context = {
         'profile': profile,
-
-
     }
     return render(request, 'accounts/demo_profile.html', context)
 

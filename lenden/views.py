@@ -4,8 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from .forms import *
 # Create your views here.
-class AddProductView(LoginRequiredMixin, CreateView):
-    form_class = AddProductForm
+
+
+class AddChalanView(LoginRequiredMixin, CreateView):
+    form_class = AddChalanForm
     template_name = 'lenden/addproduct.html'
     success_url = reverse_lazy('accounts:home')
 
@@ -18,4 +20,3 @@ class AddProductView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-

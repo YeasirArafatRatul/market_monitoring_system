@@ -9,7 +9,7 @@ app_name = "lenden"
 
 
 urlpatterns = [
-    path('add-product/', AddProductView.as_view(), name='add-product'),
+    path('add-chalan/', AddChalanView.as_view(), name='add-chalan'),
 
 
 ]

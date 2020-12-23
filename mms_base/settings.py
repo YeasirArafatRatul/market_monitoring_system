@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'lenden',
+    'admin_site',
 
 ]
 
@@ -133,4 +134,3 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-

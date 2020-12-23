@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 from datetime import date
+import random
 # Create your models here.
 
 
@@ -11,30 +12,40 @@ from datetime import date
 
 
 ROLE = (
-    ('retailer','Retailer'),
-    ('importer','Importer'),
-    ('wholeseller','Whole Seller'),
+    ('retailer', 'Retailer'),
+    ('importer', 'Importer'),
+    ('wholeseller', 'Whole Seller'),
 )
+
+
+def randint():
+    return random.randint(1000, 9999)
+
+
 class User(AbstractUser):
-    username = models.CharField(unique=True, max_length=50,error_messages={
-                                  'unique': "A user with that name already exists.",
-                              })
+    username = models.CharField(unique=True, max_length=15, error_messages={
+        'unique': "A user with that name already exists.",
+    })
     email = models.EmailField(unique=True, blank=False,
                               error_messages={
                                   'unique': "A user with that email already exists.",
                               })
-    trade_license_no = models.PositiveBigIntegerField(unique=True, null= True, blank=False,
-                              error_messages={
-                                  'unique': "A user with that trade license is already exists.",
-                              })
-    role = models.CharField(choices=ROLE, max_length= 15, error_messages={
+    trade_license_no = models.PositiveBigIntegerField(unique=True, null=True, blank=False,
+                                                      error_messages={
+                                                          'unique': "A user with that trade license is already exists.",
+                                                      })
+    role = models.CharField(choices=ROLE, max_length=15, error_messages={
         'required': "Role must be provided"
     })
-    signed_up = models.DateField(default = date.today())
+    signed_up = models.DateField(default=date.today())
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ['username',]
+    REQUIRED_FIELDS = ['username', ]
 
+    # @property
+    # def usercode(self):
+
+    #     return str(self.username + str(randint())).upper()
 
     def __str__(self):
         return f"{self.username} - {self.trade_license_no}"
@@ -64,7 +75,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'{self.user.email}'
-
 
     objects = UserProfileManager()
 
