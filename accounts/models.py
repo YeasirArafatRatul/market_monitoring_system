@@ -48,7 +48,7 @@ class User(AbstractUser):
     #     return str(self.username + str(randint())).upper()
 
     def __str__(self):
-        return f"{self.username} - {self.trade_license_no}"
+        return f"{self.role} - {self.trade_license_no}"
 
     objects = UserManager()
 

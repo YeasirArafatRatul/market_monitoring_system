@@ -6,10 +6,7 @@
 <!--=============================-->
 {% block fileSpecificCss %}
 <!--=============================-->
-<link
-  rel="stylesheet"
-  href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}"
-/>
+<link rel="stylesheet" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}" />
 <!--============================-->
 <link rel="stylesheet" href="{% static 'vendor/select2/select2.min.css' %}" />
 
@@ -26,21 +23,20 @@
 {% block content %}
 
 <div class="limiter">
-  <div class="container-login100">
-    <div class="wrap-login100">
-      <div class="heading">
-        <a href="{% url 'accounts:home' %}" rel="noopener noreferrer"
-          ><h3>Market Monitoring System</h3></a
-        >
-      </div>
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="heading">
+                <a href="{% url 'accounts:home' %}" rel="noopener noreferrer">
+                    <h3>Market Monitoring System</h3>
+                </a>
+            </div>
 
-      <!-- FOR ERRORS -->
-      {% if form.errors %} {% for field in form %}
-      <!--  -->
-      {% for error in field.errors %}
-      <div class="wrap-input100 alert alert-danger alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close"
-          >&times;</a
+            <!-- FOR ERRORS -->
+            {% if form.errors %} {% for field in form %}
+            <!--  -->
+            {% for error in field.errors %}
+            <div class="wrap-input100 alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a
         >
         <strong>{{ error|escape }}</strong>
       </div>
@@ -59,7 +55,7 @@
         <form class="login100-form validate-form" action="" method="POST">
           {% csrf_token %}
           <span class="login100-form-title"> Add Product </span>
-          {{ form|crispy }}
+          {{ form }}
           <button
             style="margin-top: 2rem"
             type="submit"
