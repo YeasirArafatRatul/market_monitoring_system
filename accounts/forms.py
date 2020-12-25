@@ -7,54 +7,67 @@ from accounts.models import User, UserProfile
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import reverse_lazy
 
+
+ROLE = (
+    ('retailer', 'Retailer'),
+    ('importer', 'Importer'),
+    ('wholeseller', 'Whole Seller'),
+)
+
+
 class UserRegisterForm(UserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super(UserRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['username'].label = "Username"
-        self.fields['email'].label = "Email"
-        self.fields['trade_license_no'].label = "Trade License No"
-        self.fields['role'].label = "Who Are You?"
-        self.fields['password1'].label = "Password"
-        self.fields['password2'].label = "Confirm Password"
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Username",
+                "class": "form-control"
+            }
+        ))
 
-        # self.fields['gender'].widget = forms.CheckboxInput()
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                "placeholder": "Email",
+                "class": "form-control"
+            }
+        ))
 
-        self.fields['username'].widget.attrs.update(
-            {
-                'placeholder': 'Enter Username',
+    trade_license_no = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                "placeholder": "Trade License No",
+                "class": "form-control"
             }
         )
+    )
 
-        self.fields['email'].widget.attrs.update(
-            {
-                'placeholder': 'Enter Email',
+    role = forms.ChoiceField(
+        choices=ROLE,
+        widget=forms.Select(
+            attrs={
+                "placeholder": "Who are you?",
+                "class": "form-control"
             }
         )
-        self.fields['trade_license_no'].widget.attrs.update(
-            {
-                'placeholder': 'Enter Trade License',
+    )
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password",
+                "class": "form-control"
             }
-        )
-        self.fields['role'].widget.attrs.update(
-            {
-                'placeholder': 'Who Are You?',
+        ))
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Confirm Password",
+                "class": "form-control"
             }
-        )
-        self.fields['password1'].widget.attrs.update(
-            {
-                'placeholder': 'Enter Password',
-            }
-        )
-
-        self.fields['password2'].widget.attrs.update(
-            {
-                'placeholder': 'Confirm Password',
-            }
-        )
+        ))
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'trade_license_no','role',
+        fields = ['username', 'email', 'trade_license_no', 'role',
                   'password1', 'password2']
         error_messages = {
             'username': {
@@ -62,13 +75,12 @@ class UserRegisterForm(UserCreationForm):
                 'max_length': 'Username is too long'
             },
             'email': {
-                'required': 'Email is required',  
+                'required': 'Email is required',
             },
             'trade_license_no': {
                 'required': 'Trade License Number is required'
             }
         }
-
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
@@ -77,24 +89,21 @@ class UserRegisterForm(UserCreationForm):
         return user
 
 
-
-
-
 class UserLoginForm(forms.Form):
-    email = forms.EmailField()
+    email = forms.EmailField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Email",
+                "class": "form-control"
+            }
+        ))
     password = forms.CharField(
-        label="Password",
-        strip=False,
-        widget=forms.PasswordInput,
-    )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.user = None
-        self.fields['email'].widget.attrs.update(
-            {'placeholder': 'Enter Email'})
-        self.fields['password'].widget.attrs.update(
-            {'placeholder': 'Enter Password'})
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password",
+                "class": "form-control"
+            }
+        ))
 
     def clean(self, *args, **kwargs):
         email = self.cleaned_data.get("email")
@@ -116,7 +125,6 @@ class UserLoginForm(forms.Form):
         return self.user
 
 
-
 class UserUpdateForm(UserChangeForm):
     class Meta:
         model = User
@@ -130,13 +138,13 @@ class UserUpdateForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
         del self.fields['password']
-       
+
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('user',)
-        fields = ('image','division', 'district', 'upazila',
+        fields = ('image', 'division', 'district', 'upazila',
                   'industry_type',)
         # widgets = {
         #     'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
@@ -145,4 +153,3 @@ class ProfileUpdateForm(forms.ModelForm):
         #     'address': TextInput(attrs={'class': 'input', 'placeholder': 'Enter Address'}),
         #     'website': TextInput(attrs={'class': 'input', 'placeholder': 'https://www.example.com'})
         # }
-

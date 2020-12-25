@@ -37,7 +37,7 @@ class User(AbstractUser):
     role = models.CharField(choices=ROLE, max_length=15, error_messages={
         'required': "Role must be provided"
     })
-    signed_up = models.DateField(default=date.today())
+    signed_up = models.DateField(default=date.today)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['username', ]
