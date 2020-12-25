@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{% block title %}{% endblock %} | Market Monitoring System</title>
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+    <!-- Specific CSS goes HERE -->
+    {% block stylesheets %} {% endblock stylesheets %}
+  </head>
+  <body>
+    <!-- [ auth-signin ] start -->
+    <div class="auth-wrapper">{% block content %}{% endblock content %}</div>
+    <!-- [ auth-signin ] end -->
+
+    {% include 'includes/scripts.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %} {% endblock javascripts %}
+  </body>
+</html>
