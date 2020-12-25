@@ -65,7 +65,7 @@ def home(request):
         'product_form': product_form,
     }
 
-    return render(request, 'dashboard/dashboard.html', context)
+    return render(request, 'dashboard/index.html', context)
 
 
 # class HomeView(FormView, ListView):
