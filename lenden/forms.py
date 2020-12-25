@@ -3,6 +3,7 @@ from .models import *
 from django.forms.widgets import DateInput, TextInput
 from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
+from django.db.models import Sum
 
 
 class AddChalanForm(forms.ModelForm):
@@ -31,17 +32,30 @@ class AddSalesForm(forms.ModelForm):
             'sell_date': TextInput(attrs={'class': 'input', 'placeholder': 'mm/dd/yyyy'}),
             'created_at': DateInput(attrs={'class': 'input', 'placeholder': 'mm/dd/yyyy'}),
         }
+        error_messages = {
+            'buyer': {
+                'required': 'Username is required',
+                'none': "Buyer with this name doesn't exists"
+            },
+            'trade_license_no': {
+                'required': 'Trade License Number is required'
+            }
+        }
 
     def clean(self, *args, **kwargs):
         form_data = self.cleaned_data
         print(form_data)
         user = form_data['buyer']
+
         if User.objects.filter(trade_license_no=user).exists():
+
             print("returning form")
+
             return form_data
         else:
             print("user doesn't exists")
-            raise forms.ValidationError("User doesn't exists")
+            raise forms.ValidationError(
+                "User with this trade license doesn't exists")
             return super(AddSalesForm, self).clean(*args, **kwargs)
 
     def is_valid(self):

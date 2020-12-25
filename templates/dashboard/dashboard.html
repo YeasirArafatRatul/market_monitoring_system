@@ -6,7 +6,7 @@
 <!-- CSS -->
 <!-- ============================= -->
 {% block fileSpecificCss %}
- 
+
 <!--=============================-->
 <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
 <!-- ============================= -->
@@ -553,9 +553,23 @@
                             <form action="#" method="POST"> {% csrf_token %}
 
                                 <div class="form-group">
+                                    <label for="product">Products</label>
+                                    <select name="product" class="form-control">
+                                                    {% for pro in products %}
+                                                    <option class="form-control" value="{{ pro.id }}" >{{pro.name}}</option> 
+                                                    {% endfor %}
+                                            </select>
+                                </div>
+
+                                <div class="form-group">
                                     <label>Select Product</label>
                                     <!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" /> -->
-                                    <br> {{ product_form.product.name}}
+                                    <!-- <br> {{ product_form.product.name}} -->
+                                    <select name="product" class="form-control select2">
+                                        {% for pro in products %}
+                                        <option value="{{ pro.id }}" >{{pro.name}}</option> 
+                                    {% endfor %}
+                                </select>
                                 </div>
                                 <div class="form-group">
                                     <label f>Quantity</label>
@@ -602,20 +616,20 @@
                             </h3>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                         </div>
-                        <div class="modal-body" style="margin-left: 4rem; align-self: center;"">
-                            <form action="#" method="POST" enctype="multipart/form-data"> {% csrf_token %} {{ user_form|crispy }} {{ profile_form|crispy }}
-                                <!-- <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                        <div class="modal-body" style="margin-left: 4rem; align-self: center;" ">
+                            <form action="# " method="POST " enctype="multipart/form-data "> {% csrf_token %} {{ user_form|crispy }} {{ profile_form|crispy }}
+                                <!-- <div class="form-group ">
+                                    <label for="exampleInputEmail1 ">Email address</label>
+                                    <input type="email " class="form-control " id="exampleInputEmail1 " placeholder="Enter email " />
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                <div class="form-group ">
+                                    <label for="exampleInputPassword1 ">Password</label>
+                                    <input type="password " class="form-control " id="exampleInputPassword1 " placeholder="Password " />
                                 </div> -->
 
-                                <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                    <button class="btn btn-primary" type="submit">Update</button>
+                                <div class="modal-footer ">
+                                    <button class="btn btn-secondary " type="button " data-dismiss="modal ">Cancel</button>
+                                    <button class="btn btn-primary " type="submit ">Update</button>
                                 </div>
                             </form>
                         </div>
@@ -632,20 +646,20 @@
             <!--============================-->
 
             <!--============================-->
-            <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+            <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %} "></script>
             <!--============================-->
 
             <!--============================-->
-            <script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+            <script src="{% static 'js/dashboard/dashboard.js' %} "></script>
             <!--============================-->
 
             <!--============= Page level plugins ===============-->
-            <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+            <script src="{% static 'vendor/chart.js/Chart.min.js' %} "></script>
             <!--============================-->
 
             <!-- Page level custom scripts -->
-            <script src="{% static 'js/dashboard/demo/chart-area-demo.js' %}"></script>
-            <script src="{% static 'js/dashboard/demo/chart-pie-demo.js' %}"></script>
+            <script src="{% static 'js/dashboard/demo/chart-area-demo.js' %} "></script>
+            <script src="{% static 'js/dashboard/demo/chart-pie-demo.js' %} "></script>
 
             <!--============================-->
 <script>

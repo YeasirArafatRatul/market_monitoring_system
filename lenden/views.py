@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from .forms import *
 from django.core.exceptions import ValidationError
+from lenden.models import Chalan
+from django.db.models import Avg, Sum
 # Create your views here.
 
 
@@ -20,6 +22,7 @@ class AddChalanView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.all()
         return context
 
 
@@ -29,12 +32,57 @@ class AddSalesView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('accounts:home')
 
     def form_valid(self, form):
-        request = self.request
+        user = self.request.user
         form.instance.seller = self.request.user
-        form.save()
+        product = form.cleaned_data['product']
+        user_product_total_quantity = Chalan.objects.filter(
+            owner=user, product_id=product).aggregate(Sum('quantity'))['quantity__sum']
+
+        user_total_sell_product_quantity = SellProduct.objects.filter(
+            seller=user, product_id=product).aggregate(Sum('quantity'))['quantity__sum']
+
+        print(type(user_total_sell_product_quantity))
+        print(user_total_sell_product_quantity + form.cleaned_data['quantity'])
+
+        print(user_product_total_quantity)
+        if user_product_total_quantity >= (user_total_sell_product_quantity + form.cleaned_data['quantity']):
+            form.save()
+        else:
+            raise forms.ValidationError(
+                "You don't have enough product to sell")
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
+        return context
+
+
+class MyProductListView(ListView):
+    model = Chalan
+    # USE THE TEMPLATE You want to render
+    template_name = 'lenden/user-available.html'
+    context_object_name = 'chalans'
+
+    def get_queryset(self):
+        self.id = get_object_or_404(Product, id=self.kwargs['pro_id'])
+        return Product.objects.filter(id=self.request.user.id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user_product_total_quantity = Chalan.objects.filter(
+            owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+        user_total_sell_product_quantity = SellProduct.objects.filter(
+            seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+        if user_total_sell_product_quantity == None:
+            context['available'] = user_product_total_quantity
+        else:
+            context['available'] = (user_product_total_quantity -
+
+                                    user_total_sell_product_quantity)
+
         return context
