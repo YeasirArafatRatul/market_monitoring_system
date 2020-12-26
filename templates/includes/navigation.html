@@ -3,8 +3,8 @@
   class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed header-blue shadow"
 >
   <div class="m-header justify-content-center">
-    <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
-    <a href="{% url 'accounts:home' %}" class="b-brand">
+    <a title="Menu" class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+    <a title="Home" href="{% url 'accounts:home' %}" class="b-brand">
       <!-- ========   change your logo hear   ============ -->
       <h3 style="font-family: 'LANGAR'; margin-bottom: 0; color: #f6f7fb;">
         <i class="fa fa-modx"> </i> M.M.S
@@ -17,7 +17,7 @@
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       
-      <li class="nav-item">
+      <li title="Full Scren" class="nav-item">
         <a href="#!" class="full-screen" onclick="javascript:toggleFullScreen()"
           ><i class="feather icon-maximize"></i
         ></a>
@@ -37,7 +37,7 @@
         aria-describedby="basic-addon2"
       />
       <div class="input-group-append">
-        <button class="btn btn-primary" type="button">
+        <button title="Search" class="btn btn-primary" type="button">
           <i class="fa fa-search fa-sm"></i>
         </button>
       </div>
@@ -46,7 +46,7 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li>
+      <li title="Notification">
         <div class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown"
             ><i class="icon feather icon-bell"></i
@@ -133,7 +133,7 @@
         </div>
       </li>
      
-      <li class="nav-item dropdown no-arrow">
+      <li title="User Menu" class="nav-item dropdown no-arrow">
         <a
           class="nav-link dropdown-toggle"
           href="#"
