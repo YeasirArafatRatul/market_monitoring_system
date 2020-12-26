@@ -749,7 +749,27 @@
   width: 18vw !important;
 }
 
+.pcoded-navbar.navbar-collapsed:hover .p-card {
+  display: block;
+}
+
 .dropdown-menu-right a:hover {
   color: black !important;
   background-color: white !important;
+}
+
+.p-card {
+  background-color: #fff !important;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-card .card-subtitle,
+.p-card .card-text {
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
 }

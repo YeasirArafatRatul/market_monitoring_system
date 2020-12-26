@@ -4,17 +4,19 @@
     <div class="navbar-content scroll-div">
       <ul class="nav pcoded-inner-navbar">
         <li class="nav-item pcoded-menu-caption">
-          <label>Information</label>
+          <label>Informations</label>
         </li>
-        <li class="nav-item">
+        <li class="nav-item pcoded-hasmenu pcoded-trigger">
           <a
-            href="/"
+            href="#"
             class="nav-link {% if 'index' in segment %} active {% endif %}"
           >
             <span class="pcoded-micon"> <i class="feather icon-user"></i></span
             ><span class="pcoded-mtext"> User Info</span></a
           >
+          <div class="pcoded-submenu" style="display: block"></div>
         </li>
+
         <li class="nav-item pcoded-hasmenu">
           <a href="#!" class="nav-link"
             ><span class="pcoded-micon"
