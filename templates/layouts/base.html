@@ -14,34 +14,27 @@
   </head>
   <body>
     <!-- [ Pre-loader ] start -->
-    <!-- <div class="loader-bg">
+    <div class="loader-bg">
       <div class="loader-track">
         <div class="loader-fill"></div>
       </div>
-    </div> -->
+    </div>
 
     <!-- [ Pre-loader ] End -->
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-      {% include 'includes/sidebar.html' %}
-      <!--  -->
-      <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
-        <div id="content">
-          <!-- Topbar -->
-          {% include 'includes/navigation.html' %}
-        </div>
+    {% include 'includes/sidebar.html' %}
+    <!--  -->
+    {% include 'includes/navigation.html' %}
+    <!--  -->
+    <div class="pcoded-main-container">
+      <div class="pcoded-content">
+        {% block content %}{% endblock content %}
       </div>
     </div>
-    <!-- End of Page Wrapper -->
-
-    <!--  -->
-    {% block content %}{% endblock content %}
     <!--  -->
     {% include 'includes/scripts.html' %}
 
     <!-- Specific Page JS goes HERE  -->
-    {% block javascripts %} {% endblock javascripts %}
+    {% block javascripts %}{% endblock javascripts %}
   </body>
 </html>

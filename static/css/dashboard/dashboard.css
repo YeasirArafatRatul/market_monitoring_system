@@ -544,11 +544,11 @@
   }
   .sidebar.toggled {
     overflow: visible;
-    width: 12rem !important;
+    width: 6.5rem !important;
   }
   .sidebar.toggled .nav-item .collapse {
     position: absolute;
-    left: calc(12rem + 1.5rem / 2);
+    left: calc(6.5rem + 1.5rem / 2);
     z-index: 1;
     top: 2px;
     -webkit-animation-name: growIn;
@@ -582,7 +582,8 @@
     width: 6.5rem;
   }
   .sidebar.toggled .nav-item .nav-link span {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
+    display: block;
   }
   .sidebar.toggled .nav-item .nav-link i {
     margin-right: 0;
@@ -715,4 +716,40 @@
 
 .sidebar-dark.toggled #sidebarToggle::after {
   color: rgba(255, 255, 255, 0.5);
+}
+
+/* *Custom */
+
+.pcoded-header {
+  min-height: 4rem;
+}
+
+.pcoded-header.header-blue {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#331c52),
+    to(#6015d8)
+  );
+  background: linear-gradient(to right, #331c52, #6015d8);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.pcoded-navbar {
+  margin-top: 4rem;
+  width: 18vw;
+}
+
+.pcoded-navbar.navbar-collapsed {
+  width: 80px;
+}
+
+.pcoded-navbar.navbar-collapsed:hover {
+  width: 18vw !important;
+}
+
+.dropdown-menu-right a:hover {
+  color: black !important;
+  background-color: white !important;
 }

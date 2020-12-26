@@ -1,31 +1,32 @@
-<!-- Topbar -->
-<nav
-  class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+<!-- [ Header ] start -->
+<header
+  class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed header-blue shadow"
 >
-  <!-- Sidebar Toggle (Topbar) -->
-  <button
-    id="sidebarToggleTop"
-    class="btn btn-link d-md-none rounded-circle mr-3"
-  >
-    <i class="fa fa-bars"></i>
-  </button>
-
-  <div>
-    <a
-      href="#!"
-      title="Full Screen"
-      class="full-screen"
-      onclick="javascript:toggleFullScreen()"
-      ><i
-        style="color: black"
-        class="feather icon-maximize font-weight-bold"
-      ></i
-    ></a>
+  <div class="m-header justify-content-center">
+    <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+    <a href="{% url 'accounts:home' %}" class="b-brand">
+      <!-- ========   change your logo hear   ============ -->
+      <h3 style="font-family: 'LANGAR'; margin-bottom: 0; color: #f6f7fb;">
+        <i class="fa fa-modx"> </i> M.M.S
+      </h3>
+    </a>
+    <a href="#!" class="mob-toggler">
+      <i class="feather icon-more-vertical"></i>
+    </a>
   </div>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item">
+        <a href="#!" class="full-screen" onclick="javascript:toggleFullScreen()"
+          ><i class="feather icon-maximize"></i
+        ></a>
+      </li>
+      <li class="nav-item">
 
-  <!-- Topbar Search -->
   <form
     class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+    style="width: 450px;"
   >
     <div class="input-group">
       <input
@@ -42,203 +43,173 @@
       </div>
     </div>
   </form>
-
-  <!-- Topbar Navbar -->
-  <ul class="navbar-nav ml-auto">
-    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-    <li class="nav-item dropdown no-arrow d-sm-none">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        id="searchDropdown"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <i class="fa fa-search fa-fw"></i>
-      </a>
-      <!-- Dropdown - Messages -->
-      <div
-        class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-        aria-labelledby="searchDropdown"
-      >
-        <form class="form-inline mr-auto w-100 navbar-search">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control bg-light border-0 small"
-              placeholder="Search for..."
-              aria-label="Search"
-              aria-describedby="basic-addon2"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">
-                <i class="fa fa-search fa-sm"></i>
-              </button>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li>
+        <div class="dropdown">
+          <a class="dropdown-toggle" href="#" data-toggle="dropdown"
+            ><i class="icon feather icon-bell"></i
+            ><span class="badge bg-danger"><span class="sr-only"></span></span
+          ></a>
+          <div class="dropdown-menu dropdown-menu-right notification">
+            <div class="noti-head">
+              <h6 class="d-inline-block m-b-0">Notifications</h6>
+              <div class="float-right">
+                <a href="#!" class="m-r-10">mark as read</a>
+                <a href="#!">clear all</a>
+              </div>
+            </div>
+            <ul class="noti-body">
+              <li class="n-title">
+                <p class="m-b-0">NEW</p>
+              </li>
+              <li class="notification">
+                <div class="media">
+                  <img
+                    class="img-radius"
+                    src="/static/img/img-01.png"
+                    alt="Generic placeholder image"
+                  />
+                  <div class="media-body">
+                    <p>
+                      <strong>John Doe</strong
+                      ><span class="n-time text-muted"
+                        ><i class="icon feather icon-clock m-r-10"></i>5
+                        min</span
+                      >
+                    </p>
+                    <p>New token Added</p>
+                  </div>
+                </div>
+              </li>
+              <li class="n-title">
+                <p class="m-b-0">EARLIER</p>
+              </li>
+              <li class="notification">
+                <div class="media">
+                  <img
+                    class="img-radius"
+                    src="/static/img/img-01.png"
+                    alt="Generic placeholder image"
+                  />
+                  <div class="media-body">
+                    <p>
+                      <strong>Khan Traders</strong
+                      ><span class="n-time text-muted"
+                        ><i class="icon feather icon-clock m-r-10"></i>10
+                        min</span
+                      >
+                    </p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, aut!</p>
+                  </div>
+                </div>
+              </li>
+              <li class="notification">
+                <div class="media">
+                  <img
+                    class="img-radius"
+                    src="/static/img/img-01.png"
+                    alt="Generic placeholder image"
+                  />
+                  <div class="media-body">
+                    <p>
+                      <strong>R.S Traders</strong
+                      ><span class="n-time text-muted"
+                        ><i class="icon feather icon-clock m-r-10"></i>12
+                        min</span
+                      >
+                    </p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, tenetur.</p>
+                  </div>
+                </div>
+              </li>
+             
+            </ul>
+            <div class="noti-footer">
+              <a href="#!">show all</a>
             </div>
           </div>
-        </form>
-      </div>
-    </li>
-
-    <!-- Nav Item - Alerts -->
-    <li class="nav-item dropdown no-arrow mx-1">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        id="alertsDropdown"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <i class="fa fa-bell fa-fw"></i>
-        <!-- Counter - Alerts -->
-        <span class="badge badge-danger badge-counter">3+</span>
-      </a>
-      <!-- Dropdown - Alerts -->
-      <div
-        class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="alertsDropdown"
-      >
-        <h6 class="dropdown-header">Alerts Center</h6>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-            <div class="icon-circle bg-primary">
-              <i class="fa fa-file-alt text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">December 12, 2019</div>
-            <span class="font-weight-bold"
-              >A new monthly report is ready to download!</span
-            >
-          </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-            <div class="icon-circle bg-success">
-              <i class="fa fa-donate text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">December 7, 2019</div>
-            $290.29 has been deposited into your account!
-          </div>
-        </a>
-
-        <a class="dropdown-item text-center small text-gray-500" href="#"
-          >Show All Alerts</a
-        >
-      </div>
-    </li>
-
-    <!-- Nav Item - Messages -->
-    <li class="nav-item dropdown no-arrow mx-1">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        id="messagesDropdown"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <i class="fa fa-envelope fa-fw"></i>
-        <!-- Counter - Messages -->
-        <span class="badge badge-danger badge-counter">7</span>
-      </a>
-      <!-- Dropdown - Messages -->
-      <div
-        class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="messagesDropdown"
-      >
-        <h6 class="dropdown-header">Message Center</h6>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="dropdown-list-image mr-3">
-            <img
-              class="rounded-circle"
-              src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-              alt=""
-            />
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold">
-            <div class="text-truncate">
-              Hi there! I am wondering if you can help me with a problem I've
-              been having.
-            </div>
-            <div class="small text-gray-500">Emily Fowler · 58m</div>
-          </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="dropdown-list-image mr-3">
-            <img
-              class="rounded-circle"
-              src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-              alt=""
-            />
-            <div class="status-indicator"></div>
-          </div>
-          <div>
-            <div class="text-truncate">
-              I have the photos that you ordered last month, how would you like
-              them sent to you?
-            </div>
-            <div class="small text-gray-500">Jae Chun · 1d</div>
-          </div>
-        </a>
-
-        <a class="dropdown-item text-center small text-gray-500" href="#"
-          >Read More Messages</a
-        >
-      </div>
-    </li>
-
-    <div class="topbar-divider d-none d-sm-block"></div>
-
-    <!-- Nav Item - User Information -->
-    <li class="nav-item dropdown no-arrow">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        id="userDropdown"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-          >{{ request.user.username }}</span
-        >
-        <img
-          class="img-profile rounded-circle"
-          src="{{ request.user.userprofile.image.url }}"
-        />
-      </a>
-      <!-- Dropdown - User Information -->
-      <div
-        class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="userDropdown"
-      >
-        <a class="dropdown-item" href="{% url 'accounts:profile-update' %}">
-          <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Edit Profile
-        </a>
-
-        <div class="dropdown-divider"></div>
+        </div>
+      </li>
+     
+      <li class="nav-item dropdown no-arrow">
         <a
-          class="dropdown-item"
+          class="nav-link dropdown-toggle"
           href="#"
-          data-toggle="modal"
-          data-target="#logoutModal"
+          id="userDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
         >
-          <i class="fa fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-          Logout
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+            >{{ request.user.username }}</span
+          >
+          <img
+            class="img-radius wid-40"
+            alt="User-Profile-Image"
+            src="{{ request.user.userprofile.image.url }}"
+          />
         </a>
-      </div>
-    </li>
-  </ul>
-</nav>
+        <!-- Dropdown - User Information -->
+        <div
+          class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+          aria-labelledby="userDropdown"
+        >
+          <a class="dropdown-item" href="{% url 'accounts:profile-update' %}">
+            <i class="feather icon-user mr-2 text-gray-400"></i> Edit
+            Profile
+          </a>
 
-<!-- End of Topbar -->
+          <div class="dropdown-divider"></div>
+          <a
+            class="dropdown-item"
+            href="#"
+            data-toggle="modal"
+            data-target="#logoutModal"
+          >
+            <i class="feather mr-2 text-gray-400 icon-log-out"></i></i>
+             Logout
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<!-- Logout Modal-->
+<div
+  class="modal fade"
+  id="logoutModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="logoutModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Ready to Leave?</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Select "Logout" below if you are ready to end your current session.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+          Cancel
+        </button>
+        <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- [ Header ] end -->
