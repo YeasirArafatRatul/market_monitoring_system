@@ -2,9 +2,7 @@
 {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-<link rel="stylesheet" href="{% static '/css/dashboard/dashboard.css' %}" />
-{% endblock stylesheets %}
+{% block stylesheets %} {% endblock stylesheets %}
 <!--  -->
 {% block content %}
 <!-- Breadcrumb STARTS -->
@@ -15,10 +13,7 @@
 <!-- Main Cards ENDS -->
 <!-- Products Table -->
 
-<!-- {% if request.user.role == 'importer' or request.user.role == 'wholeseller' or
-request.user.role == 'retailer' %} -->
 <div class="row">{% include 'includes/dashboard/product_table.html' %}</div>
-<!-- {% endif %} -->
 
 <!-- Products Table -->
 <!-- Activity STARTS -->

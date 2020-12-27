@@ -130,8 +130,19 @@ class UserUpdateForm(UserChangeForm):
         model = User
         fields = ('username', 'email')
         widgets = {
-            'username': TextInput(attrs={'class': 'input', 'placeholder': ' Username'}),
-            'email': EmailInput(attrs={'class': 'input', 'placeholder': 'email'}),
+            'username': TextInput(
+                attrs={
+                    "placeholder": "Username",
+                    "class": "form-control",
+                    'disabled': 'true'
+                }
+            ),
+            'email': EmailInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'email'
+                }
+            ),
 
         }
 
@@ -146,6 +157,40 @@ class ProfileUpdateForm(forms.ModelForm):
         exclude = ('user',)
         fields = ('image', 'division', 'district', 'upazila',
                   'industry_type',)
+
+        widgets = {
+            'image': FileInput(
+                attrs={
+                    "placeholder": "Profile Photo",
+                    "class": "form-control",
+                }
+            ),
+            'division': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Division'
+                }
+            ),
+            'district': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'District'
+                }
+            ),
+            'upazila': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Upzilla'
+                }
+            ),
+            'industry_type': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Industry Type'
+                }
+            ),
+
+        }
         # widgets = {
         #     'image': FileInput(attrs={'class': 'input', 'placeholder': 'profile picture', }),
         #     'cover_img': FileInput(attrs={'class': 'input', 'placeholder': 'cover photo', }),

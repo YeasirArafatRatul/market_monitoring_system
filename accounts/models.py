@@ -26,14 +26,11 @@ class User(AbstractUser):
     username = models.CharField(unique=True, max_length=15, error_messages={
         'unique': "A user with that name already exists.",
     })
-    email = models.EmailField(unique=True, blank=False,
-                              error_messages={
-                                  'unique': "A user with that email already exists.",
-                              })
+    email = models.EmailField(unique=True, blank=False, error_messages={
+        'unique': "A user with that email already exists."})
     trade_license_no = models.PositiveBigIntegerField(unique=True, null=True, blank=False,
-                                                      error_messages={
-                                                          'unique': "A user with that trade license is already exists.",
-                                                      })
+                                                      error_messages={'unique': "A user with that trade license is already exists.",
+                                                                      })
     role = models.CharField(choices=ROLE, max_length=15, error_messages={
         'required': "Role must be provided"
     })

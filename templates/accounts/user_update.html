@@ -1,79 +1,128 @@
-{%extends 'base.html' %} {% load static %}
+{%extends 'layouts/base.html' %} {% load static %}
 <!--  -->
 {% load crispy_forms_filters %}
 <!-- title -->
-{% block title %} Profile Update {% endblock %} {% block styles %}
-<style>
-    /* CUSTOMIZED BY ME */
-    
-    .col-lg-10 {
-        margin-top: 25px;
-    }
-    
-    .row {
-        margin: 0 15px;
-        display: block;
-    }
-    
-    .login-title {
-        text-align: center;
-    }
-    
-    .form-group {
-        margin-bottom: 1rem;
-        margin-left: 1.5rem;
-    }
-    /* .login-form input {
-        width: 100%;
-        background-color: transparent;
-        border: 1px solid #ffc06f;
-        border-radius: 1px;
-        line-height: 23px;
-        padding: 10px 20px;
-        font-size: 14px;
-        color: #7a7a7a;
-        margin-bottom: 15px;
-        column-gap: 1.5rem;
-        height: 3.2em;
-    }
-     */
-    
-    button,
-    input,
-    optgroup,
-    select,
-    textarea {
-        margin: 0;
-        padding-left: 1em;
-        width: 100%;
-        background-color: rgb(238, 238, 238);
-        border: 2px solid #ffc06f;
-        border-radius: 5px;
-        line-height: 23px;
-        margin-bottom: 15px;
-        column-gap: 1.5rem;
-        height: 2.8em;
-    }
-    
-    input[type="file"] {
-        font-size: 0.8rem;
-        padding: 0.5em;
-    }
-    
-    .btn {
-        font-size: 0.85rem;
-        margin: 0 auto !important;
-    }
-</style>
-{% endblock %}
+{% block title %} Profile Update {% endblock %} {% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/accounts/style.css' %}" />
+{% endblock stylesheets %}
+
 <!-- MainBody -->
 {% block content %}
 
-<div class="page-section mb-60">
+<div class="page-header mb-1">
+  <div class="page-block">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <div class="page-header-title"></div>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'accounts:home' %}"
+              ><i class="feather icon-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item"><a href="#">Profile Update</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="p-update d-flex align-items-center justify-content-center">
+  <div class="card">
+    <div class="row align-items-center text-center">
+      <div class="col-md-12">
+        <div class="card-body">
+          <h4 class="card-title mb-4 mt-4 text-uppercase">
+            <u>Profile Update</u>
+          </h4>
+          <form
+            role="form"
+            method="post"
+            action=""
+            enctype="multipart/form-data"
+          >
+            {% csrf_token %}
+            <div class="form-group row d-flex justify-content-center">
+              <label
+                for="username"
+                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
+                >Username:</label
+              >
+              <div class="col-sm-5">
+                {{ user_form.username }}
+                <small
+                  style="font-size: 0.7rem"
+                  id="username"
+                  class="form-text text-muted"
+                >
+                  You can't change your username.
+                </small>
+              </div>
+            </div>
+            <div class="form-group row d-flex justify-content-center">
+              <label
+                for="username"
+                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
+                >Profile Picture:</label
+              >
+              <div class="col-sm-5">{{ profile_form.image }}</div>
+            </div>
+
+            <div class="form-group row d-flex justify-content-center">
+              <label
+                for="division"
+                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
+                >Division:</label
+              >
+              <div class="col-sm-5">{{ profile_form.division }}</div>
+            </div>
+
+            <div class="form-group row d-flex justify-content-center">
+              <label
+                for="district"
+                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
+                >District:</label
+              >
+              <div class="col-sm-5">{{ profile_form.district }}</div>
+            </div>
+
+            <div class="form-group row d-flex justify-content-center">
+              <label
+                for="upazila"
+                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
+                >Upzilla:</label
+              >
+              <div class="col-sm-5">{{ profile_form.upazila }}</div>
+            </div>
+
+            <div class="form-group row d-flex justify-content-center">
+              <label
+                for="industry_type"
+                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
+                >Industry Type:</label
+              >
+              <div class="col-sm-5">{{ profile_form.industry_type }}</div>
+            </div>
+            <div class="d-flex justify-content-center mt-5">
+              <button
+                style="width: 250px"
+                type="submit"
+                class="btn btn-primary btn-block mb-4"
+              >
+                Update Profile
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="page-section mb-60">
     <div class="container">
         <div class="col-lg-10 mx-auto">
             {% if form.errors %} {% for field in form %}
-            <!--  -->
             {% for error in field.errors %}
             <div class="alert alert-danger alert-dismissable">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a
@@ -106,6 +155,6 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
 
 {% endblock %}
