@@ -6,21 +6,17 @@
 <!--  -->
 {% block content %}
 <!-- Breadcrumb STARTS -->
-{% include 'includes/dashboard/breadcrumb.html' %}
+{% include 'includes/product/breadcrumb.html' %}
 <!-- Breadcrumb ENDS -->
 <!-- Main Cards STARTS -->
-<div class="row">{% include 'includes/dashboard/card.html' %}</div>
+<div class="row">{% include 'includes/product/card.html' %}</div>
 <!-- Main Cards ENDS -->
 <!-- Products Table -->
 
-<div id="products_list" class="row">
-  {% include 'includes/dashboard/product_table.html' %}
+<div id="product_table" class="row">
+  {% include 'includes/product/product_table.html' %}
 </div>
 
 <!-- Products Table -->
-<!-- Activity STARTS -->
-<div class="row">
-  <div class="col-12">{% include 'includes/dashboard/activity.html' %}</div>
-</div>
-<!-- Activity ENDS -->
+
 {% endblock content %}

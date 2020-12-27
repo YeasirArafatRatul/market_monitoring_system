@@ -62,7 +62,7 @@ class AddSalesView(LoginRequiredMixin, CreateView):
 class MyProductListView(ListView):
     model = Chalan
     # USE THE TEMPLATE You want to render
-    template_name = 'lenden/details_about_individual_product.html'
+    template_name = 'lenden/product_details.html'
     context_object_name = 'chalans'
 
     def get_queryset(self):
@@ -97,5 +97,5 @@ class MyProductListView(ListView):
                                 user_total_sell_product_quantity)
         context['average'] = average_price
         context['chalans'] = my_chalan_for_individual_product
-
+        print(context)
         return context
