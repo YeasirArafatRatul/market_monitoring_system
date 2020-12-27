@@ -3,6 +3,12 @@
   border: none;
 }
 
+.custom-form1 input::-webkit-outer-spin-button,
+.custom-form1 input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .custom-form1 input:focus {
   border-color: transparent !important;
 }

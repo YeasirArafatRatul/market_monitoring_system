@@ -1,6 +1,6 @@
 {%extends 'layouts/base.html' %} {% load static %}
 <!-- title -->
-{% block title %} Profile Update {% endblock %} {% block stylesheets %}
+{% block title %} Add Chalan Record {% endblock %} {% block stylesheets %}
 <link
   rel="stylesheet"
   href="{% static 'vendor/css/select2/select2.min.css' %}"
@@ -78,7 +78,7 @@
           <form method="POST" class="validate-form">
               {% csrf_token %}
             <h4 class="custom-form-title text-center text-uppercase text pb-5">
-              <u>Add Chalan</u>
+              <u>Add Chalan Record</u>
             </h4>
 
           
@@ -115,7 +115,7 @@
               <div class="wrap-input input-select">
               <label for="unit" class="label-input">Choose Unit</label>
               <div>
-                <select id="unit" class="selection-2" name="product">
+                <select id="unit" class="selection-2" name="unit">
                   <option value="kilograms" 
                   {% if form.unit.value == "kilograms" %} selected {% endif %}>
                     KILOGRAMS
