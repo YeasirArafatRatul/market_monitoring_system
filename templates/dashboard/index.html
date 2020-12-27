@@ -8,29 +8,23 @@
 <!--  -->
 {% block content %}
 <!-- Breadcrumb STARTS -->
-<div class="page-header">
-  <div class="page-block">
-    <div class="row align-items-center">
-      <div class="col-md-12">
-        <div class="page-header-title">
-          <h5 class="m-b-10">Dashboard</h5>
-        </div>
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'accounts:home' %}"
-              ><i class="feather icon-home"></i
-            ></a>
-          </li>
-          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-        </ul>
-      </div>
-    </div>
+{% include 'includes/dashboard/breadcrumb.html' %}
+<!-- Breadcrumb ENDS -->
+<!-- Main Cards STARTS -->
+<div class="row">
+  <!--  -->
+  {% include 'includes/dashboard/card.html' %}
+</div>
+<!-- Main Cards ENDS -->
+<!-- Activity STARTS -->
+<div class="row">
+  <div class="col-12">
+    <!--  -->
+    {% include 'includes/dashboard/activity.html' %}
   </div>
 </div>
-<!-- Breadcrumb ENDS -->
-
+<!-- Activity ENDS -->
 {% endblock content %}
-<!--  -->
 <!--  -->
 {% block javascripts %}
 <script>
