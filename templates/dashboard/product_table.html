@@ -1,110 +1,106 @@
-{% if request.user.role == 'importer' or request.user.role == 'wholeseller' or request.user.role == 'retailer' %}
+{% if request.user.role == 'importer' or request.user.role == 'wholeseller' or
+request.user.role == 'retailer' %}
 <!-- Content Row -->
 <div class="row">
-    <!-- Border Left Utilities -->
-    <div class="col-lg-12">
-        <div class="card mb-2 py-1 border-left-primary">
-            <div class="card-body" style="padding: 0.3rem 1rem">
-                <div class="row">
-                    <div class="col-lg-1">Import Date</div>
-                    <div class="col-lg-2 text-black">Name</div>
+  <!-- Border Left Utilities -->
+  <div class="col-lg-12">
+    <div class="card mb-2 py-1 border-left-primary">
+      <div class="card-body" style="padding: 0.3rem 1rem">
+        <div class="row">
+          <div class="col-lg-1">Import Date</div>
+          <div class="col-lg-2 text-black">Name</div>
 
+          <div class="col-lg-2">Imported From</div>
+          <div class="col-lg-2">Clearance No</div>
 
-                    <div class="col-lg-2">Imported From</div>
-                    <div class="col-lg-2">Clearance No</div>
-
-                    <div class="col-lg-1">Quantity</div>
-                    <div class="col-lg-1">Unit</div>
-                    <div class="col-lg-2">Price(TK)</div>
-                </div>
-            </div>
+          <div class="col-lg-1">Quantity</div>
+          <div class="col-lg-1">Unit</div>
+          <div class="col-lg-2">Price(TK)</div>
         </div>
+      </div>
     </div>
+  </div>
 
-    {% for object in chalans %}
-    <div class="col-lg-12">
-        <div class="card mb-2 py-1 border-left-primary">
-            <div class="card-body" style="padding: 0.3rem 1rem">
-                <div class="row">
-                    <div class="col-lg-1">{{object.import_date}}</div>
-                    <div class="col-lg-2 ">{{object.product.name}}</div>
+  {% for object in chalans %}
+  <div class="col-lg-12">
+    <div class="card mb-2 py-1 border-left-primary">
+      <div class="card-body" style="padding: 0.3rem 1rem">
+        <div class="row">
+          <div class="col-lg-1">{{object.import_date}}</div>
+          <div class="col-lg-2">{{object.product.name}}</div>
 
-                    <div class="col-lg-2">{{object.imported_from}}</div>
-                    <div class="col-lg-2">{{object.customs_clearance_no}}</div>
+          <div class="col-lg-2">{{object.imported_from}}</div>
+          <div class="col-lg-2">{{object.customs_clearance_no}}</div>
 
-                    <div class="col-lg-1">{{object.quantity}}</div>
-                    <div class="col-lg-1">{{object.unit}}</div>
-                    <div class="col-lg-2">{{object.price}}</div>
-                </div>
-            </div>
+          <div class="col-lg-1">{{object.quantity}}</div>
+          <div class="col-lg-1">{{object.unit}}</div>
+          <div class="col-lg-2">{{object.price}}</div>
         </div>
+      </div>
     </div>
-    {% endfor %}
+  </div>
+  {% endfor %}
 </div>
 
 {% else %}
 <!-- Content Row -->
 <div class="row">
-    <!-- Border Left Utilities -->
-    <div class="col-lg-12">
-        <div class="card mb-2 py-1 border-left-primary">
-            <div class="card-body" style="padding: 0.3rem 1rem">
-                <div class="row">
-                    <div class="col-lg-1">Import Date</div>
-                    <div class="col-lg-1 text-black">Importer</div>
-                    <div class="col-lg-1 text-black">Name</div>
+  <!-- Border Left Utilities -->
+  <div class="col-lg-12">
+    <div class="card mb-2 py-1 border-left-primary">
+      <div class="card-body" style="padding: 0.3rem 1rem">
+        <div class="row">
+          <div class="col-lg-1">Import Date</div>
+          <div class="col-lg-1 text-black">Importer</div>
+          <div class="col-lg-1 text-black">Name</div>
 
-                    <div class="col-lg-2">Imported From</div>
-                    <div class="col-lg-2">Clearance No</div>
+          <div class="col-lg-2">Imported From</div>
+          <div class="col-lg-2">Clearance No</div>
 
-                    <div class="col-lg-1">Quantity</div>
-                    <div class="col-lg-1">Unit</div>
-                    <div class="col-lg-2">Price(TK)</div>
-                </div>
-            </div>
+          <div class="col-lg-1">Quantity</div>
+          <div class="col-lg-1">Unit</div>
+          <div class="col-lg-2">Price(TK)</div>
         </div>
+      </div>
     </div>
+  </div>
 
-    {% for object in chalans %}
-    <div class="col-lg-12">
-        <div class="card mb-2 py-1 border-left-primary">
-            <div class="card-body" style="padding: 0.3rem 1rem">
-                <div class="row">
-                    <div class="col-lg-1">{{object.import_date}}</div>
-                    <div class="col-lg-1">{{object.owner.username}}</div>
-                    <div class="col-lg-1">{{object.product.name}}</div>
+  {% for object in chalans %}
+  <div class="col-lg-12">
+    <div class="card mb-2 py-1 border-left-primary">
+      <div class="card-body" style="padding: 0.3rem 1rem">
+        <div class="row">
+          <div class="col-lg-1">{{object.import_date}}</div>
+          <div class="col-lg-1">{{object.owner.username}}</div>
+          <div class="col-lg-1">{{object.product.name}}</div>
 
+          <div class="col-lg-2">{{object.imported_from}}</div>
+          <div class="col-lg-2">{{object.customs_clearance_no}}</div>
 
-                    <div class="col-lg-2">{{object.imported_from}}</div>
-                    <div class="col-lg-2">{{object.customs_clearance_no}}</div>
-
-                    <div class="col-lg-1">{{object.quantity}}</div>
-                    <div class="col-lg-1">{{object.unit}}</div>
-                    <div class="col-lg-2">{{object.price}}</div>
-                </div>
-
-            </div>
+          <div class="col-lg-1">{{object.quantity}}</div>
+          <div class="col-lg-1">{{object.unit}}</div>
+          <div class="col-lg-2">{{object.price}}</div>
         </div>
+      </div>
     </div>
-    {% endfor %}
-    <div class="col-lg-12">
-        <div class="card mb-2 py-1 border-left-primary">
-            <div class="card-body" style="padding: 0.3rem 1rem">
-                <div class="row">
-                    <div class="col-lg-1">Total:</div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-1"></div>
+  </div>
+  {% endfor %}
+  <div class="col-lg-12">
+    <div class="card mb-2 py-1 border-left-primary">
+      <div class="card-body" style="padding: 0.3rem 1rem">
+        <div class="row">
+          <div class="col-lg-1">Total:</div>
+          <div class="col-lg-1"></div>
+          <div class="col-lg-1"></div>
 
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-1">{{ total }}</div>
-                    <div class="col-lg-1">{{unit_of_total.unit}}</div>
-                    <div class="col-lg-2">{{average_price}}</div>
-
-                </div>
-
-            </div>
+          <div class="col-lg-2"></div>
+          <div class="col-lg-2"></div>
+          <div class="col-lg-1">{{ total }}</div>
+          <div class="col-lg-1">{{unit_of_total.unit}}</div>
+          <div class="col-lg-2">{{average_price}}</div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endif %}

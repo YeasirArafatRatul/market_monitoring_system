@@ -11,19 +11,22 @@
 {% include 'includes/dashboard/breadcrumb.html' %}
 <!-- Breadcrumb ENDS -->
 <!-- Main Cards STARTS -->
-<div class="row">
-  <!--  -->
-  {% include 'includes/dashboard/card.html' %}
-</div>
+<div class="row">{% include 'includes/dashboard/card.html' %}</div>
 <!-- Main Cards ENDS -->
+<!-- Products Table -->
+
+<!-- {% if request.user.role == 'importer' or request.user.role == 'wholeseller' or
+request.user.role == 'retailer' %} -->
+<div class="row">{% include 'includes/dashboard/product_table.html' %}</div>
+<!-- {% endif %} -->
+
+<!-- Products Table -->
 <!-- Activity STARTS -->
 <div class="row">
-  <div class="col-12">
-    <!--  -->
-    {% include 'includes/dashboard/activity.html' %}
-  </div>
+  <div class="col-12">{% include 'includes/dashboard/activity.html' %}</div>
 </div>
 <!-- Activity ENDS -->
+
 {% endblock content %}
 <!--  -->
 {% block javascripts %}
