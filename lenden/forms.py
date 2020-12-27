@@ -11,7 +11,12 @@ class AddChalanForm(forms.ModelForm):
         model = Chalan
         exclude = ('owner',)
         widgets = {
-            'product': TextInput(attrs={'class': 'input', 'placeholder': 'SElect Product', }),
+            'product': TextInput(
+                attrs={
+                    'class': 'input',
+                    'placeholder': 'SElect Product',
+                }
+            ),
             'quantity': TextInput(attrs={'class': 'input', 'placeholder': '1', }),
             # 'unit': TextInput(attrs={'class': 'input', 'placeholder': '1', }),
             'imported_from': TextInput(attrs={'class': 'input', 'placeholder': 'USA'}),
