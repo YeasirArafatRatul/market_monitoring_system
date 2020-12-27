@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', include('lenden.urls')),
     path('', include('admin_site.urls')),
-    path('', lambda request: HttpResponse('the cow jumped over the moon')),
+    path('inbox/notifications/',
+         include('notifications.urls', namespace='notifications'),),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

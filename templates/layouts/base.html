@@ -1,8 +1,8 @@
-{% load static %}
-
+{% load static %} {% load notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="{% static '/css/dashboard/dashboard.css' %}" />
     <!-- Specific CSS goes HERE -->
     {% block stylesheets %} {% endblock stylesheets %}
-  </head>
-  <body>
+</head>
+
+<body>
     <!-- [ Pre-loader ] start -->
     <div class="loader-bg">
-      <div class="loader-track">
-        <div class="loader-fill"></div>
-      </div>
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
     </div>
 
     <!-- [ Pre-loader ] End -->
@@ -28,14 +29,16 @@
     {% include 'includes/navigation.html' %}
     <!--  -->
     <div class="pcoded-main-container">
-      <div class="pcoded-content">
-        {% block content %}{% endblock content %}
-      </div>
+        <div class="pcoded-content">
+            {% block content %}{% endblock content %}
+        </div>
     </div>
     <!--  -->
     {% include 'includes/scripts.html' %}
 
     <!-- Specific Page JS goes HERE  -->
     {% block javascripts %}{% endblock javascripts %}
-  </body>
+
+</body>
+
 </html>

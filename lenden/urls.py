@@ -11,6 +11,8 @@ app_name = "lenden"
 urlpatterns = [
     path('add-chalan/', AddChalanView.as_view(), name='add-chalan'),
     path('add-sales/', AddSalesView.as_view(), name='add-sales'),
-    path('available-products/<int:pro_id>', MyProductListView.as_view(),
-         name='my-available-products'),
+    path('import-record/<int:pro_id>', ImportRecordView.as_view(),
+         name='import-records'),
+    path('sales-record/<int:pro_id>', SalesRecordView.as_view(),
+         name='sales-records'),
 ]

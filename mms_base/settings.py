@@ -37,12 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'notifications',
     'crispy_forms',
 
     'accounts',
     'lenden',
     'admin_site',
+
 
 ]
 
@@ -134,3 +135,6 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+NOTIFICATIONS_USE_JSONFIELD = True
