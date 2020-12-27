@@ -1,8 +1,7 @@
 {% extends "layouts/base.html" %} {% load static %} {% block title %} Dashboard {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-<link rel="stylesheet" href="{% static '/css/dashboard/dashboard.css' %}" /> {% endblock stylesheets %}
+{% block stylesheets %} {% endblock stylesheets %}
 <!--  -->
 {% block content %}
 <!-- Breadcrumb STARTS -->
@@ -13,9 +12,7 @@
 <!-- Main Cards ENDS -->
 <!-- Products Table -->
 
-
 <div class="row">{% include 'includes/dashboard/product_table.html' %}</div>
-
 
 <!-- Products Table -->
 <!-- Activity STARTS -->

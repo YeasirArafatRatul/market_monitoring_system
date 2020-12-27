@@ -16,3 +16,15 @@
   display: inline-block;
   margin-bottom: 1rem;
 }
+
+.p-update {
+  display: flex;
+}
+
+.p-update .card {
+  width: 1200px;
+}
+
+.p-update label {
+  font-size: 0.9rem;
+}
