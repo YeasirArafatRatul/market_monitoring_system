@@ -47,6 +47,7 @@ class SellProduct(models.Model):
         'required': "Quantity must be provided"})
     unit = models.CharField(choices=UNIT, max_length=20)
     price = models.PositiveIntegerField()
+    pending = models.BooleanField(default=True)
     sell_date = models.DateField()
     created_at = models.DateField(auto_now_add=True)
 

@@ -3,158 +3,86 @@
 {% load crispy_forms_filters %}
 <!-- title -->
 {% block title %} Profile Update {% endblock %} {% block stylesheets %}
-<link rel="stylesheet" href="{% static 'css/accounts/style.css' %}" />
-{% endblock stylesheets %}
+<link rel="stylesheet" href="{% static 'css/accounts/style.css' %}" /> {% endblock stylesheets %}
 
 <!-- MainBody -->
 {% block content %}
 
 <div class="page-header mb-1">
-  <div class="page-block">
-    <div class="row align-items-center">
-      <div class="col-md-12">
-        <div class="page-header-title"></div>
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'accounts:home' %}"
-              ><i class="feather icon-home"></i
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title"></div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'accounts:home' %}"><i class="feather icon-home"></i
             ></a>
-          </li>
-          <li class="breadcrumb-item"><a href="#">Profile Update</a></li>
-        </ul>
-      </div>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Profile Update</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="p-update d-flex align-items-center justify-content-center">
-  <div class="card">
-    <div class="row align-items-center text-center">
-      <div class="col-md-12">
-        <div class="card-body">
-          <h4 class="card-title mb-4 mt-4 text-uppercase">
-            <u>Profile Update</u>
-          </h4>
-          <form
-            role="form"
-            method="post"
-            action=""
-            enctype="multipart/form-data"
-          >
-            {% csrf_token %}
-            <div class="form-group row d-flex justify-content-center">
-              <label
-                for="username"
-                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
-                >Username:</label
-              >
-              <div class="col-sm-5">
-                {{ user_form.username }}
-                <small
-                  style="font-size: 0.7rem"
-                  id="username"
-                  class="form-text text-muted"
-                >
-                  You can't change your username.
-                </small>
-              </div>
-            </div>
-            <div class="form-group row d-flex justify-content-center">
-              <label
-                for="username"
-                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
-                >Profile Picture:</label
-              >
-              <div class="col-sm-5">{{ profile_form.image }}</div>
-            </div>
+    <div class="card">
+        <div class="row align-items-center text-center">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <h4 class="card-title mb-4 mt-4 text-uppercase">
+                        <u>Profile Update</u>
+                    </h4>
+                    <form role="form" method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group row d-flex justify-content-center">
+                            <label for="username" class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg" aria-disabled="true">Username:</label>
+                            <div class="col-sm-5">
+                                {{ user_form.username }}
+                                <small style="font-size: 0.7rem" id="username" class="form-text text-muted">You can't change your username.</small>
+                            </div>
+                        </div>
+                        <div class="form-group row d-flex justify-content-center">
+                            <label for="username" class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg">Email:</label>
+                            <div class="col-sm-5">
+                                {{ user_form.email }}
 
-            <div class="form-group row d-flex justify-content-center">
-              <label
-                for="division"
-                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
-                >Division:</label
-              >
-              <div class="col-sm-5">{{ profile_form.division }}</div>
-            </div>
+                            </div>
+                        </div>
+                        <div class="form-group row d-flex justify-content-center">
+                            <label for="username" class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg">Profile Picture:</label>
+                            <div class="col-sm-5">{{ profile_form.image }}</div>
+                        </div>
 
-            <div class="form-group row d-flex justify-content-center">
-              <label
-                for="district"
-                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
-                >District:</label
-              >
-              <div class="col-sm-5">{{ profile_form.district }}</div>
-            </div>
+                        <div class="form-group row d-flex justify-content-center">
+                            <label for="division" class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg">Division:</label>
+                            <div class="col-sm-5">{{ profile_form.division }}</div>
+                        </div>
 
-            <div class="form-group row d-flex justify-content-center">
-              <label
-                for="upazila"
-                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
-                >Upzilla:</label
-              >
-              <div class="col-sm-5">{{ profile_form.upazila }}</div>
-            </div>
+                        <div class="form-group row d-flex justify-content-center">
+                            <label for="district" class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg">District:</label>
+                            <div class="col-sm-5">{{ profile_form.district }}</div>
+                        </div>
 
-            <div class="form-group row d-flex justify-content-center">
-              <label
-                for="industry_type"
-                class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg"
-                >Industry Type:</label
-              >
-              <div class="col-sm-5">{{ profile_form.industry_type }}</div>
+                        <div class="form-group row d-flex justify-content-center">
+                            <label for="upazila" class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg">Upzilla:</label>
+                            <div class="col-sm-5">{{ profile_form.upazila }}</div>
+                        </div>
+
+                        <div class="form-group row d-flex justify-content-center">
+                            <label for="industry_type" class="col-sm-3 col-sm-offset-2 col-form-label font-weight-bold form-label-lg">Industry Type:</label>
+                            <div class="col-sm-5">{{ profile_form.industry_type }}</div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button style="width: 250px" type="submit" class="btn btn-primary btn-block mb-4">Update Profile</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="d-flex justify-content-center mt-5">
-              <button
-                style="width: 250px"
-                type="submit"
-                class="btn btn-primary btn-block mb-4"
-              >
-                Update Profile
-              </button>
-            </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<!-- <div class="page-section mb-60">
-    <div class="container">
-        <div class="col-lg-10 mx-auto">
-            {% if form.errors %} {% for field in form %}
-            {% for error in field.errors %}
-            <div class="alert alert-danger alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a
-        >
-        <strong>{{ error|escape }}</strong>
-      </div>
-      {% endfor %} {% endfor %} 
-      
-      {% for error in form.non_field_errors %}
-      <div class="alert alert-danger alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close"
-          >&times;</a
-        >
-        <strong>{{ error|escape }}</strong>
-      </div>
-      {% endfor %} {% endif %}
-      <form action="#" method="POST" enctype="multipart/form-data">
-        <div class="login-form">
-          <h4 class="login-title">Change Your Password</h4>
-          <div class="row">
-            <fieldset class="form-group">
-              {% csrf_token %} {{ user_form|crispy }} {{ profile_form|crispy }}
-            </fieldset>
-            <div class="col-sm-4">
-              <button class="btn btn-outline-white-primary" type="submit">
-                Update
-              </button>
-            </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div> -->
+
 
 {% endblock %}

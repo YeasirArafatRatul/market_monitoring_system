@@ -79,7 +79,8 @@ class MyProductListView(ListView):
             seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
 
         if user_total_sell_product_quantity == None:
-            context['available'] = user_product_total_quantity
+
+            context['available'] = 0
         else:
             context['available'] = (user_product_total_quantity -
 

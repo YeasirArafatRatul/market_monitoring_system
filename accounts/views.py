@@ -17,17 +17,50 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from accounts.models import User
 from .forms import *
+from .forms import ProfileUpdateForm, UserUpdateForm
 from lenden.models import Product
 from lenden.forms import *
 
 
 @login_required(login_url='/login')
 def home(request):
-
     current_user = request.user
     profile = UserProfile.objects.get(user_id=current_user.id)
+
+    product_from_chalan = Chalan.objects.filter(owner=current_user)
+
+    products = list(dict.fromkeys(product_from_chalan))
+    print(products)
+    for pro in products:
+        print(pro.product)
+
     chalans = Chalan.objects.filter(
         owner_id=request.user.id).order_by('-id')[:8]
+    pending_sale_record_of_buyer = SellProduct.objects.filter(
+        buyer=current_user.trade_license_no, pending=True).order_by('-created_at').count()
+
+    print(current_user.trade_license_no)
+    pending_sale_record_of_seller = SellProduct.objects.filter(
+        seller=current_user, pending=True).order_by('-created_at').count()
+
+    total_sales = SellProduct.objects.filter(
+        seller=current_user).aggregate(Sum('price'))['price__sum']
+
+    if total_sales == None:
+        total_sales = 0
+
+    number_of_sellings = SellProduct.objects.filter(
+        seller=current_user).count()
+
+    number_of_buyings = SellProduct.objects.filter(
+        buyer=current_user.trade_license_no).count()
+
+    if number_of_buyings == None:
+        number_of_buyings = 0
+    elif number_of_sellings == None:
+        number_of_sellings = 0
+
+    number_of_transactions = number_of_buyings + number_of_sellings
 
     if request.method == "POST":
         user_form = UserUpdateForm(
@@ -63,6 +96,10 @@ def home(request):
         'user_form': user_form,
         'profile_form': profile_form,
         'product_form': product_form,
+        'pending_sale_record_of_buyer': pending_sale_record_of_buyer,
+        'pending_sale_record_of_seller': pending_sale_record_of_seller,
+        'total_sales': total_sales,
+        'number_of_transactions': number_of_transactions,
     }
 
     return render(request, 'dashboard/index.html', context)

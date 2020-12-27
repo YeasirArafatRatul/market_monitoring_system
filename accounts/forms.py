@@ -128,22 +128,21 @@ class UserLoginForm(forms.Form):
 class UserUpdateForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email',)
         widgets = {
             'username': TextInput(
                 attrs={
                     "placeholder": "Username",
                     "class": "form-control",
-                    'disabled': 'true'
-                }
-            ),
-            'email': EmailInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': 'email'
                 }
             ),
 
+            'email': EmailInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'email',
+                }
+            ),
         }
 
     def __init__(self, *args, **kwargs):
