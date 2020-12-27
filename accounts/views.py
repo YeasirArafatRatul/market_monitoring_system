@@ -70,7 +70,7 @@ def home(request):
         number_of_sellings = 0
 
     number_of_transactions = number_of_buyings + number_of_sellings
-
+# User UPDATE FORM
     if request.method == "POST":
         user_form = UserUpdateForm(
             request.POST, instance=request.user)
@@ -109,7 +109,6 @@ def home(request):
         'pending_sale_record_of_seller': pending_sale_record_of_seller,
         'total_sales': total_sales,
         'number_of_transactions': number_of_transactions,
-
         'products': products,
     }
 

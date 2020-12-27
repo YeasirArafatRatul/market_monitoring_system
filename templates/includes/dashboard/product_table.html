@@ -41,6 +41,7 @@
                     <thead>
                         <tr>
                             <th>Import Date</th>
+                            <th>Product Name</th>
                             <th>Imported From</th>
                             <th>Clearance No</th>
                             <th>Quantity</th>
@@ -60,18 +61,27 @@
                             <td>{{object.unit}}</td>
                             <td>{{object.price}}</td>
                         </tr>
-
                         {% endfor %}
-                        <tr>
-                            <td>Total:</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{{ total }}</td>
-                            <td>{{unit_of_total.unit}}</td>
-                            <td>{{average_price}}</td>
-                        </tr>
                     </tbody>
+                </table>
+                <table>
+                    <tr>
+                        <td>Total: {{ total }} {{unit}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sold: {{sold}} {{unit}}</td>
+                    </tr>
+                    <tr>
+                        <td>Available: {{available}} {{unit}}</td>
+                    </tr>
+                    <tr>
+                        <td>Average Price: {% if average == None %} No Transactions Yet {% else %} {{average}} / {{unit}} {% endif %}</td>
+                    </tr>
+
+
+
+
+
                 </table>
             </div>
         </div>

@@ -62,7 +62,7 @@ class AddSalesView(LoginRequiredMixin, CreateView):
 class MyProductListView(ListView):
     model = Chalan
     # USE THE TEMPLATE You want to render
-    template_name = 'lenden/user-available.html'
+    template_name = 'lenden/details_about_individual_product.html'
     context_object_name = 'chalans'
 
     def get_queryset(self):
@@ -72,6 +72,12 @@ class MyProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        my_chalan_for_individual_product = Chalan.objects.filter(
+            owner=self.request.user, product=self.id)
+
+        average_price = SellProduct.objects.filter(
+            seller=self.request.user).aggregate(Avg('price'))['price__avg']
+
         user_product_total_quantity = Chalan.objects.filter(
             owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
 
@@ -79,11 +85,17 @@ class MyProductListView(ListView):
             seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
 
         if user_total_sell_product_quantity == None:
+            user_total_sell_product_quantity = 0
 
-            context['available'] = 0
-        else:
-            context['available'] = (user_product_total_quantity -
+        unit_for_chalan = Chalan.objects.filter(
+            owner=self.request.user, product=self.id).values('unit').first()['unit']
 
-                                    user_total_sell_product_quantity)
+        context['total'] = user_product_total_quantity
+        context['unit'] = unit_for_chalan
+        context['sold'] = user_total_sell_product_quantity
+        context['available'] = (user_product_total_quantity -
+                                user_total_sell_product_quantity)
+        context['average'] = average_price
+        context['chalans'] = my_chalan_for_individual_product
 
         return context
