@@ -11,7 +11,7 @@ from django.db.models import Avg, Sum
 
 class AddChalanView(LoginRequiredMixin, CreateView):
     form_class = AddChalanForm
-    template_name = 'lenden/addproduct.html'
+    template_name = 'lenden/add_chalan.html'
     success_url = reverse_lazy('accounts:home')
 
     def form_valid(self, form):
@@ -28,7 +28,7 @@ class AddChalanView(LoginRequiredMixin, CreateView):
 
 class AddSalesView(LoginRequiredMixin, CreateView):
     form_class = AddSalesForm
-    template_name = 'lenden/demo-form.html'
+    template_name = 'lenden/add_sale.html'
     success_url = reverse_lazy('accounts:home')
 
     def form_valid(self, form):

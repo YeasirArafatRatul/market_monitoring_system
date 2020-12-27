@@ -2,8 +2,16 @@
   <div class="page-block">
     <div class="row align-items-center">
       <div class="col-md-12">
-        <div class="page-header-title">
+        <div class="page-header-title d-flex justify-content-between">
           <h5 class="m-b-10">Dashboard</h5>
+          <div>
+            <a class="btn btn-primary" href="{% url 'lenden:add-chalan' %}"
+              >Add Chalan Record</a
+            >
+            <a class="btn btn-info" href="{% url 'lenden:add-sales' %}"
+              >Add Sale Record</a
+            >
+          </div>
         </div>
         <ul class="breadcrumb">
           <li class="breadcrumb-item">
