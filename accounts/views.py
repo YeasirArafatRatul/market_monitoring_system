@@ -31,16 +31,17 @@ def home(request):
     product_from_chalan = Chalan.objects.filter(
         owner=current_user)
 
-    unique_products = Chalan.objects.order_by(
+    unique_products = Chalan.objects.filter(owner=current_user).order_by(
         'product').values('product').distinct()
 
+    print(unique_products)
     products = []
 
     for k in unique_products:
         query = Product.objects.get(id=k['product'])
         products.append(query)
 
-    # print(products)
+    print(products)
 
     chalans = Chalan.objects.filter(
         owner_id=request.user.id).order_by('-id')[:8]

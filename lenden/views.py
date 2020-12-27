@@ -1,3 +1,4 @@
+from notifications.signals import notify
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -41,12 +42,20 @@ class AddSalesView(LoginRequiredMixin, CreateView):
         user_total_sell_product_quantity = SellProduct.objects.filter(
             seller=user, product_id=product).aggregate(Sum('quantity'))['quantity__sum']
 
-        print(type(user_total_sell_product_quantity))
-        print(user_total_sell_product_quantity + form.cleaned_data['quantity'])
+        # print(type(user_total_sell_product_quantity))
+        # print(user_total_sell_product_quantity + form.cleaned_data['quantity'])
+        # print(user_product_total_quantity)
 
-        print(user_product_total_quantity)
+        if user_total_sell_product_quantity == None:
+            user_total_sell_product_quantity = 0
+
+        buyer = User.objects.filter(
+            trade_license_no=form.instance.buyer).first()
+        print(buyer)
         if user_product_total_quantity >= (user_total_sell_product_quantity + form.cleaned_data['quantity']):
             form.save()
+            notify.send(user, recipient=buyer,
+                        verb="has issued a selling record on your name")
         else:
             raise forms.ValidationError(
                 "You don't have enough product to sell")
@@ -59,7 +68,7 @@ class AddSalesView(LoginRequiredMixin, CreateView):
         return context
 
 
-class MyProductListView(ListView):
+class ImportRecordView(ListView):
     model = Chalan
     # USE THE TEMPLATE You want to render
     template_name = 'lenden/details_about_individual_product.html'
@@ -76,7 +85,7 @@ class MyProductListView(ListView):
             owner=self.request.user, product=self.id)
 
         average_price = SellProduct.objects.filter(
-            seller=self.request.user).aggregate(Avg('price'))['price__avg']
+            seller=self.request.user, product=self.id).aggregate(Avg('price'))['price__avg']
 
         user_product_total_quantity = Chalan.objects.filter(
             owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
@@ -98,4 +107,69 @@ class MyProductListView(ListView):
         context['average'] = average_price
         context['chalans'] = my_chalan_for_individual_product
 
+        return context
+
+
+class SalesRecordView(ListView):
+    model = SellProduct
+    # USE THE TEMPLATE You want to render
+    template_name = 'includes/dashboard/sales_detail_for_individual_product.html'
+    context_object_name = 'chalans'
+
+    def get_queryset(self):
+        self.id = get_object_or_404(Product, id=self.kwargs['pro_id'])
+        return Product.objects.filter(id=self.request.user.id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        my_sales_for_individual_product = SellProduct.objects.filter(
+            seller=self.request.user, product=self.id)
+
+        average_price = SellProduct.objects.filter(
+            seller=self.request.user, product=self.id).aggregate(Avg('price'))['price__avg']
+
+        user_product_total_quantity = Chalan.objects.filter(
+            owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+        user_total_sell_product_quantity = SellProduct.objects.filter(
+            seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+        if user_total_sell_product_quantity == None:
+            user_total_sell_product_quantity = 0
+
+        if SellProduct.objects.filter(seller=self.request.user, product=self.id).exists():
+            unit_for_chalan = SellProduct.objects.filter(
+                seller=self.request.user, product=self.id).values('unit').first()['unit']
+            context['unit'] = unit_for_chalan
+        else:
+            context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
+
+        context['total'] = user_product_total_quantity
+
+        context['sold'] = user_total_sell_product_quantity
+        context['available'] = (user_product_total_quantity -
+                                user_total_sell_product_quantity)
+        context['average'] = average_price
+        context['sales'] = my_sales_for_individual_product
+
+        return context
+
+# TO SAVE a CHALAN object from SELLPRODUCT object:
+
+
+class AutomatedChalanProductAddView(LoginRequiredMixin, CreateView):
+    form_class = AddChalanForm
+    template_name = 'lenden/add_chalan.html'
+    success_url = reverse_lazy('accounts:home')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.owner = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.all()
         return context

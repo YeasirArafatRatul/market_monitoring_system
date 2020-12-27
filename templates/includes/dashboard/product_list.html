@@ -43,8 +43,8 @@
                             <span class="text-c-blue">{{pro.name}}</span>
                         </h4>
                         <div>
-                            <a href="{% url 'lenden:my-available-products' pro.id %}" class="btn btn-primary btn-sm mr-1 btn-round">See Sales</a>
-                            <a href="#" class="btn btn-primary btn-sm btn-round">See Imports</a>
+                            <a href="{% url 'lenden:import-records' pro.id %}" class="btn btn-primary btn-sm mr-1 btn-round">See Imports</a>
+                            <a href="{% url 'lenden:sales-records' pro.id %}" class="btn btn-primary btn-sm btn-round">See Sales </a>
                         </div>
                     </div>
                 </div>
