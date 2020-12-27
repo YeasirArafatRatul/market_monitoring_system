@@ -1,95 +1,228 @@
-{% extends 'layouts/base.html' %} {% load static %} {% block title %} Post New Job {{ title }} {% endblock %} {% block styles %}
-<link rel="stylesheet" href="{% static 'vendor/bootstrap-select/css/bootstrap-select.min.css' %}"> {% endblock %} {% block content %}
+{%extends 'layouts/base.html' %} {% load static %}
+<!-- title -->
+{% block title %} Profile Update {% endblock %} {% block stylesheets %}
+<link
+  rel="stylesheet"
+  href="{% static 'vendor/css/select2/select2.min.css' %}"
+/>
+<link rel="stylesheet" href="{% static 'css/form/form.css' %}" />
+{% endblock stylesheets %} {% block content %}
 
-<section class="bg-light-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h1 class="heading">Add Sell Record</h1>
-            </div>
-        </div>
+<!-- BREADCRUMB STARTS -->
+<div class="page-header mb-1">
+  <div class="page-block">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <div class="page-header-title"></div>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'accounts:home' %}"
+              ><i class="feather icon-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item"><a href="#">Add Chalan</a></li>
+        </ul>
+      </div>
     </div>
-</section>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-10 mx-auto">
-                {% if form.errors %} {% for field in form %} {% for error in field.errors %}
-                <div class="alert alert-danger alert-dismissable">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{ field.label }}: {{ error|escape }}</strong>
-                </div>
-                {% endfor %} {% endfor %} {% endif %}
-                <form id="job-main-form" method="post" action="" class="job-add-form">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h4>Add New Chalan</h4>
-                            <p class="text-muted text-small">Fill The Form With Appropriate Information </p>
-                            <hr>
-                        </div>
-                    </div>
+  </div>
+</div>
+<!-- BREADCRUMB ENDS -->
 
-                    <div class="row">
-                        <div class="col-lg-12 form-group">
-                            <label for="product">Products</label>
-                            <select name="product" class="form-control select2">
-
-                                        {% for pro in products %}
-                                        <option value="{{ pro.id }}" >{{pro.name}}</option> 
-                                        {% endfor %}
-                                </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 form-group">
-                            <label for="quantity">Quantity</label>
-                            <input name="quantity" type="number" class="form-control" value="{{ form.quantity.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-                    <div class="col-lg-12 form-group">
-                        <label for="unit">Unit</label>
-                        <select id="unit" name="unit" placeholder="Choose unit " class="form-control select2">
-                                <option value="kilograms" {% if form.unit.value == "kilograms" %} selected {% endif %}>KILOGRAMS</option>
-                                <option value="litres" {% if form.unit.value == "litres" %} selected {% endif %}>LITERS</option>
-                                <!-- <option value="3" {% if form.type.value == "3" %} selected {% endif %}>Internship</option> -->
-                            </select>
-                    </div>
-                    <div class="col-lg-12 form-group">
-                        <label for="imported_from">Imported From</label>
-                        <label for="imported_from">Price</label>
-                        <input id="imported_from" name="imported_from" type="text" class="form-control" value="{{ form.imported_from.value|default_if_none:'' }}">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 form-group">
-                            <label for="customs_clearance_no">Customs Clearnce No</label>
-                            <input id="customs_clearance_no" name="customs_clearance_no" type="number" class="form-control" value="{{ form.customs_clearance_no.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 form-group">
-                            <label for="price">Price</label>
-                            <input id="price" name="price" type="number" class="form-control" value="{{ form.price.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6 form-group">
-                            <label for="import_date">Import Date</label>
-                            <input id="import_date" name="import_date" type="date" class="form-control" value="{{ form.import_date.value|default_if_none:' ' }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
-                            <hr>
-                            <button type="submit" class="btn btn-outline-white-primary"><i class="fa fa-file"></i>
-                                  Add New Chalan
-                                </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+<!-- Chalan Form -->
+<div class="row">
+  <div class="col-12">
+    <div id="custom-form1" class="custom-form1 card">
+      <div class="card-header">
+        <div class="card-header-right">
+          <div class="btn-group card-option">
+            <button
+              type="button"
+              class="btn dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="feather icon-more-horizontal"></i>
+            </button>
+            <ul
+              class="list-unstyled card-option dropdown-menu dropdown-menu-right"
+            >
+              <li class="dropdown-item full-card">
+                <a href="#!"
+                  ><span><i class="feather icon-maximize"></i> maximize</span
+                  ><span style="display: none"
+                    ><i class="feather icon-minimize"></i> Restore</span
+                  ></a
+                >
+              </li>
+              <li class="dropdown-item minimize-card">
+                <a href="#!"
+                  ><span><i class="feather icon-minus"></i> collapse</span
+                  ><span style="display: none"
+                    ><i class="feather icon-plus"></i> expand</span
+                  ></a
+                >
+              </li>
+              <li class="dropdown-item reload-card">
+                <a href="#!"><i class="feather icon-refresh-cw"></i> reload</a>
+              </li>
+              <li class="dropdown-item close-card">
+                <a href="#!"><i class="feather icon-trash"></i> remove</a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </div>
-</section>
+      </div>
+      <div class="card-body d-flex justify-content-center pb-4">
+        <div class="wrap-form px-5">
+          <form method="POST" class="validate-form">
+              {% csrf_token %}
+            <h4 class="custom-form-title text-center text-uppercase text pb-5">
+              <u>Add Chalan</u>
+            </h4>
 
-{% endblock %}
+          
+            <div class="wrap-input input-select">
+              <label for="products" class="label-input">Products</label>
+              <div>
+                <select id="products" class="selection-2" name="product">
+                  {% for pro in products %}
+                    <option value="{{ pro.id }}" >{{pro.name}}</option> 
+                  {% endfor %}
+                </select>
+              </div>
+              <span class="focus-input"></span>
+            </div>
+
+              <div
+              class="wrap-input validate-input"
+              data-validate="Quantity is required"
+            >
+              <label for="quantity" class="label-input">Quantity</label>
+              <input
+              required
+              id="quantity"
+                class="input"
+                type="number"
+                min="1"
+                name="quantity"
+                placeholder="Enter Quantity"
+                value="{{ form.quantity.value|default_if_none:'' }}"
+              />
+              <span class="focus-input"></span>
+            </div>
+
+              <div class="wrap-input input-select">
+              <label for="unit" class="label-input">Choose Unit</label>
+              <div>
+                <select id="unit" class="selection-2" name="product">
+                  <option value="kilograms" 
+                  {% if form.unit.value == "kilograms" %} selected {% endif %}>
+                    KILOGRAMS
+                </option>
+                  <option value="litres" 
+                  {% if form.unit.value == "litres" %} selected {% endif %}>
+                    LITERS
+                </option>
+                </select>
+              </div>
+              <span class="focus-input"></span>
+            </div>
+
+               <div
+              class="wrap-input validate-input"
+              data-validate="Price is required"
+            >
+              <label for="price" class="label-input">Price(tk)</label>
+              <input
+              required
+                id="price"
+                class="input"
+                type="number"
+                min="1"
+                name="price"
+                placeholder="Enter Price"
+                value="{{ form.price.value|default_if_none:'' }}"
+              />
+              <span class="focus-input"></span>
+            </div>
+
+              <div
+              class="wrap-input validate-input"
+              data-validate="Imported From is required"
+            >
+              <label for="imported_from" class="label-input">Imported From</label>
+              <input
+              required
+                id="imported_from"
+                class="input"
+                type="text"
+                name="imported_from"
+                placeholder="Enter Imported From"
+                value="{{ form.imported_from.value|default_if_none:'' }}"
+              />
+              <span class="focus-input"></span>
+            </div>
+
+             <div
+              class="wrap-input validate-input"
+              data-validate="Customs Clearnce No is required"
+            >
+              <label for="customs_clearance_no" class="label-input">Customs Clearnce No</label>
+              <input
+              required
+                id="customs_clearance_no"
+                class="input"
+                type="text"
+                name="customs_clearance_no"
+                placeholder="Enter Customs Clearnce No"
+                value="{{ form.customs_clearance_no.value|default_if_none:'' }}"
+              />
+              <span class="focus-input"></span>
+            </div>
+
+
+              <div
+              class="wrap-input validate-input"
+              data-validate="Import Date is required"
+            >
+              <label for="import_date" class="label-input">Import Date</label>
+              <input
+              required
+                id="import_date"
+                class="input"
+                type="date"
+                name="import_date"
+                placeholder="Enter Import Date"
+                value="{{ form.import_date.value|default_if_none:'' }}"
+              />
+              <span class="focus-input"></span>
+            </div>
+
+            <button type="submit" class="form-btn">
+              <span>
+                Submit
+                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+              </span>
+            </button>
+          </form>
+          <div id="dropDownSelect1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chalan Form -->
+
+{% endblock %} {% block javascripts %}
+
+<script src="{% static 'vendor/js/select2/select2.min.js' %}"></script>
+<script>
+  $(".selection-2").select2({
+    minimumResultsForSearch: 20,
+    dropdownParent: $("#dropDownSelect1"),
+  });
+</script>
+
+{% endblock javascripts %}
