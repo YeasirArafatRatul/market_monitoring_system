@@ -1,27 +1,72 @@
 <div class="col-12 clearfix">
-    <div class="page-header mb-0 pb-0">
-        <div class="page-block">
-            <div class="row align-items-center">
-                <div class="col-md-12">
-                    <div class="page-header-title">
-                        <h5 class="mb-0">All Products</h5>
-                    </div>
-                </div>
+  <div class="card">
+    <div class="card-header">
+      <h5>All Products</h5>
+      <div class="card-header-right">
+        <div class="btn-group card-option">
+          <button
+            type="button"
+            class="btn dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="feather icon-more-horizontal"></i>
+          </button>
+          <ul
+            class="list-unstyled card-option dropdown-menu dropdown-menu-right"
+          >
+            <li class="dropdown-item full-card">
+              <a href="#!"
+                ><span><i class="feather icon-maximize"></i> maximize</span
+                ><span style="display: none"
+                  ><i class="feather icon-minimize"></i> Restore</span
+                ></a
+              >
+            </li>
+            <li class="dropdown-item minimize-card">
+              <a href="#!"
+                ><span><i class="feather icon-minus"></i> collapse</span
+                ><span style="display: none"
+                  ><i class="feather icon-plus"></i> expand</span
+                ></a
+              >
+            </li>
+            <li class="dropdown-item reload-card">
+              <a href="#!"><i class="feather icon-refresh-cw"></i> reload</a>
+            </li>
+            <li class="dropdown-item close-card">
+              <a href="#!"><i class="feather icon-trash"></i> remove</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card-body row">
+      {% for pro in products %}
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <img
+              src="{{pro.product.icon.url}}"
+              class="wid-130 img-fluid card-img-top"
+              alt="huey freemen"
+            />
+            <h4 class="m-t-20">
+              <span class="text-c-blue">{{pro.product.name}}</span>
+            </h4>
+            <div>
+              <a href="#" class="btn btn-primary btn-sm mr-1 btn-round"
+                >See Sales</a
+              >
+              <a href="#" class="btn btn-primary btn-sm btn-round"
+                >See Imports</a
+              >
             </div>
+          </div>
         </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </div>
-{% for pro in products %}
-<div class="col-3">
-    <div class="card">
-        <img class="img-fluid img-thumbnail card-img-top product-card" src="{{pro.product.icon.url}}" alt="Product Photo" />
-        <div class="card-body text-center">
-            <h5 class="card-title">{{pro.product.name}}</h5>
-
-            <a href="#" class="btn btn-primary">See Sales</a>
-            <a href="#" class="btn btn-secondary">See Imports</a>
-        </div>
-    </div>
-</div>
-
-{% endfor %}

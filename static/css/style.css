@@ -29,8 +29,3 @@
   font-size: 0.9rem;
   text-align: left;
 }
-
-#products_list .product-card {
-  object-fit: cover;
-  height: 250px;
-}
