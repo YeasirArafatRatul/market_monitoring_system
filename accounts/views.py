@@ -20,6 +20,7 @@ from .forms import *
 from .forms import ProfileUpdateForm, UserUpdateForm
 from lenden.models import Product
 from lenden.forms import *
+from django.db.models import Count, Max
 
 
 @login_required(login_url='/login')
@@ -27,19 +28,27 @@ def home(request):
     current_user = request.user
     profile = UserProfile.objects.get(user_id=current_user.id)
 
-    product_from_chalan = Chalan.objects.filter(owner=current_user)
+    product_from_chalan = Chalan.objects.filter(
+        owner=current_user)
 
-    products = list(dict.fromkeys(product_from_chalan))
-    print(products)
-    for pro in products:
-        print(pro.product)
+    unique_products = Chalan.objects.order_by(
+        'product').values('product').distinct()
+
+    products = []
+
+    for k in unique_products:
+        query = Product.objects.get(id=k['product'])
+        products.append(query)
+
+    # print(products)
 
     chalans = Chalan.objects.filter(
         owner_id=request.user.id).order_by('-id')[:8]
     pending_sale_record_of_buyer = SellProduct.objects.filter(
         buyer=current_user.trade_license_no, pending=True).order_by('-created_at').count()
 
-    print(current_user.trade_license_no)
+    # print(current_user.trade_license_no)
+
     pending_sale_record_of_seller = SellProduct.objects.filter(
         seller=current_user, pending=True).order_by('-created_at').count()
 
@@ -230,7 +239,7 @@ class LogoutView(RedirectView):
         return super(LogoutView, self).get(request, *args, **kwargs)
 
 
-@login_required(login_url='/login')
+@ login_required(login_url='/login')
 def profile(request):
 
     current_user = request.user
@@ -242,7 +251,7 @@ def profile(request):
     return render(request, 'accounts/demo_profile.html', context)
 
 
-@login_required(login_url='/login')
+@ login_required(login_url='/login')
 def user_update(request):
     if request.method == "POST":
         user_form = UserUpdateForm(

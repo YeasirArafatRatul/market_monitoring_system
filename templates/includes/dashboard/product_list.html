@@ -14,11 +14,10 @@
 {% for pro in products %}
 <div class="col-3">
     <div class="card">
-        <img class="img-fluid img-thumbnail card-img-top product-card" src="{{pro.product.icon.url}}" alt="Product Photo" />
+        <img class="img-fluid img-thumbnail card-img-top product-card" src="{{pro.icon.url}}" alt="Product Photo" />
         <div class="card-body text-center">
-            <h5 class="card-title">{{pro.product.name}}</h5>
-
-            <a href="#" class="btn btn-primary">See Sales</a>
+            <h5 class="card-title">{{pro.name}}</h5>
+            <a href="{% url 'lenden:my-available-products' pro.id %}" class="btn btn-primary">See Sales</a>
             <a href="#" class="btn btn-secondary">See Imports</a>
         </div>
     </div>
