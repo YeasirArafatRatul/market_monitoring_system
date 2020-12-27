@@ -100,6 +100,8 @@ def home(request):
         'pending_sale_record_of_seller': pending_sale_record_of_seller,
         'total_sales': total_sales,
         'number_of_transactions': number_of_transactions,
+
+        'products': products,
     }
 
     return render(request, 'dashboard/index.html', context)
