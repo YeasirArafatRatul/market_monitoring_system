@@ -1,55 +1,41 @@
 {%extends 'layouts/base.html' %} {% load static %}
 <!-- title -->
 {% block title %} Add Sale Record {% endblock %} {% block stylesheets %}
-<link
-  rel="stylesheet"
-  href="{% static 'vendor/css/select2/select2.min.css' %}"
-/>
-<link rel="stylesheet" href="{% static 'css/form/form.css' %}" />
-{% endblock stylesheets %} {% block content %}
+<link rel="stylesheet" href="{% static 'vendor/css/select2/select2.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/form/form.css' %}" /> {% endblock stylesheets %} {% block content %}
 
 <!-- BREADCRUMB STARTS -->
 <div class="page-header mb-1">
-  <div class="page-block">
-    <div class="row align-items-center">
-      <div class="col-md-12">
-        <div class="page-header-title"></div>
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'accounts:home' %}"
-              ><i class="feather icon-home"></i
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title"></div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'accounts:home' %}"><i class="feather icon-home"></i
             ></a>
-          </li>
-          <li class="breadcrumb-item"><a href="#">Add Sale Record</a></li>
-        </ul>
-      </div>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Add Sale Record</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!-- BREADCRUMB ENDS -->
 
 <!-- Chalan Form -->
 <div class="row">
-  <div class="col-12">
-    <div id="custom-form1" class="custom-form1 card">
-      <div class="card-header">
-        <div class="card-header-right">
-          <div class="btn-group card-option">
-            <button
-              type="button"
-              class="btn dropdown-toggle"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
+    <div class="col-12">
+        <div id="custom-form1" class="custom-form1 card">
+            <div class="card-header">
+                <div class="card-header-right">
+                    <div class="btn-group card-option">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="feather icon-more-horizontal"></i>
             </button>
-            <ul
-              class="list-unstyled card-option dropdown-menu dropdown-menu-right"
-            >
-              <li class="dropdown-item full-card">
-                <a href="#!"
-                  ><span><i class="feather icon-maximize"></i> maximize</span
+                        <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-item full-card">
+                                <a href="#!"><span><i class="feather icon-maximize"></i> maximize</span
                   ><span style="display: none"
                     ><i class="feather icon-minimize"></i> Restore</span
                   ></a
@@ -65,77 +51,50 @@
               </li>
               <li class="dropdown-item reload-card">
                 <a href="#!"><i class="feather icon-refresh-cw"></i> reload</a>
-              </li>
-              <li class="dropdown-item close-card">
-                <a href="#!"><i class="feather icon-trash"></i> remove</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="card-body d-flex justify-content-center pb-4">
-        <div class="wrap-form px-5">
-          <form method="POST" class="validate-form">
-              {% csrf_token %}
-            <h4 class="custom-form-title text-center text-uppercase text pb-5">
-              <u>Add Sale Record</u>
-            </h4>
-
-            <div
-              class="wrap-input validate-input"
-              data-validate=" Buyer's Trade License No is required"
-            >
-              <label for="buyer" class="label-input">Buyer's Trade License No</label>
-              <input
-              required
-              id="buyer"
-                class="input"
-                type="number"
-                min="1"
-                name="buyer"
-                placeholder=" Enter Buyer's Trade License No"
-                value="{{ form.buyer.value|default_if_none:'' }}"
-              />
-              <span class="focus-input"></span>
+                            </li>
+                            <li class="dropdown-item close-card">
+                                <a href="#!"><i class="feather icon-trash"></i> remove</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+            <div class="card-body d-flex justify-content-center pb-4">
+                <div class="wrap-form px-5">
+                    <form method="POST" class="validate-form">
+                        {% csrf_token %}
+                        <h4 class="custom-form-title text-center text-uppercase text pb-5">
+                            <u>Add Sale Record</u>
+                        </h4>
 
-          
-            <div class="wrap-input input-select">
-              <label for="products" class="label-input">Product</label>
-              <div>
-                <select id="products" class="selection-2" name="product">
+                        <div class="wrap-input validate-input" data-validate=" Buyer's Trade License No is required">
+                            <label for="buyer" class="label-input">Buyer's Trade License No</label>
+                            <input required id="buyer" class="input" type="number" min="1" name="buyer" placeholder=" Enter Buyer's Trade License No" value="{{ form.buyer.value|default_if_none:'' }}" />
+                            <span class="focus-input"></span>
+                        </div>
+                        <div class="wrap-input input-select">
+                            <label for="products" class="label-input">Product</label>
+                            <div>
+                                <select id="products" class="selection-2" name="product">
                     <option selected disabled value="">Select Product </option>
                   {% for pro in products %}
                     <option value="{{ pro.id }}" >{{pro.name}}</option> 
                   {% endfor %}
                 </select>
-              </div>
-              <span class="focus-input"></span>
-            </div>
+                            </div>
+                            <span class="focus-input"></span>
+                        </div>
 
-            <div
-              class="wrap-input validate-input"
-              data-validate="Quantity is required"
-            >
-              <label for="quantity" class="label-input">Quantity</label>
-              <input
-                required
-                id="quantity"
-                class="input"
-                type="number"
-                min="1"
-                name="quantity"
-                placeholder="Enter Quantity"
-                value="{{ form.quantity.value|default_if_none:'' }}"
-              />
-              <span class="focus-input"></span>
-            </div>
+                        <div class="wrap-input validate-input" data-validate="Quantity is required">
+                            <label for="quantity" class="label-input">Quantity</label>
+                            <input required id="quantity" class="input" type="number" min="1" name="quantity" placeholder="Enter Quantity" value="{{ form.quantity.value|default_if_none:'' }}" />
+                            <span class="focus-input"></span>
+                        </div>
 
-            <div class="wrap-input input-select">
-              <label for="unit" class="label-input">Choose Unit</label>
-              <div>
-                <select id="unit" class="selection-2" name="product">
-                    <option selected disabled value="">Select Unit </option>
+                        <div class="wrap-input input-select">
+                            <label for="unit" class="label-input">Choose Unit</label>
+                            <div>
+                                <select id="unit" class="selection-2" name="unit"><option selected disabled value="">Select Unit </option>
                   <option value="kilograms" 
                   {% if form.unit.value == "kilograms" %} selected {% endif %}>
                     KILOGRAMS
@@ -145,58 +104,30 @@
                     LITERS
                 </option>
                 </select>
-              </div>
-              <span class="focus-input"></span>
+                            </div>
+                            <span class="focus-input"></span>
+                        </div>
+
+                        <div class="wrap-input validate-input" data-validate="Price is required">
+                            <label for="price" class="label-input">Price(tk)</label>
+                            <input required id="price" class="input" type="number" min="1" name="price" placeholder="Enter Price" value="{{ form.price.value|default_if_none:'' }}" />
+                            <span class="focus-input"></span>
+                        </div>
+
+
+                        <div class="wrap-input validate-input" data-validate="Sale Date is required">
+                            <label for="sell_date" class="label-input">Sale Date</label>
+                            <input required id="sell_date" class="input" type="date" name="sell_date" placeholder="Enter Sale Date" value="{{ form.sell_date.value|default_if_none:'' }}" />
+                            <span class="focus-input"></span>
+                        </div>
+
+                        <button type="submit" class="form-btn"><span>Add Sale<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span></button>
+                    </form>
+                    <div id="dropDownSelect1"></div>
+                </div>
             </div>
-
-            <div
-              class="wrap-input validate-input"
-              data-validate="Price is required"
-            >
-              <label for="price" class="label-input">Price(tk)</label>
-              <input
-              required
-                id="price"
-                class="input"
-                type="number"
-                min="1"
-                name="price"
-                placeholder="Enter Price"
-                value="{{ form.price.value|default_if_none:'' }}"
-              />
-              <span class="focus-input"></span>
-            </div>            
-
-
-            <div
-              class="wrap-input validate-input"
-              data-validate="Sale Date is required"
-            >
-              <label for="sell_date" class="label-input">Sale Date</label>
-              <input
-              required
-                id="sell_date"
-                class="input"
-                type="date"
-                name="sell_date"
-                placeholder="Enter Sale Date"
-                value="{{ form.sell_date.value|default_if_none:'' }}"
-              />
-              <span class="focus-input"></span>
-            </div>
-
-            <button type="submit" class="form-btn">
-              <span>
-                Add Sale
-                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-              </span>
-            </button>
-          </form>
-          <div id="dropDownSelect1"></div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <!-- Chalan Form -->
@@ -205,10 +136,10 @@
 
 <script src="{% static 'vendor/js/select2/select2.min.js' %}"></script>
 <script>
-  $(".selection-2").select2({
-    minimumResultsForSearch: 20,
-    dropdownParent: $("#dropDownSelect1"),
-  });
+    $(".selection-2").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $("#dropDownSelect1"),
+    });
 </script>
 
 {% endblock javascripts %}
