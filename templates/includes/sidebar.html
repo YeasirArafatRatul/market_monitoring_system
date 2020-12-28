@@ -50,32 +50,28 @@
           </div>
         </li>
 
-        <li class="nav-item pcoded-hasmenu">
-          <a href="#!" class="nav-link"
-            ><span class="pcoded-micon"
-              ><i class="feather icon-layout"></i></span
-            ><span class="pcoded-mtext">Lorem</span></a
-          >
-          <ul class="pcoded-submenu">
-            <li>
-              <a href="#">Lorem</a>
-            </li>
-            <li>
-              <a href="#">Lorem</a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="nav-item pcoded-menu-caption">
-          <label>Sales &amp; Orders</label>
-        </li>
         <li
-          class="nav-item {% if 'form_elements' in segment %} active {% endif %}"
+          class="nav-item {% if 'all_importers' in segment %} active {% endif %}"
         >
           <a href="#" class="nav-link"
-            ><span class="pcoded-micon"
-              ><i class="feather icon-file-text"></i></span
-            ><span class="pcoded-mtext">Sales</span></a
+            ><span class="pcoded-micon"><i class="fas fa-user-ninja"></i></span
+            ><span class="pcoded-mtext">Impoters</span></a
+          >
+        </li>
+        <li
+          class="nav-item {% if 'all_retailers' in segment %} active {% endif %}"
+        >
+          <a href="#" class="nav-link"
+            ><span class="pcoded-micon"><i class="fas fa-users"></i></span
+            ><span class="pcoded-mtext">Retailers</span></a
+          >
+        </li>
+        <li
+          class="nav-item {% if 'all_wholesellers' in segment %} active {% endif %}"
+        >
+          <a href="#" class="nav-link"
+            ><span class="pcoded-micon"><i class="fa fa-users"></i></span
+            ><span class="pcoded-mtext">Wholesellers</span></a
           >
         </li>
       </ul>

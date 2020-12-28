@@ -29,3 +29,6 @@
   font-size: 0.9rem;
   text-align: left;
 }
+.pcoded-inner-navbar a {
+  font-size: 0.85rem !important;
+}
