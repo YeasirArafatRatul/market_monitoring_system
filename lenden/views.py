@@ -1,3 +1,5 @@
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 from notifications.signals import notify
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
@@ -7,6 +9,7 @@ from .forms import *
 from django.core.exceptions import ValidationError
 from lenden.models import Chalan
 from django.db.models import Avg, Sum
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -80,7 +83,6 @@ class ImportRecordView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         my_chalan_for_individual_product = Chalan.objects.filter(
             owner=self.request.user, product=self.id)
 
@@ -115,6 +117,7 @@ class SalesRecordView(ListView):
     # USE THE TEMPLATE You want to render
     template_name = 'includes/dashboard/sales_detail_for_individual_product.html'
     context_object_name = 'chalans'
+    paginate_by = 3
 
     def get_queryset(self):
         self.id = get_object_or_404(Product, id=self.kwargs['pro_id'])
@@ -173,3 +176,23 @@ class AutomatedChalanProductAddView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
         return context
+
+
+def confirm(request, id):
+    obj = SellProduct.objects.get(id=id)
+    print("HELLLLLLLLLLLLLLLLO")
+    print(obj.pending)
+    obj.pending = False
+    obj.save(update_fields=["pending"])
+
+    @receiver(post_save, sender=SellProduct)
+    def create_object(sender, instance, created, **kwargs):
+        user = User.objects.get(trade_license_no=instance.buyer)
+        print(user)
+        if created and instance.pending == False:
+            Chalan.objects.create(owner=user, product=instance.product, quantity=instance.quantity,
+                                  unit=instance.unit, price=instance.price, import_date=instance.sell_date, imported_from=instance.seller.username)
+            post_save.connect(create_object, sender=SellProduct)
+
+    create_object(sender=SellProduct, instance=obj, created=True)
+    return HttpResponse("Done")

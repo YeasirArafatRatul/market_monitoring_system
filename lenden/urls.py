@@ -15,4 +15,6 @@ urlpatterns = [
          name='import-records'),
     path('sales-record/<int:pro_id>', SalesRecordView.as_view(),
          name='sales-records'),
+    path('confirm/<int:id>', confirm,
+         name='confirm'),
 ]
