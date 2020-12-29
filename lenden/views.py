@@ -74,7 +74,7 @@ class AddSalesView(LoginRequiredMixin, CreateView):
 class ImportRecordView(ListView):
     model = Chalan
     # USE THE TEMPLATE You want to render
-    template_name = 'lenden/product_details.html'
+    template_name = 'lenden/import_product_details.html'
     context_object_name = 'chalans'
 
     def get_queryset(self):
@@ -115,7 +115,7 @@ class ImportRecordView(ListView):
 class SalesRecordView(ListView):
     model = SellProduct
     # USE THE TEMPLATE You want to render
-    template_name = 'includes/dashboard/sales_detail_for_individual_product.html'
+    template_name = 'lenden/sale_product_details.html'
     context_object_name = 'chalans'
     paginate_by = 3
 
