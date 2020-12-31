@@ -101,6 +101,7 @@ class ImportRecordView(ListView):
         unit_for_chalan = Chalan.objects.filter(
             owner=self.request.user, product=self.id).values('unit').first()['unit']
 
+        print(self.request.GET)
         context['total'] = user_product_total_quantity
         context['unit'] = unit_for_chalan
         context['sold'] = user_total_sell_product_quantity
@@ -196,3 +197,13 @@ def confirm(request, id):
 
     create_object(sender=SellProduct, instance=obj, created=True)
     return HttpResponse("Done")
+
+
+class FilterChalanProductsView(ListView):
+    model = Chalan
+    template_name = 'dashboard/index.html'
+    context_object_name = 'chalans'
+
+    def get_queryset(self):
+        return self.model.objects.filter(location__contains=self.request.GET['location'],
+                                         title__contains=self.request.GET['position'])

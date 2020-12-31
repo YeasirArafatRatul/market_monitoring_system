@@ -1,25 +1,16 @@
-{% extends "layouts/base-fullscreen.html" %}
-{% load static %}
+{% extends "layouts/base-fullscreen.html" %} {% load static %} {% block title %} Register {% endblock %} {% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/accounts/style.css' %}" /> {% endblock stylesheets %} {% block content %}
 
-
-{% block title %} Register {% endblock %}
-
-{% block stylesheets %}
-    <link rel="stylesheet" href="{% static 'css/accounts/style.css' %}" />
-{% endblock stylesheets %}
-
-{% block content %} 
-
-	<!-- [ auth-signup ] start -->
-		<div class="auth-content">
-			<div class="card">
-				<div class="row align-items-center text-center">
-					<div class="col-md-12">
-						<div class="card-body">
-							<h3><a href="/">Market Monitoring System</a></h3>
-							<h4 class="mb-3 f-w-400">
-								 <h4 class="mb-3 f-w-400">Register</h4>
-							 <span class="text-muted d-inline-block mb-2">
+<!-- [ auth-signup ] start -->
+<div class="auth-content">
+    <div class="card">
+        <div class="row align-items-center text-center">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <h3><a href="/">Market Monitoring System</a></h3>
+                    <h4 class="mb-3 f-w-400">
+                        <h4 class="mb-3 f-w-400">Register</h4>
+                        <span class="text-muted d-inline-block mb-2">
               {% if form.errors %} 
               {% for field in form %}
               <!--  -->
@@ -51,109 +42,107 @@
              
               {% endif %}
             </span>
-						
-							
-							<!-- Hide the form on success -->
-								<form role="form" method="post" action="">
-
-									{% csrf_token %}  
-															
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="feather icon-user"></i></span>
-										</div>
-										{{ form.username }}
-									</div>
-									<span class="text-error">{{ form.username.errors }}</span>
-
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="feather icon-mail" aria-hidden="true"></i></span>
-										</div>
-										{{ form.email }}
-									</div>
-                  <span class="text-error">{{ form.email.errors }}</span>
-                  
-                  <div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>
-										</div>
-										{{ form.trade_license_no }}
-									</div>
-                  <span class="text-error">{{ form.trade_license_no.errors }}</span>
 
 
-                   <div class="input-group ">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fa fa-user-md" aria-hidden="true"></i>
+                        <!-- Hide the form on success -->
+                        <form role="form" method="post" action="">
+
+                            {% csrf_token %}
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="feather icon-user"></i></span>
+                                </div>
+                                {{ form.username }}
+                            </div>
+                            <span class="text-error">{{ form.username.errors }}</span>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="feather icon-mail" aria-hidden="true"></i></span>
+                                </div>
+                                {{ form.email }}
+                            </div>
+                            <span class="text-error">{{ form.email.errors }}</span>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>
+                                </div>
+                                {{ form.trade_license_no }}
+                            </div>
+                            <span class="text-error">{{ form.trade_license_no.errors }}</span>
+
+
+                            <div class="input-group ">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user-md" aria-hidden="true"></i>
 </span>
-										</div>
-										{{ form.role }}
-									</div>
-                  <span class="text-error">{{ form.role.errors }}</span>
+                                </div>
+                                {{ form.role }}
+                            </div>
+                            <span class="text-error">{{ form.role.errors }}</span>
 
 
 
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i>
 </span>
-										</div>
-										{{ form.password1 }}
-									</div>
-									<span class="text-error">{{ form.password1.errors }}</span>
+                                </div>
+                                {{ form.password1 }}
+                            </div>
+                            <span class="text-error">{{ form.password1.errors }}</span>
 
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i>
 </span>
-										</div>
-										{{ form.password2 }}
-									</div>
-									<span class="text-error">{{ form.password2.errors }}</span>
-									
-									<div class="form-group text-left mt-2">
-										<div class="checkbox checkbox-primary d-inline">
-											<input type="checkbox" name="checkbox-fill-2" id="checkbox-fill-2" checked="">
-											<label for="checkbox-fill-2" class="cr">I agree with <a href="#">terms</a>.</label>
-										</div>
-									</div>
-									<button type="submit" name="register" class="btn btn-primary btn-block mb-4">Sign up</button>
-								
-								</form>
+                                </div>
+                                {{ form.password2 }}
+                            </div>
+                            <span class="text-error">{{ form.password2.errors }}</span>
 
-              <p class="mb-0 text-muted">Have an account? <a href="{% url 'accounts:login' %}" class="f-w-400">Login</a></p>
-						
+                            <div class="form-group text-left mt-2">
+                                <div class="checkbox checkbox-primary d-inline">
+                                    <input type="checkbox" name="checkbox-fill-2" id="checkbox-fill-2" checked="">
+                                    <label for="checkbox-fill-2" class="cr">I agree with <a href="#">terms</a>.</label>
+                                </div>
+                            </div>
+                            <button type="submit" name="register" class="btn btn-primary btn-block mb-4">Sign up</button>
 
-							<p class="mb-2 text-muted">
-              <br />
-              &copy;
-              <a  rel="noopener" href="/" class="f-w-400"
-                >M.M.S</a
+                        </form>
+
+                        <p class="mb-0 text-muted">Have an account? <a href="{% url 'accounts:login' %}" class="f-w-400">Login</a></p>
+
+
+                        <p class="mb-2 text-muted">
+                            <br /> &copy;
+                            <a rel="noopener" href="/" class="f-w-400">M.M.S</a
               >
               - coded by
               <a rel="noopener" href="#" class="f-w-400">Ayub & Ratul</a>
-            </p>
+                        </p>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	<!-- [ auth-signup ] end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ auth-signup ] end -->
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
- 
-  <script>
-  $(".alert-danger")
-    .fadeTo(4000, 500)
-    .slideUp(1000, function () {
-      $(".alert-danger").slideUp(500);
-    });
+
+<script>
+    $(".alert-danger")
+        .fadeTo(4000, 500)
+        .slideUp(1000, function() {
+            $(".alert-danger").slideUp(500);
+        });
 </script>
 
-{% endblock javascripts %} 
+{% endblock javascripts %}

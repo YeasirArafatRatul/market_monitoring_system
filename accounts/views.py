@@ -241,7 +241,6 @@ class LogoutView(RedirectView):
 
 @ login_required(login_url='/login')
 def profile(request):
-
     current_user = request.user
     profile = UserProfile.objects.get(user_id=current_user.id)
 
