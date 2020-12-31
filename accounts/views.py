@@ -307,7 +307,7 @@ class ListOfUsersView(ListView):
     model = User
     template_name = 'accounts/users.html'
     context_object_name = 'users'
-    paginate_by = 12
+    paginate_by = 1
 
     def get_queryset(self):
         self.role = self.kwargs['role']
