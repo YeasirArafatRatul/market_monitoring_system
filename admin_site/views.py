@@ -37,5 +37,5 @@ class ProductSellsView(ListView):
 
     def get_queryset(self):
         url = self.request.META.get("HTTP_REFERER")  # get last url
-        print(url)
+        # print(url)
         return self.model.objects.filter()

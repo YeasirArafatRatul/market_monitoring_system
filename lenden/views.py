@@ -54,7 +54,7 @@ class AddSalesView(LoginRequiredMixin, CreateView):
 
         buyer = User.objects.filter(
             trade_license_no=form.instance.buyer).first()
-        print(buyer)
+        # print(buyer)
         if user_product_total_quantity >= (user_total_sell_product_quantity + form.cleaned_data['quantity']):
             form.save()
             notify.send(user, recipient=buyer,
@@ -179,15 +179,15 @@ class AutomatedChalanProductAddView(LoginRequiredMixin, CreateView):
 
 def confirm(request, id):
     obj = SellProduct.objects.get(id=id)
-    print("HELLLLLLLLLLLLLLLLO")
-    print(obj.pending)
+    # print("HELLLLLLLLLLLLLLLLO")
+    # print(obj.pending)
     obj.pending = False
     obj.save(update_fields=["pending"])
 
     @receiver(post_save, sender=SellProduct)
     def create_object(sender, instance, created, **kwargs):
         user = User.objects.get(trade_license_no=instance.buyer)
-        print(user)
+        # print(user)
         if created and instance.pending == False:
             Chalan.objects.create(owner=user, product=instance.product, quantity=instance.quantity,
                                   unit=instance.unit, price=instance.price, import_date=instance.sell_date, imported_from=instance.seller.username)

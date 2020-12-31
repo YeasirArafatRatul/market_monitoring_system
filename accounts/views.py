@@ -34,14 +34,14 @@ def home(request):
     unique_products = Chalan.objects.filter(owner=current_user).order_by(
         'product').values('product').distinct()
 
-    print(unique_products)
+    # print(unique_products)
     products = []
 
     for k in unique_products:
         query = Product.objects.get(id=k['product'])
         products.append(query)
 
-    print(products)
+    # print(products)
 
     chalans = Chalan.objects.filter(
         owner_id=request.user.id).order_by('-id')[:8]
@@ -89,7 +89,7 @@ def home(request):
         if product_form.is_valid():
             product_form.instance.owner = request.user
             product_form.save()
-            print('____________________I AM SAVED_________________')
+            # print('____________________I AM SAVED_________________')
             messages.success(
                 request, "New Product is Added")
             return redirect('accounts:home')
@@ -219,7 +219,7 @@ class LoginView(FormView):
 
     def form_valid(self, form):
         auth.login(self.request, form.get_user())
-        print("Logged In Sucessfully")
+        # print("Logged In Sucessfully")
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form):
