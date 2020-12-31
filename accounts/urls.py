@@ -21,6 +21,8 @@ urlpatterns = [
          name='profile'),
     path('profile-update/', user_update,
          name='profile-update'),
-    path('password-change', password_change, name='password-change')
+    path('password-change', password_change, name='password-change'),
+
+    path('users/<str:role>/', ListOfUsersView.as_view(), name='user-type-view')
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

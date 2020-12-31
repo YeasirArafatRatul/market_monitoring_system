@@ -1,67 +1,50 @@
 <!-- [ navigation menu ] start -->
 <nav class="pcoded-navbar menupos-fixed menu-light animated--grow-in">
-  <div class="navbar-wrapper">
-    <div class="navbar-content scroll-div">
-      <ul class="nav pcoded-inner-navbar">
-        <li class="nav-item pcoded-menu-caption">
-          <label>Informations</label>
-        </li>
-        <li class="nav-item pcoded-hasmenu pcoded-trigger">
-          <a
-            href="#"
-            class="nav-link {% if 'index' in segment %} active {% endif %}"
-          >
-            <span class="pcoded-micon"> <i class="feather icon-user"></i></span
-            ><span class="pcoded-mtext"> User Info</span></a
-          >
-          <div class="pcoded-submenu" style="display: block">
-            <div class="p-card card">
-              <div
-                class="card-body p-0 d-flex flex-column justify-content-center align-items-center"
-              >
-                <img
-                  class="rounded mx-auto mb-2 d-block img-fluid rounded-circle"
-                  src="{{ request.user.userprofile.image.url }}"
-                  width="120px"
-                />
-                <h5 class="card-title mb-0">{{ request.user.username }}</h5>
-                <h6
-                  class="card-subtitle mb-2 text-muted font-weight-bold text-capitalize"
-                >
-                  {{ request.user.role }}
-                </h6>
-                <p class="card-text">
-                  <span class="font-weight-bold">Type: </span>
-                  {{ request.user.userprofile.industry_type }}
-                </p>
-                <p class="card-text">
-                  <span class="font-weight-bold">L/N: </span>
-                  {{ request.user.trade_license_no }}
-                </p>
-                <p class="card-text">
-                  {{ request.user.userprofile.upazila }},
-                  <!--  -->
-                  {{ request.user.userprofile.district }},
-                  <!--  -->
-                  {{ request.user.userprofile.division }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </li>
+    <div class="navbar-wrapper">
+        <div class="navbar-content scroll-div">
+            <ul class="nav pcoded-inner-navbar">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Informations</label>
+                </li>
+                <li class="nav-item pcoded-hasmenu pcoded-trigger">
+                    <a href="#" class="nav-link {% if 'index' in segment %} active {% endif %}">
+                        <span class="pcoded-micon"> <i class="feather icon-user"></i></span
+            ><span class="pcoded-mtext"> User Info</span></a>
+                    <div class="pcoded-submenu" style="display: block">
+                        <div class="p-card card">
+                            <div class="card-body p-0 d-flex flex-column justify-content-center align-items-center">
+                                <img class="rounded mx-auto mb-2 d-block img-fluid rounded-circle" src="{{ request.user.userprofile.image.url }}" width="120px" />
+                                <h5 class="card-title mb-0">{{ request.user.username }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted font-weight-bold text-capitalize">
+                                    {{ request.user.role }}
+                                </h6>
+                                <p class="card-text">
+                                    <span class="font-weight-bold">Type: </span> {{ request.user.userprofile.industry_type }}
+                                </p>
+                                <p class="card-text">
+                                    <span class="font-weight-bold">L/N: </span> {{ request.user.trade_license_no }}
+                                </p>
+                                <p class="card-text">
+                                    {{ request.user.userprofile.upazila }},
+                                    <!--  -->
+                                    {{ request.user.userprofile.district }},
+                                    <!--  -->
+                                    {{ request.user.userprofile.division }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
 
-        <li
-          class="nav-item {% if 'all_importers' in segment %} active {% endif %}"
-        >
-          <a href="#" class="nav-link"
-            ><span class="pcoded-micon"><i class="fas fa-user-ninja"></i></span
+                <li class="nav-item {% if 'all_importers' in segment %} active {% endif %}">
+                    <a href="{% url 'accounts:user-type-view' 'importer' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-user-ninja"></i></span
             ><span class="pcoded-mtext">Impoters</span></a
           >
         </li>
         <li
           class="nav-item {% if 'all_retailers' in segment %} active {% endif %}"
         >
-          <a href="#" class="nav-link"
+          <a href="{% url 'accounts:user-type-view' 'retailer' %}" class="nav-link"
             ><span class="pcoded-micon"><i class="fas fa-users"></i></span
             ><span class="pcoded-mtext">Retailers</span></a
           >
@@ -69,7 +52,7 @@
         <li
           class="nav-item {% if 'all_wholesellers' in segment %} active {% endif %}"
         >
-          <a href="#" class="nav-link"
+          <a href="{% url 'accounts:user-type-view' 'wholeseller' %}" class="nav-link"
             ><span class="pcoded-micon"><i class="fa fa-users"></i></span
             ><span class="pcoded-mtext">Wholesellers</span></a
           >
@@ -91,8 +74,8 @@
           <p>Need more?</p>
           <a href="#" class="btn btn-primary btn-sm text-white m-0">Contact</a>
         </div>
-      </div>
     </div>
-  </div>
+    </div>
+    </div>
 </nav>
 <!-- [ navigation menu ] end -->

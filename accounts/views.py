@@ -301,3 +301,15 @@ def password_change(request):
         form = PasswordChangeForm(request.user)
         return render(request, 'accounts/password_change.html', {'form': form
                                                                  })
+
+
+class ListOfUsersView(ListView):
+    model = User
+    template_name = 'accounts/users.html'
+    context_object_name = 'users'
+    paginate_by = 12
+
+    def get_queryset(self):
+        self.role = self.kwargs['role']
+        print(self.role)
+        return self.model.objects.filter(role=self.role)
