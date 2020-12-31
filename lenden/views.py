@@ -101,7 +101,6 @@ class ImportRecordView(ListView):
         unit_for_chalan = Chalan.objects.filter(
             owner=self.request.user, product=self.id).values('unit').first()['unit']
 
-        print(self.request.GET)
         context['total'] = user_product_total_quantity
         context['unit'] = unit_for_chalan
         context['sold'] = user_total_sell_product_quantity
@@ -109,7 +108,6 @@ class ImportRecordView(ListView):
                                 user_total_sell_product_quantity)
         context['average'] = average_price
         context['chalans'] = my_chalan_for_individual_product
-        print(context)
         return context
 
 

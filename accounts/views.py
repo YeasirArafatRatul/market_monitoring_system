@@ -311,5 +311,9 @@ class ListOfUsersView(ListView):
 
     def get_queryset(self):
         self.role = self.kwargs['role']
-        print(self.role)
         return self.model.objects.filter(role=self.role)
+
+    def get_context_data(self, **kwargs):
+        context = super(ListView, self).get_context_data(**kwargs)
+        context['role'] = self.kwargs['role'].capitalize()+'s'
+        return context
