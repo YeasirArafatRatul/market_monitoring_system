@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from notifications.signals import notify
@@ -122,7 +123,9 @@ class SalesRecordView(ListView):
 
     def get_queryset(self):
         self.id = get_object_or_404(Product, id=self.kwargs['pro_id'])
-        return Product.objects.filter(id=self.request.user.id)
+        data = Product.objects.filter(id=self.request.user.id)
+        print(JsonResponse(data))
+        return JsonResponse(data, many=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
