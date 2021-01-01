@@ -1,27 +1,23 @@
 <div class="page-header">
-  <div class="page-block">
-    <div class="row align-items-center">
-      <div class="col-md-12">
-        <div class="page-header-title d-flex justify-content-between">
-          <h5 class="m-b-10">Dashboard</h5>
-          <div>
-            <a class="btn btn-primary" href="{% url 'lenden:add-chalan' %}"
-              >Add Chalan Record</a
-            >
-            <a class="btn btn-info" href="{% url 'lenden:add-sales' %}"
-              >Add Sale Record</a
-            >
-          </div>
-        </div>
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'accounts:home' %}"
-              ><i class="feather icon-home"></i
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title d-flex justify-content-between">
+                    <h5 class="m-b-10">Dashboard</h5>
+                    <div>
+                        {% if request.user.role == 'importer' and not request.user.is_admin %}
+                        <a class="btn btn-primary" href="{% url 'lenden:add-chalan' %}">Add Chalan Record</a> {% endif %} {% if request.user.role == 'importer' or request.user.role == 'wholeseller' or request.user.role == 'retailer' %}
+                        <a class="btn btn-info" href="{% url 'lenden:add-sales' %}">Add Sale Record</a> {% endif %}
+                    </div>
+                </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'accounts:home' %}"><i class="feather icon-home"></i
             ></a>
-          </li>
-          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-        </ul>
-      </div>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

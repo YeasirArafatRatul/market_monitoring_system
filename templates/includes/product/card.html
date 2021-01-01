@@ -1,52 +1,52 @@
 <!--  -->
 <div class="col-md-6 col-xl-3">
-  <div class="card bg-info order-card">
-    <div class="card-body">
-      <h5 class="text-white">Total</h5>
-      <h2 class="text-right text-white">
-        <i class="feather icon-tag float-left"></i><span>{{ total }}</span>
-      </h2>
-      <p class="m-b-0">
-        <span class="float-right"> {{unit}}</span>
-      </p>
+    <div class="card bg-info order-card">
+        <div class="card-body">
+            <h5 class="text-white">Total</h5>
+            <h2 class="text-right text-white">
+                <i class="feather icon-tag float-left"></i><span>{{ total }}</span>
+            </h2>
+            <p class="m-b-0">
+                <span class="float-right"> {{unit}}</span>
+            </p>
+        </div>
     </div>
-  </div>
 </div>
 <div class="col-md-6 col-xl-3">
-  <div class="card bg-c-blue order-card">
-    <div class="card-body">
-      <h5 class="text-white">Sold</h5>
-      <h2 class="text-right text-white">
-        <i class="feather icon-repeat float-left"></i><span>{{ sold }}</span>
-      </h2>
-      <p class="m-b-0"><span class="float-right">{{unit}}</span></p>
+    <div class="card bg-c-blue order-card">
+        <div class="card-body">
+            <h5 class="text-white">Sold</h5>
+            <h2 class="text-right text-white">
+                <i class="feather icon-repeat float-left"></i><span>{{ sold }}</span>
+            </h2>
+            <p class="m-b-0"><span class="float-right">{{unit}}</span></p>
+        </div>
     </div>
-  </div>
 </div>
 <div class="col-md-6 col-xl-3">
-  <div class="card bg-c-purple order-card">
-    <div class="card-body">
-      <h5 class="text-white">Available</h5>
-      <h2 class="text-right text-white">
-        <i class="feather icon-award float-left"></i><span> {{available}}</span>
-      </h2>
-      <p class="m-b-0"><span class="float-right">{{unit}}</span></p>
+    <div class="card bg-c-purple order-card">
+        <div class="card-body">
+            <h5 class="text-white">Available</h5>
+            <h2 class="text-right text-white">
+                <i class="feather icon-award float-left"></i><span> {{available}}</span>
+            </h2>
+            <p class="m-b-0"><span class="float-right">{{unit}}</span></p>
+        </div>
     </div>
-  </div>
 </div>
 <div class="col-md-6 col-xl-3">
-  <div class="card bg-danger order-card">
-    <div class="card-body">
-      <h5 class="text-white">Average Price</h5>
-      <h2 class="text-right text-white">
-        <i class="fa fa-money float-left"></i
+    <div class="card bg-danger order-card">
+        <div class="card-body">
+            <h5 class="text-white">Average Price</h5>
+            <h2 class="text-right text-white">
+                <i class="fa fa-money float-left"></i
         ><span>
-          {% if average == None %} 00 {% else %} {{ average }} / {{ unit }}
+          {% if average == None %} 00 {% else %} {{ average }} taka
           <!--  -->
           {% endif %}
         </span>
       </h2>
-      <p class="m-b-0"><span class="float-right">taka</span></p>
+      <p class="m-b-0"><span class="float-right">per {{ unit }}</span></p>
     </div>
   </div>
 </div>

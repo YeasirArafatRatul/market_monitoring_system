@@ -129,11 +129,13 @@
           role="button"
           data-toggle="dropdown"
           aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <span class="mr-2 text-white d-none d-lg-inline text-gray-600 small"
-            >{{ request.user.username }}</span
-          >
+          aria-expanded="false">
+          {% if request.user.role == 'importer' or request.user.role == 'wholeseller' or request.user.role == 'retailer' %}
+         
+          <span class="mr-2 text-white d-none d-lg-inline text-gray-600 small">{{ request.user.username }}</span>
+          {% else %}
+          <span class="mr-2 text-white d-none d-lg-inline text-gray-600 small">Admin</span>
+          {% endif %}
           <img
             class="img-radius wid-40"
             alt="User-Profile-Image"

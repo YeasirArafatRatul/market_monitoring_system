@@ -28,50 +28,7 @@ def home(request):
     current_user = request.user
     profile = UserProfile.objects.get(user_id=current_user.id)
 
-    product_from_chalan = Chalan.objects.filter(
-        owner=current_user)
-
-    unique_products = Chalan.objects.filter(owner=current_user).order_by(
-        'product').values('product').distinct()
-
-    # print(unique_products)
-    products = []
-
-    for k in unique_products:
-        query = Product.objects.get(id=k['product'])
-        products.append(query)
-
-    # print(products)
-
-    chalans = Chalan.objects.filter(
-        owner_id=request.user.id).order_by('-id')[:8]
-    pending_sale_record_of_buyer = SellProduct.objects.filter(
-        buyer=current_user.trade_license_no, pending=True).order_by('-created_at').count()
-
-    # print(current_user.trade_license_no)
-
-    pending_sale_record_of_seller = SellProduct.objects.filter(
-        seller=current_user, pending=True).order_by('-created_at').count()
-
-    total_sales = SellProduct.objects.filter(
-        seller=current_user).aggregate(Sum('price'))['price__sum']
-
-    if total_sales == None:
-        total_sales = 0
-
-    number_of_sellings = SellProduct.objects.filter(
-        seller=current_user).count()
-
-    number_of_buyings = SellProduct.objects.filter(
-        buyer=current_user.trade_license_no).count()
-
-    if number_of_buyings == None:
-        number_of_buyings = 0
-    elif number_of_sellings == None:
-        number_of_sellings = 0
-
-    number_of_transactions = number_of_buyings + number_of_sellings
-# User UPDATE FORM
+    # User UPDATE FORM
     if request.method == "POST":
         user_form = UserUpdateForm(
             request.POST, instance=request.user)
@@ -100,18 +57,96 @@ def home(request):
         product_form = AddChalanForm(
             request.POST)
 
-    context = {
-        'user': current_user,
-        'chalans': chalans,
-        'user_form': user_form,
-        'profile_form': profile_form,
-        'product_form': product_form,
-        'pending_sale_record_of_buyer': pending_sale_record_of_buyer,
-        'pending_sale_record_of_seller': pending_sale_record_of_seller,
-        'total_sales': total_sales,
-        'number_of_transactions': number_of_transactions,
-        'products': products,
-    }
+
+#  for PRODUCT SHOWCASING
+    if not current_user.role == '':
+
+        product_from_chalan = Chalan.objects.filter(
+            owner=current_user)
+
+        unique_products = Chalan.objects.filter(owner=current_user).order_by(
+            'product').values('product').distinct()
+
+        # print(unique_products)
+        products = []
+
+        for k in unique_products:
+            query = Product.objects.get(id=k['product'])
+            products.append(query)
+
+        # print(products)
+
+        chalans = Chalan.objects.filter(
+            owner_id=request.user.id).order_by('-id')[:8]
+        pending_sale_record_of_buyer = SellProduct.objects.filter(
+            buyer=current_user.trade_license_no, pending=True).order_by('-created_at').count()
+
+        # print(current_user.trade_license_no)
+
+        pending_sale_record_of_seller = SellProduct.objects.filter(
+            seller=current_user, pending=True).order_by('-created_at').count()
+
+        total_sales = SellProduct.objects.filter(
+            seller=current_user).aggregate(Sum('price'))['price__sum']
+
+        if total_sales == None:
+            total_sales = 0
+
+        number_of_sellings = SellProduct.objects.filter(
+            seller=current_user).count()
+
+        number_of_buyings = SellProduct.objects.filter(
+            buyer=current_user.trade_license_no).count()
+
+        if number_of_buyings == None:
+            number_of_buyings = 0
+        elif number_of_sellings == None:
+            number_of_sellings = 0
+
+        number_of_transactions = number_of_buyings + number_of_sellings
+
+        context = {
+            'user': current_user,
+            'chalans': chalans,
+            'user_form': user_form,
+            'profile_form': profile_form,
+            'product_form': product_form,
+            'pending_sale_record_of_buyer': pending_sale_record_of_buyer,
+            'pending_sale_record_of_seller': pending_sale_record_of_seller,
+            'total_sales': total_sales,
+            'number_of_transactions': number_of_transactions,
+            'products': products,
+        }
+
+    else:
+        products = Product.objects.all()
+        pending_sale_record_of_all = SellProduct.objects.filter(
+            pending=True).order_by('-created_at').count()
+
+        total_sales = SellProduct.objects.filter().aggregate(Sum('price'))[
+            'price__sum']
+
+        if total_sales == None:
+            total_sales = 0
+
+        number_of_sellings = SellProduct.objects.filter().count()
+        number_of_buyings = SellProduct.objects.filter().count()
+
+        if number_of_buyings == None:
+            number_of_buyings = 0
+        elif number_of_sellings == None:
+            number_of_sellings = 0
+
+        number_of_transactions = number_of_buyings + number_of_sellings
+        context = {
+            'user': current_user,
+            'profile_form': profile_form,
+            'product_form': product_form,
+            'pending_sale_record_of_buyer': pending_sale_record_of_all,
+            'total_sales': total_sales,
+            'number_of_transactions': number_of_transactions,
+            'products': products,
+        }
 
     return render(request, 'dashboard/index.html', context)
 
