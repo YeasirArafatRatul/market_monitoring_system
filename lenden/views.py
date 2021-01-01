@@ -202,11 +202,11 @@ def confirm(request, id):
     return HttpResponse("Done")
 
 
-class FilterChalanProductsView(ListView):
-    model = Chalan
-    template_name = 'dashboard/index.html'
-    context_object_name = 'chalans'
+# class FilterChalanProductsView(ListView):
+#     model = Chalan
+#     template_name = 'dashboard/index.html'
+#     context_object_name = 'chalans'
 
-    def get_queryset(self):
-        return self.model.objects.filter(location__contains=self.request.GET['location'],
-                                         title__contains=self.request.GET['position'])
+#     def get_queryset(self):
+#         return self.model.objects.filter(location__contains=self.request.GET['location'],
+#                                          title__contains=self.request.GET['position'])
