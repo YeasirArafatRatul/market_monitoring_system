@@ -1,10 +1,15 @@
 {% load static %} {% load notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon icon -->
+    <link
+      rel="icon"
+      href="{% static 'assets/favicon.ico' %}"
+      type="image/x-icon"
+    />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{% block title %}{% endblock %} | Market Monitoring System</title>
     <!-- vendor css -->
@@ -12,14 +17,14 @@
     <link rel="stylesheet" href="{% static '/css/dashboard/dashboard.css' %}" />
     <!-- Specific CSS goes HERE -->
     {% block stylesheets %} {% endblock stylesheets %}
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- [ Pre-loader ] start -->
     <div class="loader-bg">
-        <div class="loader-track">
-            <div class="loader-fill"></div>
-        </div>
+      <div class="loader-track">
+        <div class="loader-fill"></div>
+      </div>
     </div>
 
     <!-- [ Pre-loader ] End -->
@@ -29,16 +34,14 @@
     {% include 'includes/navigation.html' %}
     <!--  -->
     <div class="pcoded-main-container">
-        <div class="pcoded-content">
-            {% block content %}{% endblock content %}
-        </div>
+      <div class="pcoded-content">
+        {% block content %}{% endblock content %}
+      </div>
     </div>
     <!--  -->
     {% include 'includes/scripts.html' %}
 
     <!-- Specific Page JS goes HERE  -->
     {% block javascripts %}{% endblock javascripts %}
-
-</body>
-
+  </body>
 </html>
