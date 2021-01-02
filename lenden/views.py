@@ -13,6 +13,9 @@ from django.db.models import Avg, Sum
 from django.http import HttpResponse
 # Create your views here.
 
+from datetime import time
+from time import strftime
+
 
 class AddChalanView(LoginRequiredMixin, CreateView):
     form_class = AddChalanForm
@@ -57,6 +60,7 @@ class AddSalesView(LoginRequiredMixin, CreateView):
             trade_license_no=form.instance.buyer).first()
         # print(buyer)
         if user_product_total_quantity >= (user_total_sell_product_quantity + form.cleaned_data['quantity']):
+
             form.save()
             notify.send(user, recipient=buyer,
                         verb="has issued a selling record on your name")
@@ -84,27 +88,73 @@ class ImportRecordView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        time = self.kwargs['time']
+        print(time)
+        today = strftime("%d")
+        month = strftime('%m')
+        year = strftime('%Y')
         if not self.request.user.role == '':
-            my_chalan_for_individual_product = Chalan.objects.filter(
-                owner=self.request.user, product=self.id)
+            if time == 'today':
+                print("TODAYS DATA IS SHOWING")
 
-            average_price = SellProduct.objects.filter(
-                seller=self.request.user, product=self.id).aggregate(Avg('price'))['price__avg']
+                my_chalan_for_individual_product = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id)
 
-            user_product_total_quantity = Chalan.objects.filter(
-                owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+                average_price = SellProduct.objects.filter(
+                    seller=self.request.user, product=self.id).aggregate(Avg('price'))['price__avg']
 
-            user_total_sell_product_quantity = SellProduct.objects.filter(
-                seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+                user_product_total_quantity = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+                user_total_sell_product_quantity = SellProduct.objects.filter(
+                    seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+                unit_for_chalan = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id).values('unit').first()['unit']
+
+            elif time == 'month':
+                print("THIS MONTH DATA IS SHOWING")
+
+                print(type(month))
+
+                my_chalan_for_individual_product = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id, import_date__month=month)
+
+                average_price = SellProduct.objects.filter(
+                    seller=self.request.user, product=self.id).aggregate(Avg('price'))['price__avg']
+
+                user_product_total_quantity = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+                user_total_sell_product_quantity = SellProduct.objects.filter(
+                    seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+                unit_for_chalan = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id).values('unit').first()['unit']
+
+            else:
+                print("THIS YEARS DATA IS SHOWING")
+
+                my_chalan_for_individual_product = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id)
+
+                average_price = SellProduct.objects.filter(
+                    seller=self.request.user, product=self.id).aggregate(Avg('price'))['price__avg']
+
+                user_product_total_quantity = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+                user_total_sell_product_quantity = SellProduct.objects.filter(
+                    seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+                unit_for_chalan = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id).values('unit').first()['unit']
 
             if user_total_sell_product_quantity == None:
                 user_total_sell_product_quantity = 0
 
-            unit_for_chalan = Chalan.objects.filter(
-                owner=self.request.user, product=self.id).values('unit').first()['unit']
-
-            context['product_name'] = Product.objects.filter(
-                id=self.kwargs['pro_id']).values('name').first()['name']
+            context['product'] = Product.objects.filter(
+                id=self.kwargs['pro_id']).first()
 
             context['total'] = user_product_total_quantity
             context['unit'] = unit_for_chalan
@@ -115,9 +165,8 @@ class ImportRecordView(ListView):
             context['chalans'] = my_chalan_for_individual_product
 
         else:
-
             my_chalan_for_individual_product = Chalan.objects.filter(
-                product=self.id).exclude(customs_clearance_no=None)
+                product=self.id, import_date__year='2020').exclude(customs_clearance_no=None)
             average_price = Chalan.objects.filter(
                 product=self.id).exclude(customs_clearance_no=None).aggregate(Avg('price'))['price__avg']
             print(average_price)
@@ -136,6 +185,9 @@ class ImportRecordView(ListView):
 
             context['product_name'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).values('name').first()['name']
+
+            context['product'] = Product.objects.filter(
+                id=self.kwargs['pro_id']).first()
 
             context['total'] = user_product_total_quantity
             context['unit'] = unit_for_chalan
@@ -157,45 +209,79 @@ class SalesRecordView(ListView):
 
     def get_queryset(self):
         self.id = get_object_or_404(Product, id=self.kwargs['pro_id'])
-        data = Product.objects.filter(id=self.request.user.id)
-        print(JsonResponse(data))
-        return JsonResponse(data, many=True)
+        return Product.objects.filter(id=self.request.user.id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if not self.request.user.role == '':
+            my_sales_for_individual_product = SellProduct.objects.filter(
+                seller=self.request.user, product=self.id)
 
-        my_sales_for_individual_product = SellProduct.objects.filter(
-            seller=self.request.user, product=self.id)
+            average_price = SellProduct.objects.filter(
+                seller=self.request.user, product=self.id).aggregate(Avg('price'))['price__avg']
 
-        average_price = SellProduct.objects.filter(
-            seller=self.request.user, product=self.id).aggregate(Avg('price'))['price__avg']
+            user_product_total_quantity = Chalan.objects.filter(
+                owner=self.request.user, product=self.id).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
-        user_product_total_quantity = Chalan.objects.filter(
-            owner=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+            user_total_sell_product_quantity = SellProduct.objects.filter(
+                seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
 
-        user_total_sell_product_quantity = SellProduct.objects.filter(
-            seller=self.request.user, product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+            if user_total_sell_product_quantity == None:
+                user_total_sell_product_quantity = 0
 
-        if user_total_sell_product_quantity == None:
-            user_total_sell_product_quantity = 0
+            if user_product_total_quantity == None:
+                user_product_total_quantity = 0
 
-        if SellProduct.objects.filter(seller=self.request.user, product=self.id).exists():
-            unit_for_chalan = SellProduct.objects.filter(
-                seller=self.request.user, product=self.id).values('unit').first()['unit']
-            context['unit'] = unit_for_chalan
+            if SellProduct.objects.filter(seller=self.request.user, product=self.id).exists():
+                unit_for_chalan = SellProduct.objects.filter(
+                    seller=self.request.user, product=self.id).values('unit').first()['unit']
+                context['unit'] = unit_for_chalan
+            else:
+                context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
+
+            context['product_name'] = Product.objects.filter(
+                id=self.kwargs['pro_id']).values('name').first()['name']
+
+            context['total'] = user_product_total_quantity
+            context['sold'] = user_total_sell_product_quantity
+            context['available'] = (
+                user_product_total_quantity - user_total_sell_product_quantity)
+            context['average'] = average_price
+            context['sales'] = my_sales_for_individual_product
+
         else:
-            context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
+            my_sales_for_individual_product = SellProduct.objects.filter(
+                product=self.id)
 
-        context['product_name'] = Product.objects.filter(
-            id=self.kwargs['pro_id']).values('name').first()['name']
+            average_price = SellProduct.objects.filter(
+                product=self.id).aggregate(Avg('price'))['price__avg']
 
-        context['total'] = user_product_total_quantity
+            user_product_total_quantity = Chalan.objects.filter(
+                product=self.id).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
-        context['sold'] = user_total_sell_product_quantity
-        context['available'] = (user_product_total_quantity -
-                                user_total_sell_product_quantity)
-        context['average'] = average_price
-        context['sales'] = my_sales_for_individual_product
+            user_total_sell_product_quantity = SellProduct.objects.filter(
+                product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+
+            if user_total_sell_product_quantity == None:
+                available = user_product_total_quantity - 0
+            else:
+                available = user_product_total_quantity - user_total_sell_product_quantity
+
+            if SellProduct.objects.filter(product=self.id).exists():
+                unit_for_chalan = SellProduct.objects.filter(
+                    product=self.id).values('unit').first()['unit']
+                context['unit'] = unit_for_chalan
+            else:
+                context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
+
+            context['product_name'] = Product.objects.filter(
+                id=self.kwargs['pro_id']).values('name').first()['name']
+
+            context['total'] = user_product_total_quantity
+            context['sold'] = user_total_sell_product_quantity
+            context['available'] = available
+            context['average'] = average_price
+            context['sales'] = my_sales_for_individual_product
 
         return context
 
@@ -232,7 +318,8 @@ def confirm(request, id):
         # print(user)
         if created and instance.pending == False:
             Chalan.objects.create(owner=user, product=instance.product, quantity=instance.quantity,
-                                  unit=instance.unit, price=instance.price, import_date=instance.sell_date, imported_from=instance.seller.username)
+                                  unit=instance.unit, price=instance.price, import_date=instance.sell_date,
+                                  imported_from=instance.seller.username)
             post_save.connect(create_object, sender=SellProduct)
 
     create_object(sender=SellProduct, instance=obj, created=True)

@@ -11,10 +11,10 @@ app_name = "lenden"
 urlpatterns = [
     path('add-chalan/', AddChalanView.as_view(), name='add-chalan'),
     path('add-sales/', AddSalesView.as_view(), name='add-sales'),
-    path('import-record/<int:pro_id>', ImportRecordView.as_view(),
+    path('import-record/<int:pro_id>/<str:time>', ImportRecordView.as_view(),
          name='import-records'),
-    path('sales-record/<int:pro_id>', SalesRecordView.as_view(),
-         name='sales-records'),
+    path('sales-record/<int:pro_id>/<str:time>', SalesRecordView.as_view(),
+         name='sales-record'),
     path('confirm/<int:id>', confirm,
          name='confirm'),
 ]

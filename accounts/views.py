@@ -119,7 +119,7 @@ def home(request):
         }
 
     else:
-        products = Product.objects.all()
+        products = Product.objects.all().order_by()
         pending_sale_record_of_all = SellProduct.objects.filter(
             pending=True).order_by('-created_at').count()
 

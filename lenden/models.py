@@ -33,6 +33,7 @@ class Chalan(models.Model):
     customs_clearance_no = models.PositiveBigIntegerField(unique=True, error_messages={
         'unique': "A user with that email already exists.",
     }, null=True, blank=True)
+    # transaction_level = models.IntegerField(default=0, null=True)
     price = models.PositiveIntegerField()
     import_date = models.DateField()
     created_at = models.DateField(auto_now_add=True)
@@ -49,7 +50,8 @@ class SellProduct(models.Model):
         'required': "Quantity must be provided"})
     unit = models.CharField(choices=UNIT, max_length=20)
     price = models.PositiveIntegerField()
-    pending = models.BooleanField(default=True)
+    pending = models.BooleanField(default=True, null=True)
+    # transaction_level = models.IntegerField(default=0)
     sell_date = models.DateField()
     created_at = models.DateField(auto_now_add=True)
 

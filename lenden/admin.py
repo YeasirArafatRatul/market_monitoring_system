@@ -5,7 +5,7 @@ from .models import *
 
 class SellProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'seller', 'buyer',
-                    'product', 'unit', 'price', 'pending']
+                    'product', 'quantity', 'unit', 'price', 'pending']
 
 
 admin.site.register(Product)

@@ -6,7 +6,7 @@
 <div class="col-12">
     <div class="card table-card">
         <div class="card-header">
-            <h4><b>{{ request.user.username }}</b> Import History Of {{product_name}}</h4>
+            <h4><b>{{ request.user.username }}</b> Import History Of {{product.name}}</h4>
             <span class="d-block m-t-5">Here, all your products/items.</span></h5>
             <div class="card-header-right">
                 <div class="btn-group card-option">
@@ -41,29 +41,29 @@
             <ul class="nav nav-pills nav-fill mt-3 border-bottom pb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
                     <!-- href="#pills-this-month" -->
-                    <a class="nav-link active" id="pills-this-month-tab" data-toggle="pill" href="/?filter = month" role="tab" aria-controls="pills-this-month" aria-selected="true"><i class="fa fa-calendar m-r-5"></i> This Month</a>
+                    <a class="btn btn-primary btn-sm mr-1 btn-round active" id="pills-this-month-tab" href="/import-record/{{product.id}}/{{ 'month' }}" aria-selected="true"><i class="fa fa-calendar m-r-5"></i> This Month</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-this-year-tab" data-toggle="pill" href="#pills-this-year" role="tab" aria-controls="pills-this-year" aria-selected="false"><i class="fa fa-calendar-o m-r-5"></i> This Year</a
+                    <a class="btn btn-primary btn-sm mr-1 btn-round" id="pills-this-year-tab" href="/import-record/{{product.id}}/{{ 'year' }}" aria-selected="false "><i class="fa fa-calendar-o m-r-5 "></i> This Year</a
                 >
             </li>
             
             </ul>
         </div>
-        <div class="card-body p-0">
-            <div class="tab-content" id="pills-tabContent">
+        <div class="card-body p-0 ">
+            <div class="tab-content " id="pills-tabContent ">
             <div
-                class="tab-pane fade active show"
-                id="pills-this-month"
-                role="tabpanel"
-                aria-labelledby="pills-this-month-tab"
+                class="tab-pane fade active show "
+                id="pills-this-month "
+                role="tabpanel "
+                aria-labelledby="pills-this-month-tab "
             >
-                <div class="table-responsive">
+                <div class="table-responsive ">
                 <div
-                    class="customer-scroll ps ps--active-x ps--active-y"
-                    style="height: 420px; position: relative"
+                    class="customer-scroll ps ps--active-x ps--active-y "
+                    style="height: 420px; position: relative "
                 >
-                    <table class="table table-hover m-b-0 text-center">
+                    <table class="table table-hover m-b-0 text-center ">
                     <thead>
                         <tr>
                     <th>Import Date</th>
@@ -90,37 +90,37 @@
                     </tbody>
                     </table>
                     <div
-                    class="ps__rail-x"
-                    style="width: 795px; left: 0px; bottom: 0px"
+                    class="ps__rail-x "
+                    style="width: 795px; left: 0px; bottom: 0px "
                     >
                     <div
-                        class="ps__thumb-x"
-                        tabindex="0"
-                        style="left: 0px; width: 719px"
+                        class="ps__thumb-x "
+                        tabindex="0 "
+                        style="left: 0px; width: 719px "
                     ></div>
                     </div>
-                    <div class="ps__rail-y" style="top: 0px; height: 420px; right: 0px">
+                    <div class="ps__rail-y " style="top: 0px; height: 420px; right: 0px ">
                     <div
-                        class="ps__thumb-y"
-                        tabindex="0"
-                        style="top: 0px; height: 308px"
+                        class="ps__thumb-y "
+                        tabindex="0 "
+                        style="top: 0px; height: 308px "
                     ></div>
                     </div>
                 </div>
                 </div>
             </div>
             <div
-                class="tab-pane fade"
-                id="pills-this-year"
-                role="tabpanel"
-                aria-labelledby="pills-this-year-tab"
+                class="tab-pane fade "
+                id="pills-this-year "
+                role="tabpanel "
+                aria-labelledby="pills-this-year-tab "
             >
-                <div class="table-responsive">
+                <div class="table-responsive ">
                 <div
-                    class="customer-scroll1 ps"
-                    style="height: 420px; position: relative"
+                    class="customer-scroll1 ps "
+                    style="height: 420px; position: relative "
                 >
-                    <table class="table table-hover m-b-0 text-center">
+                    <table class="table table-hover m-b-0 text-center ">
                     <thead>
                     <tr>
                         <th>Import Date</th>
@@ -146,18 +146,18 @@
                     {% endfor %}
                 </tbody>
                     </table>
-                    <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                    <div class="ps__rail-x " style="left: 0px; bottom: 0px ">
                     <div
-                        class="ps__thumb-x"
-                        tabindex="0"
-                        style="left: 0px; width: 0px"
+                        class="ps__thumb-x "
+                        tabindex="0 "
+                        style="left: 0px; width: 0px "
                     ></div>
                     </div>
-                    <div class="ps__rail-y" style="top: 0px; right: 0px">
+                    <div class="ps__rail-y " style="top: 0px; right: 0px ">
                     <div
-                        class="ps__thumb-y"
-                        tabindex="0"
-                        style="top: 0px; height: 0px"
+                        class="ps__thumb-y "
+                        tabindex="0 "
+                        style="top: 0px; height: 0px "
                     ></div>
                     </div>
                 </div>
