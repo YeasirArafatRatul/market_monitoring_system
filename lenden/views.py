@@ -182,9 +182,6 @@ class ImportRecordView(ListView):
                 user_total_sell_product_quantity = SellProduct.objects.filter(
                     product=self.id, sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
 
-                if user_total_sell_product_quantity == None:
-                    user_total_sell_product_quantity = 0
-
             elif time == 'month':
                 print("THIS MONTH DATA IS SHOWING")
 
@@ -216,11 +213,14 @@ class ImportRecordView(ListView):
                 user_total_sell_product_quantity = SellProduct.objects.filter(
                     product=self.id, sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
 
-                if user_total_sell_product_quantity == None:
-                    user_total_sell_product_quantity = 0
-
             unit_for_chalan = Chalan.objects.filter(
                 product=self.id).values('unit').first()['unit']
+
+            if user_product_total_quantity == None:
+                user_product_total_quantity = 0
+            if user_total_sell_product_quantity == None:
+                user_total_sell_product_quantity = 0
+
             context['product_name'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).values('name').first()['name']
 

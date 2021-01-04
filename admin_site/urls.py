@@ -12,6 +12,8 @@ urlpatterns = [
          ChalanListView.as_view(), name='filtered-chalan'),
     path('all-chalans/',
          ProductSellsView.as_view(), name='all-chalans'),
+    path('chart/<int:id>',
+         ChartView.as_view(), name='chart'),
 
 
 ]
