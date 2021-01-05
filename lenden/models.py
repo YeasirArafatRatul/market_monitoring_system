@@ -57,13 +57,3 @@ class SellProduct(models.Model):
 
     def __str__(self):
         return f'{self.seller.username} -sold- {self.product.name}'
-
-
-# @receiver(post_save, sender=SellProduct)
-# def create_object(sender, instance, created, **kwargs):
-#     user = User.objects.get(trade_license_no=instance.buyer)
-#     print(user)
-#     if created and instance.pending == False:
-#         Chalan.objects.create(owner=user, product=instance.product, quantity=instance.quantity,
-#                               unit=instance.unit, price=instance.price, import_date=instance.sell_date, imported_from=instance.seller.username)
-#         post_save.connect(create_object, sender=SellProduct)
