@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'notifications',
     'crispy_forms',
+    'rest_framework',
 
     'accounts',
     'lenden',

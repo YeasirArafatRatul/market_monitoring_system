@@ -1,3 +1,4 @@
+from time import strftime
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import CreateView, FormView, RedirectView, TemplateView, DetailView, UpdateView, ListView
@@ -5,6 +6,11 @@ from django.views.generic.edit import DeleteView
 from accounts.models import User
 from lenden.models import *
 from django.db.models import Avg, Sum
+
+from rest_framework import generics
+from admin_site.api.serializers import ChalanSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 # Create your views here.
 
 
@@ -51,12 +57,15 @@ class ChartView(ListView):
     models = Chalan
     template_name = 'dashboard/chart.html'
 
+    month = strftime('%m')
+    year = strftime('%Y')
+
     def get_queryset(self):
         self.id = get_object_or_404(Product, id=self.kwargs['id'])
         data = {}
         i = 1
         for i in range(1, 13):
-            avg_of_month = Chalan.objects.filter(product=self.id, import_date__month=str(i)
+            avg_of_month = Chalan.objects.filter(product=self.id, import_date__month=str(i), import_date__year=self.year
                                                  ).aggregate(Avg('price'))['price__avg']
             new_data = {(months[i-1]): avg_of_month}
             data.update(new_data)
@@ -67,3 +76,39 @@ class ChartView(ListView):
     #     context = super().get_context_data(**kwargs)
     #     context[""] = data
     #     return context
+
+
+# API ENDPOINT : http://127.0.0.1:8000/api/chalan-chart/<product-id>
+
+class ChalanChart(APIView):
+    year = strftime('%Y')
+
+    """
+    List all snippets, or create a new snippet.
+    """
+
+    def get(self, request, id, format=None):
+        self.id = get_object_or_404(Product, id=self.kwargs['id'])
+        print(self.id)
+        serializer = {}
+        i = 1
+        for i in range(1, 13):
+            avg_of_month = Chalan.objects.filter(product=self.id, import_date__month=str(i), import_date__year=self.year
+                                                 ).aggregate(Avg('price'))['price__avg']
+
+            new_data = {(months[i-1]): avg_of_month}
+            serializer.update(new_data)
+        return Response(serializer)
+
+    # def get_queryset(self):
+    #     self.id = get_object_or_404(Product, id=self.kwargs['id'])
+    #     print(self.id)
+    #     serializer = {}
+    #     i = 1
+    #     for i in range(1, 13):
+    #         avg_of_month = Chalan.objects.filter(product=self.id, import_date__month=str(i), import_date__year=self.year
+    #                                              ).aggregate(Avg('price'))['price__avg']
+
+    #         new_data = {(months[i-1]): avg_of_month}
+    #         serializer.update(new_data)
+    #     return Response(serializer.data)
