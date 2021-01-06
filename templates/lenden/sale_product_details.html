@@ -20,3 +20,19 @@
 <!-- Products Table -->
 
 {% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const urlArr = window.location.pathname.split("/");
+    const monthEl = document.getElementById("pills-this-month-tab");
+    const yearEl = document.getElementById("pills-this-year-tab");
+    if (urlArr.includes("year")) {
+      yearEl.classList.add("active");
+      monthEl.classList.remove("active");
+    }
+  });
+</script>
+
+{% endblock javascripts %}
