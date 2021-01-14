@@ -27,11 +27,33 @@
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     const urlArr = window.location.pathname.split("/");
+    const todayEl = document.getElementById("pills-today-tab");
+    const todayTableEl = document.getElementById("pills-today");
     const monthEl = document.getElementById("pills-this-month-tab");
+    const monthTableEl = document.getElementById("pills-this-month");
     const yearEl = document.getElementById("pills-this-year-tab");
+    const yearTableEl = document.getElementById("pills-this-year");
     if (urlArr.includes("year")) {
-      yearEl.classList.add("active");
+      todayEl.classList.remove("active");
       monthEl.classList.remove("active");
+      yearEl.classList.add("active");
+      todayTableEl.classList.add("active", "show");
+      monthTableEl.classList.remove("active", "show");
+      yearTableEl.classList.remove("active", "show");
+    } else if (urlArr.includes("month")) {
+      todayEl.classList.remove("active");
+      monthEl.classList.add("active");
+      yearEl.classList.remove("active");
+      todayTableEl.classList.remove("active", "show");
+      monthTableEl.classList.add("active", "show");
+      yearTableEl.classList.remove("active", "show");
+    } else {
+      todayEl.classList.add("active");
+      monthEl.classList.remove("active");
+      yearEl.classList.remove("active");
+      todayTableEl.classList.remove("active", "show");
+      monthTableEl.classList.remove("active", "show");
+      yearTableEl.classList.add("active", "show");
     }
   });
 </script>
