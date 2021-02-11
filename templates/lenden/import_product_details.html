@@ -19,20 +19,129 @@
 
 <!-- Products Table -->
 
+<!-- Product Chart -->
+<div id="product_chart" class="row">
+  {% include "includes/product/import_product_chart.html" %}
+</div>
+<!-- Product Chart -->
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<script src="{% static 'vendor/js/apexcharts/apexcharts.min.js' %}"></script>
 
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     const urlArr = window.location.pathname.split("/");
+    const todayEl = document.getElementById("pills-today-tab");
+    const todayTableEl = document.getElementById("pills-today");
     const monthEl = document.getElementById("pills-this-month-tab");
+    const monthTableEl = document.getElementById("pills-this-month");
     const yearEl = document.getElementById("pills-this-year-tab");
+    const yearTableEl = document.getElementById("pills-this-year");
     if (urlArr.includes("year")) {
-      yearEl.classList.add("active");
+      todayEl.classList.remove("active");
       monthEl.classList.remove("active");
+      yearEl.classList.add("active");
+      todayTableEl.classList.add("active", "show");
+      monthTableEl.classList.remove("active", "show");
+      yearTableEl.classList.remove("active", "show");
+    } else if (urlArr.includes("month")) {
+      todayEl.classList.remove("active");
+      monthEl.classList.add("active");
+      yearEl.classList.remove("active");
+      todayTableEl.classList.remove("active", "show");
+      monthTableEl.classList.add("active", "show");
+      yearTableEl.classList.remove("active", "show");
+    } else {
+      todayEl.classList.add("active");
+      monthEl.classList.remove("active");
+      yearEl.classList.remove("active");
+      todayTableEl.classList.remove("active", "show");
+      monthTableEl.classList.remove("active", "show");
+      yearTableEl.classList.add("active", "show");
     }
+  });
+</script>
+
+<script>
+  "use strict";
+  $(document).ready(function () {
+    const swapValue = (obj) => {
+      Object.keys(obj).forEach((k) => {
+        if (obj[k] === null) {
+          obj[k] = 0;
+        }
+        obj[k] = obj[k].toFixed(2);
+      });
+      return obj;
+    };
+
+    let cData;
+    let url = `http://${window.location.hostname}:${
+      window.location.port
+    }/api/chalan-chart/${window.location.pathname.split("/")[2]}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        cData = swapValue(data);
+      });
+
+    setTimeout(function () {
+      $(function () {
+        var options = {
+          chart: {
+            height: 300,
+            type: "line",
+            zoom: {
+              enabled: false,
+            },
+          },
+          dataLabels: {
+            enabled: false,
+            width: 2,
+          },
+          stroke: {
+            curve: "straight",
+          },
+          colors: ["#4099ff"],
+          fill: {
+            type: "gradient",
+            gradient: {
+              shade: "light",
+            },
+          },
+          series: [
+            {
+              name: `${
+                document.getElementById("product_name").textContent
+              } Price`,
+              data: Object.values(cData),
+            },
+          ],
+          title: {
+            text: "Product Price by Month",
+            align: "left",
+          },
+          grid: {
+            row: {
+              colors: ["#f3f6ff", "transparent"], // takes an array which will be repeated on columns
+              opacity: 0.5,
+            },
+          },
+          xaxis: {
+            categories: Object.keys(cData),
+          },
+        };
+        var chart = new ApexCharts(
+          document.querySelector("#line-chart-1"),
+          options
+        );
+        chart.render();
+      });
+    }, 700);
   });
 </script>
 

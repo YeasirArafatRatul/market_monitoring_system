@@ -6,7 +6,7 @@
 <div class="col-12">
     <div class="card table-card">
         <div class="card-header">
-            <h4><b>{{ request.user.username }}</b> Import History Of {{product.name}}</h4>
+            <h4>{{ request.user.username }} Import History Of <span id='product_name'>{{product.name}}</span></h4>
             <span class="d-block m-t-5">Here, all your products/items.</span></h5>
             <div class="card-header-right">
                 <div class="btn-group card-option">
@@ -40,6 +40,9 @@
             </div>
             <ul class="nav nav-pills nav-fill mt-3 border-bottom pb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
+                    <a class="nav-link active" id="pills-today-tab" href="/import-record/{{product.id}}/{{ 'today' }}" role="tab" aria-controls="pills-today" aria-selected="true"><i class="fa fa-calendar m-r-5"></i> Today </a>
+            </li>
+                <li class="nav-item">
                     <!-- href="#pills-this-month" -->
                     <a class="nav-link active" id="pills-this-month-tab" href="/import-record/{{product.id}}/{{ 'month' }}" aria-selected="true"><i class="fa fa-calendar m-r-5"></i> This Month</a>
                 </li>
@@ -52,10 +55,69 @@
         <div class="card-body p-0 ">
             <div class="tab-content " id="pills-tabContent ">
             <div
-                class="tab-pane fade active show "
-                id="pills-this-month "
-                role="tabpanel "
-                aria-labelledby="pills-this-month-tab "
+                class="tab-pane fade"
+                id="pills-today"
+                role="tabpanel"
+                aria-labelledby="pills-today-tab"
+            >
+                <div class="table-responsive ">
+                <div
+                    class="customer-scroll ps ps--active-x ps--active-y "
+                    style="height: 420px; position: relative "
+                >
+                    <table class="table table-hover m-b-0 text-center ">
+                    <thead>
+                        <tr>
+                    <th>Import Date</th>
+                    <th>Product Name</th>
+                    <th>Imported From</th>
+                    <th>Clearance No</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Price(TK)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for object in chalans %}
+                    <tr>
+                    <td>{{object.import_date}}</td>
+                    <td>{{object.product.name}}</td>
+                    <td>{{object.imported_from}}</td>
+                    <td>{{object.customs_clearance_no}}</td>
+                    <td>{{object.quantity}}</td>
+                    <td>{{object.unit}}</td>
+                    <td>৳{{object.price|intcomma}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    <div
+                    class="ps__rail-x "
+                    style="width: 795px; left: 0px; bottom: 0px "
+                    >
+                    <div
+                        class="ps__thumb-x "
+                        tabindex="0 "
+                        style="left: 0px; width: 719px "
+                    ></div>
+                    </div>
+                    <div class="ps__rail-y " style="top: 0px; height: 420px; right: 0px ">
+                    <div
+                        class="ps__thumb-y "
+                        tabindex="0 "
+                        style="top: 0px; height: 308px "
+                    ></div>
+                    </div>
+                </div>
+                </div>
+            </div>    
+
+            
+            <div
+                class="tab-pane fade"
+                id="pills-this-month"
+                role="tabpanel"
+                aria-labelledby="pills-this-month-tab"
             >
                 <div class="table-responsive ">
                 <div
@@ -109,12 +171,12 @@
                 </div>
             </div>
             <div
-                class="tab-pane fade "
-                id="pills-this-year "
-                role="tabpanel "
-                aria-labelledby="pills-this-year-tab "
+                class="tab-pane fade"
+                id="pills-this-year"
+                role="tabpanel"
+                aria-labelledby="pills-this-year-tab"
             >
-                <div class="table-responsive ">
+                <div class="table-responsive">
                 <div
                     class="customer-scroll1 ps "
                     style="height: 420px; position: relative "
