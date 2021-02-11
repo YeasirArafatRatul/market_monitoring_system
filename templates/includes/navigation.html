@@ -36,10 +36,12 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li title="Notification">
+              <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
                 {% notifications_unread as unread_count %}
 
                 <!-- IF HAS NOTIFICAIONS -->
-                {% if unread_count %} {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge,my_special_notification_callback' %}
+                {% if unread_count %} 
+                {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge,my_special_notification_callback' %}
                 <div class="dropdown">
                     <!-- {% live_notify_badge %} -->
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon feather icon-bell"></i><span class="badge bg-danger"><span class="sr-only"></span></span> {{unread_count}}</a>
@@ -47,8 +49,8 @@
                         <div class="noti-head">
                             <h6 class="d-inline-block m-b-0">Notifications</h6>
                             <div class="float-right">
-                                <a href="#!" class="m-r-10">mark as read</a>
-                                <a href="#!">clear all</a>
+                                <a href="{% url 'lenden:mark_as_read' %}" class="m-r-10">Mark As Read</a>
+                                <a href="#!">Clear All</a>
                             </div>
                         </div>
                         <ul class="noti-body">
@@ -60,61 +62,21 @@
                                     <img class="img-radius" src="/static/img/img-01.png" alt="Generic placeholder image" />
                                     <div class="media-body">
                                         <p>
-                                            <strong>John Doe</strong
-                      ><span class="n-time text-muted"
-                        ><i class="icon feather icon-clock m-r-10"></i>5
-                        min</span
-                      >
+                                           <!-- {% live_notify_list list_class="dropdown-menu" %}
+                                              {{ live_notify_list|safe }} -->
+                                              {% for i in user.notifications.unread %}
+                                              <strong>{{ i|safe }}</strong> 
+                                              {% endfor %}
+                                           
+                      <!-- <span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>5 min</span> -->
                     </p>
-                    <p>New token Added</p>
+                    <!-- <p>New token Added</p> -->
                   </div>
                 </div>
               </li>
-              <li class="n-title">
-                <p class="m-b-0">EARLIER</p>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img
-                    class="img-radius"
-                    src="/static/img/img-01.png"
-                    alt="Generic placeholder image"
-                  />
-                  <div class="media-body">
-                    <p>
-                      <strong>Khan Traders</strong
-                      ><span class="n-time text-muted"
-                        ><i class="icon feather icon-clock m-r-10"></i>10
-                        min</span
-                      >
-                    </p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, aut!</p>
-                  </div>
-                </div>
-              </li>
-              <li class="notification">
-                <div class="media">
-                  <img
-                    class="img-radius"
-                    src="/static/img/img-01.png"
-                    alt="Generic placeholder image"
-                  />
-                  <div class="media-body">
-                    <p>
-                      <strong>R.S Traders</strong
-                      ><span class="n-time text-muted"
-                        ><i class="icon feather icon-clock m-r-10"></i>12
-                        min</span
-                      >
-                    </p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas, tenetur.</p>
-                  </div>
-                </div>
-              </li>
-             
             </ul>
             <div class="noti-footer">
-              <a href="#!">show all</a>
+              <a href="#!">Show All</a>
             </div>
           </div>
         </div>

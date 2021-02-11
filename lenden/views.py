@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from notifications.signals import notify
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView
@@ -59,14 +59,15 @@ class AddSalesView(LoginRequiredMixin, CreateView):
         buyer = User.objects.filter(
             trade_license_no=form.instance.buyer).first()
         # print(buyer)
-        if user_product_total_quantity >= (user_total_sell_product_quantity + form.cleaned_data['quantity']):
+        if user_product_total_quantity != None:
+            if user_product_total_quantity >= (user_total_sell_product_quantity + form.cleaned_data['quantity']):
 
-            form.save()
-            notify.send(user, recipient=buyer,
-                        verb="has issued a selling record on your name")
-        else:
-            raise forms.ValidationError(
-                "You don't have enough product to sell")
+                form.save()
+                notify.send(user, recipient=buyer,
+                            verb="has issued a buying record on your name")
+            else:
+                raise forms.ValidationError(
+                    "You don't have enough product to sell")
 
         return super().form_valid(form)
 
@@ -95,14 +96,17 @@ class ImportRecordView(ListView):
         month = strftime('%m')
         year = strftime('%Y')
         if not self.request.user.role == '':
+            print(self.request.user.role)
             if time == 'today':
                 print("TODAYS DATA IS SHOWING")
 
                 my_chalan_for_individual_product = Chalan.objects.filter(
                     owner=self.request.user, product=self.id, import_date__day=today)
 
-                average_price = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id, sell_date__day=today).aggregate(Avg('price'))['price__avg']
+                average_price = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id, import_date__day=today).aggregate(Avg('price'))['price__avg']
+                print(average_price)
+                print("This is type", type(average_price))
 
                 user_product_total_quantity = Chalan.objects.filter(
                     owner=self.request.user, product=self.id, import_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
@@ -115,13 +119,14 @@ class ImportRecordView(ListView):
 
             elif time == 'month':
                 print("THIS MONTH DATA IS SHOWING")
-                print(type(month))
+                # print(type(month))
 
                 my_chalan_for_individual_product = Chalan.objects.filter(
                     owner=self.request.user, product=self.id, import_date__month=month)
 
                 average_price = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__month=month).aggregate(Avg('price'))['price__avg']
+             
 
                 user_product_total_quantity = Chalan.objects.filter(
                     owner=self.request.user, product=self.id, import_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
@@ -163,24 +168,33 @@ class ImportRecordView(ListView):
             context['sold'] = user_total_sell_product_quantity
             context['available'] = (user_product_total_quantity -
                                     user_total_sell_product_quantity)
-            context['average'] = average_price
+            if average_price != None:
+                context['average'] = f"{average_price:.2f}"
+            else:
+                context['average'] = 0
             context['chalans'] = my_chalan_for_individual_product
 
 # USER IS ADMIN
         else:
             if time == 'today':
+                # print(today)
+                print(" TODAY DATA IS SHOWING")
+                import datetime
                 my_chalan_for_individual_product = Chalan.objects.filter(
-                    product=self.id, import_date__day=today).exclude(customs_clearance_no=None)
+                    product=self.id, import_date__gte=datetime.date.today()).exclude(customs_clearance_no=None)
 
                 average_price = Chalan.objects.filter(
-                    product=self.id, import_date__day=today).exclude(customs_clearance_no=None).aggregate(Avg('price'))['price__avg']
+                    product=self.id, import_date__gte=datetime.date.today()).exclude(customs_clearance_no=None).aggregate(Avg('price'))['price__avg']
+          
                 print(average_price)
+                print("This is type",type(average_price))
+
 
                 user_product_total_quantity = Chalan.objects.filter(
-                    product=self.id, import_date__day=today).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                    product=self.id, import_date__gte=datetime.date.today()).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                    product=self.id, sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
+                    product=self.id, sell_date__gte=datetime.date.today()).aggregate(Sum('quantity'))['quantity__sum']
 
             elif time == 'month':
                 print("THIS MONTH DATA IS SHOWING")
@@ -211,7 +225,7 @@ class ImportRecordView(ListView):
                     product=self.id, import_date__year=year).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                    product=self.id, sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
+                    product=self.id, sell_date__year=year,pending=False).aggregate(Sum('quantity'))['quantity__sum']
 
             unit_for_chalan = Chalan.objects.filter(
                 product=self.id).values('unit').first()['unit']
@@ -232,7 +246,10 @@ class ImportRecordView(ListView):
             context['sold'] = user_total_sell_product_quantity
             context['available'] = (user_product_total_quantity -
                                     user_total_sell_product_quantity)
-            context['average'] = average_price
+            if average_price != None:
+                context['average'] = f"{average_price:.2f}"
+            else:
+                context['average'] = 0
             context['chalans'] = my_chalan_for_individual_product
 
         return context
@@ -287,6 +304,9 @@ class SalesRecordView(ListView):
             context['average'] = average_price
             context['sales'] = my_sales_for_individual_product
 
+
+
+# IF USER IS ADMIN
         else:
             my_sales_for_individual_product = SellProduct.objects.filter(
                 product=self.id)
@@ -324,8 +344,6 @@ class SalesRecordView(ListView):
         return context
 
 # TO SAVE a CHALAN object from SELLPRODUCT object:
-
-
 class AutomatedChalanProductAddView(LoginRequiredMixin, CreateView):
     form_class = AddChalanForm
     template_name = 'lenden/add_chalan.html'
@@ -372,3 +390,81 @@ def confirm(request, id):
 #     def get_queryset(self):
 #         return self.model.objects.filter(location__contains=self.request.GET['location'],
 #                                          title__contains=self.request.GET['position'])
+
+
+
+
+#TO SEE THE DIFFERENCE BETWEEN WHOLESALE MARKET AND LOCAL MARKET
+class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
+    model = SellProduct
+    # USE THE TEMPLATE You want to render
+    template_name = 'lenden/sale_product_details.html'
+    context_object_name = 'chalans'
+    paginate_by = 3
+
+    def get_queryset(self):
+        self.id = get_object_or_404(Product, id=self.kwargs['pro_id'])
+        return Product.objects.filter(id=self.request.user.id)
+
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        average_price_in_importer_to_wholeseller = SellProduct.objects.filter(
+                product=self.id, seller__role = 'importer',pending=False).aggregate(Avg('price'))['price__avg']
+        
+        average_price_in_wholeseller_to_retailer = SellProduct.objects.filter(
+                product=self.id, seller__role = 'wholeseller',pending=False).aggregate(Avg('price'))['price__avg']
+
+        print(average_price_in_importer_to_wholeseller)
+        print(average_price_in_wholeseller_to_retailer)
+
+        if average_price_in_importer_to_wholeseller == None:
+            average_price_in_importer_to_wholeseller = 0
+        if average_price_in_wholeseller_to_retailer == None:
+            average_price_in_wholeseller_to_retailer = 0
+        
+        print(average_price_in_importer_to_wholeseller)
+        print(average_price_in_wholeseller_to_retailer)
+
+        print("Difference = ", average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller)
+
+        context['avg_in_imp_to_whlSale'] = average_price_in_importer_to_wholeseller
+        context['avg_in_whlSale_to_rtlr'] = average_price_in_wholeseller_to_retailer
+        return context
+
+
+
+
+
+#PENDING BUYING RECORDS
+
+class PendingBuyingRecodrs(ListView):
+    model = SellProduct
+    # USE THE TEMPLATE You want to render
+    template_name = 'lenden/sale_product_details.html'
+    context_object_name = 'chalans'
+    paginate_by = 3
+
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pending_records = SellProduct.objects.filter(buyer= self.request.user.trade_license_no,pending=True)
+        print(pending_records)
+        context['pending_records'] = pending_records
+        return context
+
+
+
+
+# DJANGO NOTIFICATION MARK AS READ
+from notifications.models import Notification
+def mark_as_read(request):
+    url = request.META.get("HTTP_REFERER")  # get last url
+    unread_notifications = Notification.objects.filter(recipient= request.user, unread=True)
+    print(unread_notifications)
+    for notification in unread_notifications:
+        notification.unread = False
+        notification.save()
+        print(notification)
+
+    return redirect(url)
