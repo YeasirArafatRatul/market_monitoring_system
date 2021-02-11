@@ -23,7 +23,7 @@ def randint():
 
 
 class User(AbstractUser):
-    username = models.CharField(unique=True, max_length=15, error_messages={
+    username = models.CharField(unique=True, max_length=50, error_messages={
         'unique': "A user with that name already exists.",
     })
     email = models.EmailField(unique=True, blank=False, error_messages={
