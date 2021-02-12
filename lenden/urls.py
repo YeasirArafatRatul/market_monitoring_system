@@ -24,4 +24,11 @@ urlpatterns = [
     path('pending-records', PendingBuyingRecodrs.as_view(), name='pending-records'),
 
     path('mark-as-read',mark_as_read,name='mark_as_read'),
+
+
+#     SalesRecordViewForAdmin 
+#     market_type = importer-to-wholeseller or wholeseller-to-importer
+   path('wholeseller-sales-record/<int:pro_id>/<str:time>', SalesRecordViewForAdmin.as_view(),
+         name='wholeseller-sales-record'),
+path('admin-view/sales-record/<int:pro_id>/<str:time>/<str:market_type>', SalesRecordViewForAdmin.as_view(),name='sales-view-for-admin')
 ]
