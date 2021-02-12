@@ -15,9 +15,11 @@ urlpatterns = [
          name='import-records'),
     path('sales-record/<int:pro_id>/<str:time>', SalesRecordView.as_view(),
          name='sales-record'),
+         
     path('confirm/<int:id>', confirm,
          name='confirm'),
     path('details-of-product/<int:pro_id>',
+
     DifferenceBetweenWholeSaleRetailerMarketView.as_view(), name="details-of-two-market"),
     path('pending-records', PendingBuyingRecodrs.as_view(), name='pending-records'),
 

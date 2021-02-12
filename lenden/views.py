@@ -254,7 +254,7 @@ class ImportRecordView(ListView):
 
         return context
 
-
+# FROM IMPORTER TO WHOLESELLER
 class SalesRecordView(ListView):
     model = SellProduct
     # USE THE TEMPLATE You want to render
@@ -344,6 +344,20 @@ class SalesRecordView(ListView):
             context['sales'] = my_sales_for_individual_product
 
         return context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # TO SAVE a CHALAN object from SELLPRODUCT object:
 class AutomatedChalanProductAddView(LoginRequiredMixin, CreateView):
@@ -454,6 +468,9 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
         # print(average_price_in_wholeseller_to_retailer)
 
         # print("Difference = ", average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller)
+
+        context['product'] = Product.objects.filter(
+                id=self.kwargs['pro_id']).first()
 
         context['avg_in_imp_to_whlSale'] = average_price_in_importer_to_wholeseller
         context['avg_in_whlSale_to_rtlr'] = average_price_in_wholeseller_to_retailer
