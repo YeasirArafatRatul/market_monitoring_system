@@ -12,7 +12,7 @@ from lenden.models import Chalan
 from django.db.models import Avg, Sum
 from django.http import HttpResponse
 # Create your views here.
-
+import datetime
 from datetime import time
 from time import strftime
 
@@ -179,7 +179,7 @@ class ImportRecordView(ListView):
             if time == 'today':
                 # print(today)
                 print(" TODAY DATA IS SHOWING")
-                import datetime
+     
                 my_chalan_for_individual_product = Chalan.objects.filter(
                     product=self.id, import_date__gte=datetime.date.today()).exclude(customs_clearance_no=None)
 
@@ -398,7 +398,7 @@ def confirm(request, id):
 class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
     model = SellProduct
     # USE THE TEMPLATE You want to render
-    template_name = 'lenden/sale_product_details.html'
+    template_name = 'lenden/difference_showing_page.html'
     context_object_name = 'chalans'
     paginate_by = 3
 
@@ -409,11 +409,12 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # CALCULATING TODAY's Average_price in Importer to wholesaler market
         average_price_in_importer_to_wholeseller = SellProduct.objects.filter(
-                product=self.id, seller__role = 'importer',pending=False).aggregate(Avg('price'))['price__avg']
-        
+                product=self.id, seller__role = 'importer',pending=False,sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
+              # CALCULATING TODAY's Average_price in Wholesaller to retailer market
         average_price_in_wholeseller_to_retailer = SellProduct.objects.filter(
-                product=self.id, seller__role = 'wholeseller',pending=False).aggregate(Avg('price'))['price__avg']
+                product=self.id, seller__role = 'wholeseller',pending=False,sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
 
         print(average_price_in_importer_to_wholeseller)
         print(average_price_in_wholeseller_to_retailer)
@@ -430,6 +431,7 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
 
         context['avg_in_imp_to_whlSale'] = average_price_in_importer_to_wholeseller
         context['avg_in_whlSale_to_rtlr'] = average_price_in_wholeseller_to_retailer
+        context['difference'] = average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller
         return context
 
 
