@@ -382,16 +382,6 @@ def confirm(request, id):
     return HttpResponse("Done")
 
 
-# class FilterChalanProductsView(ListView):
-#     model = Chalan
-#     template_name = 'dashboard/index.html'
-#     context_object_name = 'chalans'
-
-#     def get_queryset(self):
-#         return self.model.objects.filter(location__contains=self.request.GET['location'],
-#                                          title__contains=self.request.GET['position'])
-
-
 
 
 #TO SEE THE DIFFERENCE BETWEEN WHOLESALE MARKET AND LOCAL MARKET
@@ -409,29 +399,72 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # CALCULATE AVAILABILITY Of Product In market.
+
+        product_total_quantity_to_importers = Chalan.objects.filter(
+                    product=self.id,owner__role='importer').exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+        sold_product_quantity_to_wholesellers = Chalan.objects.filter(
+                    product=self.id,owner__role='wholeseller').aggregate(Sum('quantity'))['quantity__sum']
+
+        if product_total_quantity_to_importers == None:
+            product_total_quantity_to_importers = 0
+        if sold_product_quantity_to_wholesellers == None:
+            sold_product_quantity_to_wholesellers = 0
+
+        available_in_importer_to_wholeseller_market = product_total_quantity_to_importers - sold_product_quantity_to_wholesellers
+        print(sold_product_quantity_to_wholesellers)
+        print(available_in_importer_to_wholeseller_market)
+
+
+        # CALCULATE AVAILABILITY Of Product In Wholesaler Market.
+
+        product_total_quantity_to_wholesellers = Chalan.objects.filter(
+                    product=self.id,owner__role='wholeseller').aggregate(Sum('quantity'))['quantity__sum']
+        sold_product_quantity_to_retailers = Chalan.objects.filter(
+                    product=self.id,owner__role='retailer').aggregate(Sum('quantity'))['quantity__sum']
+
+        if product_total_quantity_to_wholesellers == None:
+            product_total_quantity_to_wholesellers = 0
+        if sold_product_quantity_to_retailers == None:
+            sold_product_quantity_to_retailers = 0
+
+        available_in_wholeseller_to_retailer_market = product_total_quantity_to_wholesellers - sold_product_quantity_to_retailers
+
+        print(available_in_wholeseller_to_retailer_market)
+
+
+
         # CALCULATING TODAY's Average_price in Importer to wholesaler market
         average_price_in_importer_to_wholeseller = SellProduct.objects.filter(
                 product=self.id, seller__role = 'importer',pending=False,sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
-              # CALCULATING TODAY's Average_price in Wholesaller to retailer market
+        # CALCULATING TODAY's Average_price in Wholesaller to retailer market
         average_price_in_wholeseller_to_retailer = SellProduct.objects.filter(
                 product=self.id, seller__role = 'wholeseller',pending=False,sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
-
-        print(average_price_in_importer_to_wholeseller)
-        print(average_price_in_wholeseller_to_retailer)
 
         if average_price_in_importer_to_wholeseller == None:
             average_price_in_importer_to_wholeseller = 0
         if average_price_in_wholeseller_to_retailer == None:
             average_price_in_wholeseller_to_retailer = 0
         
-        print(average_price_in_importer_to_wholeseller)
-        print(average_price_in_wholeseller_to_retailer)
 
-        print("Difference = ", average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller)
+
+        # print(average_price_in_importer_to_wholeseller)
+        # print(average_price_in_wholeseller_to_retailer)
+
+        # print("Difference = ", average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller)
 
         context['avg_in_imp_to_whlSale'] = average_price_in_importer_to_wholeseller
         context['avg_in_whlSale_to_rtlr'] = average_price_in_wholeseller_to_retailer
         context['difference'] = average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller
+
+        context['total_product_to_importers'] = product_total_quantity_to_importers
+        context['sold_to_wholesellers'] = sold_product_quantity_to_wholesellers
+        context['available_in_importer_to_wholeseller_marktet'] = available_in_importer_to_wholeseller_market
+
+        context['total_product_to_wholesellers'] = product_total_quantity_to_wholesellers
+        context['sold_to_retailers'] = sold_product_quantity_to_retailers
+        context['available_in_wholeseller_to_importer_marktet'] = available_in_wholeseller_to_retailer_market
+
         return context
 
 
@@ -470,3 +503,6 @@ def mark_as_read(request):
         print(notification)
 
     return redirect(url)
+
+
+

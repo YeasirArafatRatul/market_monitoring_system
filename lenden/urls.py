@@ -18,7 +18,7 @@ urlpatterns = [
     path('confirm/<int:id>', confirm,
          name='confirm'),
     path('details-of-product/<int:pro_id>',
-    DifferenceBetweenWholeSaleRetailerMarketView.as_view(), name="difference-view"),
+    DifferenceBetweenWholeSaleRetailerMarketView.as_view(), name="details-of-two-market"),
     path('pending-records', PendingBuyingRecodrs.as_view(), name='pending-records'),
 
     path('mark-as-read',mark_as_read,name='mark_as_read'),
