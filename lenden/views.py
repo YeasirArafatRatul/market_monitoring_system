@@ -1,8 +1,9 @@
+from notifications.models import Notification
 from django.http import JsonResponse
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from notifications.signals import notify
-from django.shortcuts import get_object_or_404, render,redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView
@@ -126,7 +127,6 @@ class ImportRecordView(ListView):
 
                 average_price = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__month=month).aggregate(Avg('price'))['price__avg']
-             
 
                 user_product_total_quantity = Chalan.objects.filter(
                     owner=self.request.user, product=self.id, import_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
@@ -179,16 +179,15 @@ class ImportRecordView(ListView):
             if time == 'today':
                 # print(today)
                 print(" TODAY DATA IS SHOWING")
-     
+
                 my_chalan_for_individual_product = Chalan.objects.filter(
                     product=self.id, import_date__gte=datetime.date.today()).exclude(customs_clearance_no=None)
 
                 average_price = Chalan.objects.filter(
                     product=self.id, import_date__gte=datetime.date.today()).exclude(customs_clearance_no=None).aggregate(Avg('price'))['price__avg']
-          
-                print(average_price)
-                print("This is type",type(average_price))
 
+                print(average_price)
+                print("This is type", type(average_price))
 
                 user_product_total_quantity = Chalan.objects.filter(
                     product=self.id, import_date__gte=datetime.date.today()).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
@@ -225,7 +224,7 @@ class ImportRecordView(ListView):
                     product=self.id, import_date__year=year).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                    product=self.id, sell_date__year=year,pending=False).aggregate(Sum('quantity'))['quantity__sum']
+                    product=self.id, sell_date__year=year, pending=False).aggregate(Sum('quantity'))['quantity__sum']
 
             unit_for_chalan = Chalan.objects.filter(
                 product=self.id).values('unit').first()['unit']
@@ -255,6 +254,8 @@ class ImportRecordView(ListView):
         return context
 
 # FROM IMPORTER TO WHOLESELLER
+
+
 class SalesRecordView(ListView):
     model = SellProduct
     # USE THE TEMPLATE You want to render
@@ -306,7 +307,6 @@ class SalesRecordView(ListView):
             context['sales'] = my_sales_for_individual_product
 
 
-
 # IF USER IS ADMIN
         else:
             my_sales_for_individual_product = SellProduct.objects.filter(
@@ -344,19 +344,6 @@ class SalesRecordView(ListView):
             context['sales'] = my_sales_for_individual_product
 
         return context
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # TO SAVE a CHALAN object from SELLPRODUCT object:
@@ -398,9 +385,7 @@ def confirm(request, id):
     return HttpResponse("Done")
 
 
-
-
-#TO SEE THE DIFFERENCE BETWEEN WHOLESALE MARKET AND LOCAL MARKET
+# TO SEE THE DIFFERENCE BETWEEN WHOLESALE MARKET AND LOCAL MARKET
 class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
     model = SellProduct
     # USE THE TEMPLATE You want to render
@@ -412,57 +397,53 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
         self.id = get_object_or_404(Product, id=self.kwargs['pro_id'])
         return Product.objects.filter(id=self.request.user.id)
 
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # CALCULATE AVAILABILITY Of Product In market.
 
         product_total_quantity_to_importers = Chalan.objects.filter(
-                    product=self.id,owner__role='importer').exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+            product=self.id, owner__role='importer').exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
         sold_product_quantity_to_wholesellers = Chalan.objects.filter(
-                    product=self.id,owner__role='wholeseller').aggregate(Sum('quantity'))['quantity__sum']
+            product=self.id, owner__role='wholeseller').aggregate(Sum('quantity'))['quantity__sum']
 
         if product_total_quantity_to_importers == None:
             product_total_quantity_to_importers = 0
         if sold_product_quantity_to_wholesellers == None:
             sold_product_quantity_to_wholesellers = 0
 
-        available_in_importer_to_wholeseller_market = product_total_quantity_to_importers - sold_product_quantity_to_wholesellers
+        available_in_importer_to_wholeseller_market = product_total_quantity_to_importers - \
+            sold_product_quantity_to_wholesellers
         print(sold_product_quantity_to_wholesellers)
         print(available_in_importer_to_wholeseller_market)
-
 
         # CALCULATE AVAILABILITY Of Product In Wholesaler Market.
 
         product_total_quantity_to_wholesellers = Chalan.objects.filter(
-                    product=self.id,owner__role='wholeseller').aggregate(Sum('quantity'))['quantity__sum']
+            product=self.id, owner__role='wholeseller').aggregate(Sum('quantity'))['quantity__sum']
         sold_product_quantity_to_retailers = Chalan.objects.filter(
-                    product=self.id,owner__role='retailer').aggregate(Sum('quantity'))['quantity__sum']
+            product=self.id, owner__role='retailer').aggregate(Sum('quantity'))['quantity__sum']
 
         if product_total_quantity_to_wholesellers == None:
             product_total_quantity_to_wholesellers = 0
         if sold_product_quantity_to_retailers == None:
             sold_product_quantity_to_retailers = 0
 
-        available_in_wholeseller_to_retailer_market = product_total_quantity_to_wholesellers - sold_product_quantity_to_retailers
+        available_in_wholeseller_to_retailer_market = product_total_quantity_to_wholesellers - \
+            sold_product_quantity_to_retailers
 
         print(available_in_wholeseller_to_retailer_market)
 
-
-
         # CALCULATING TODAY's Average_price in Importer to wholesaler market
         average_price_in_importer_to_wholeseller = SellProduct.objects.filter(
-                product=self.id, seller__role = 'importer',pending=False,sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
+            product=self.id, seller__role='importer', pending=False, sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
         # CALCULATING TODAY's Average_price in Wholesaller to retailer market
         average_price_in_wholeseller_to_retailer = SellProduct.objects.filter(
-                product=self.id, seller__role = 'wholeseller',pending=False,sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
+            product=self.id, seller__role='wholeseller', pending=False, sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
 
         if average_price_in_importer_to_wholeseller == None:
             average_price_in_importer_to_wholeseller = 0
         if average_price_in_wholeseller_to_retailer == None:
             average_price_in_wholeseller_to_retailer = 0
-        
-
 
         # print(average_price_in_importer_to_wholeseller)
         # print(average_price_in_wholeseller_to_retailer)
@@ -470,11 +451,12 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
         # print("Difference = ", average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller)
 
         context['product'] = Product.objects.filter(
-                id=self.kwargs['pro_id']).first()
+            id=self.kwargs['pro_id']).first()
 
         context['avg_in_imp_to_whlSale'] = average_price_in_importer_to_wholeseller
         context['avg_in_whlSale_to_rtlr'] = average_price_in_wholeseller_to_retailer
-        context['difference'] = average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller
+        context['difference'] = average_price_in_wholeseller_to_retailer - \
+            average_price_in_importer_to_wholeseller
 
         context['total_product_to_importers'] = product_total_quantity_to_importers
         context['sold_to_wholesellers'] = sold_product_quantity_to_wholesellers
@@ -487,34 +469,30 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
         return context
 
 
-
-
-
-#PENDING BUYING RECORDS
+# PENDING BUYING RECORDS
 
 class PendingBuyingRecodrs(ListView):
     model = SellProduct
     # USE THE TEMPLATE You want to render
-    template_name = 'lenden/sale_product_details.html'
+    template_name = 'lenden/pending_requests.html'
     context_object_name = 'chalans'
     paginate_by = 3
 
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pending_records = SellProduct.objects.filter(buyer= self.request.user.trade_license_no,pending=True)
-        print(pending_records)
+        pending_records = SellProduct.objects.filter(
+            buyer=self.request.user.trade_license_no, pending=True)
         context['pending_records'] = pending_records
         return context
 
 
-
-
 # DJANGO NOTIFICATION MARK AS READ
-from notifications.models import Notification
+
+
 def mark_as_read(request):
     url = request.META.get("HTTP_REFERER")  # get last url
-    unread_notifications = Notification.objects.filter(recipient= request.user, unread=True)
+    unread_notifications = Notification.objects.filter(
+        recipient=request.user, unread=True)
     print(unread_notifications)
     for notification in unread_notifications:
         notification.unread = False
@@ -522,6 +500,3 @@ def mark_as_read(request):
         print(notification)
 
     return redirect(url)
-
-
-
