@@ -47,8 +47,15 @@
                             <span class="text-c-blue">{{pro.name}}</span>
                         </h4>
                         <div>
-                            <a href="/import-record/{{pro.id}}/{{ 'today' }}" class="btn btn-primary btn-sm mr-1 btn-round">See Imports</a>
+                          {% if request.user.role == '' %}
+                          <a href="/details-of-product/{{pro.id}}" class="btn btn-primary btn-sm mr-1 btn-round">See Details</a>
+                          {% else %}
+  <a href="/import-record/{{pro.id}}/{{ 'today' }}" class="btn btn-primary btn-sm mr-1 btn-round">See Imports</a>
                             <a href="/sales-record/{{pro.id}}/{{ 'today' }}" class="btn btn-primary btn-sm btn-round">See Sales</a>
+                          {% endif %}
+                          
+    
+                           
                         </div>
                     </div>
                 </div>
