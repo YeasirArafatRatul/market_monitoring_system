@@ -80,6 +80,7 @@ class ChartView(ListView):
 
 # API ENDPOINT : http://127.0.0.1:8000/api/chalan-chart/<product-id>
 
+# Average Importing Price OF Importers
 class ChalanChart(APIView):
     year = strftime('%Y')
 
@@ -94,21 +95,53 @@ class ChalanChart(APIView):
         i = 1
         for i in range(1, 13):
             avg_of_month = Chalan.objects.filter(product=self.id, import_date__month=str(i), import_date__year=self.year
-                                                 ).aggregate(Avg('price'))['price__avg']
+                                                 , owner__role='importer').aggregate(Avg('price'))['price__avg']
 
             new_data = {(months[i-1]): avg_of_month}
             serializer.update(new_data)
         return Response(serializer)
 
-    # def get_queryset(self):
-    #     self.id = get_object_or_404(Product, id=self.kwargs['id'])
-    #     print(self.id)
-    #     serializer = {}
-    #     i = 1
-    #     for i in range(1, 13):
-    #         avg_of_month = Chalan.objects.filter(product=self.id, import_date__month=str(i), import_date__year=self.year
-    #                                              ).aggregate(Avg('price'))['price__avg']
+#   Average selling price of importers
+# API ENDPOINT : http://127.0.0.1:8000/api/importers-selling-chart/<product-id>
+class ImportersSellingChart(APIView):
+    year = strftime('%Y')
 
-    #         new_data = {(months[i-1]): avg_of_month}
-    #         serializer.update(new_data)
-    #     return Response(serializer.data)
+    """
+    List all snippets, or create a new snippet.
+    """
+
+    def get(self, request, id, format=None):
+        self.id = get_object_or_404(Product, id=self.kwargs['id'])
+        print(self.id)
+        serializer = {}
+        i = 1
+        for i in range(1, 13):
+            avg_of_month = SellProduct.objects.filter(product=self.id, sell_date__month=str(i), sell_date__year=self.year
+                                                 , seller__role='importer').aggregate(Avg('price'))['price__avg']
+
+            new_data = {(months[i-1]): avg_of_month}
+            serializer.update(new_data)
+        return Response(serializer)
+
+
+#   Average selling price of wholesellers
+# API ENDPOINT : http://127.0.0.1:8000/api/wholesellers-selling-chart/<int:id>
+class WholesellersSellingChart(APIView):
+    year = strftime('%Y')
+
+    """
+    List all snippets, or create a new snippet.
+    """
+
+    def get(self, request, id, format=None):
+        self.id = get_object_or_404(Product, id=self.kwargs['id'])
+        print(self.id)
+        serializer = {}
+        i = 1
+        for i in range(1, 13):
+            avg_of_month = SellProduct.objects.filter(product=self.id, sell_date__month=str(i), sell_date__year=self.year,
+                                                 seller__role='wholeseller').aggregate(Avg('price'))['price__avg']
+
+            new_data = {(months[i-1]): avg_of_month}
+            serializer.update(new_data)
+        return Response(serializer)

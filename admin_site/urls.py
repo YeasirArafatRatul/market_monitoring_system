@@ -17,5 +17,11 @@ urlpatterns = [
     path('api/chalan-chart/<int:id>',
          ChalanChart.as_view(), name='chart'),
 
+     path('api/wholesellers-selling-chart/<int:id>',
+         WholesellersSellingChart.as_view(), name='chart'),
+
+     path('api/importers-selling-chart/<int:id>',
+         ImportersSellingChart.as_view(), name='chart'),
+
 
 ]
