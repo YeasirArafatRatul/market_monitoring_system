@@ -1,5 +1,6 @@
-{% load humanize %} {% extends "layouts/base.html" %} {% load static %} {% block
-title %} Dashboard {% endblock %}
+ {% extends "layouts/base.html" %} {% load static %} {% load humanize %}
+
+{% block title %} Dashboard {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %} {% endblock stylesheets %}
@@ -10,11 +11,6 @@ title %} Dashboard {% endblock %}
 <!-- Breadcrumb ENDS -->
 
 <!-- Main Cards STARTS -->
-<<<<<<< HEAD
-<div class="row">
-  <div class="col-12"></div>
-</div>
-=======
 
 <h2>Wholeseller To Importer </h2>
 <P>Total Product of Importers   {{total_product_to_importers}}</P>
@@ -32,7 +28,6 @@ title %} Dashboard {% endblock %}
 <P>Sold to retailers {{ sold_to_retailers }}</P>
 
 <P>Available in Wholeseller To Retailer Market {{ available_in_wholeseller_to_importer_marktet }}</P>
->>>>>>> afd8b215793a04d9b6c5295ea46bdcc130d5984c
 <!-- Main Cards ENDS -->
 
 <!-- Main Cards STARTS -->
