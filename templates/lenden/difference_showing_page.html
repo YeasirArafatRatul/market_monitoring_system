@@ -1,8 +1,170 @@
-{% load humanize %} {% extends "layouts/base.html" %} {% load static %} {% block
-title %} Dashboard {% endblock %}
+{% extends "layouts/base.html" %} {% load static %}
+<!--  -->
+{% load humanize %} {% block title %} Dashboard {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %} {% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+  .differece-list {
+    width: 100vw;
+  }
+
+  .differece-list ul {
+    list-style: none;
+  }
+
+  .background {
+    padding: 0 25px 25px;
+    position: relative;
+    width: 100%;
+  }
+
+  .background::after {
+    content: "";
+    background: #6015d8;
+    background: linear-gradient(to bottom, #7432dd 0%, #6015d8 100%);
+    height: 350px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+
+  @media (min-width: 900px) {
+    .background {
+      padding: 0 0 25px;
+    }
+  }
+
+  .container {
+    margin: 0 auto;
+    padding: 50px 0 0;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  .pricing-features-item span {
+    font-size: 1.2rem;
+    color: teal;
+    font-weight: bold;
+  }
+
+  .panel {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px 25px;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .pricing-table {
+    box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.08),
+      0px 20px 31px 3px rgba(0, 0, 0, 0.09),
+      0px 8px 20px 7px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 900px) {
+    .pricing-table {
+      flex-direction: row;
+    }
+  }
+
+  .pricing-table * {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .pricing-plan {
+    border-bottom: 1px solid #e1f1ff;
+    padding: 25px;
+  }
+
+  .pricing-plan:last-child {
+    border-bottom: none;
+  }
+
+  @media (min-width: 900px) {
+    .pricing-plan {
+      border-bottom: none;
+      border-right: 1px solid #e1f1ff;
+      flex-basis: 100%;
+      padding: 25px 50px;
+    }
+
+    .pricing-plan:last-child {
+      border-right: none;
+    }
+  }
+
+  .pricing-img {
+    margin-bottom: 25px;
+    max-width: 100%;
+  }
+
+  .pricing-header {
+    color: rgb(16, 16, 17);
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  .pricing-features {
+    color: #0f151d;
+    font-weight: 600;
+    font-size: 0.96rem;
+    margin: 50px 0 25px;
+  }
+
+  .pricing-features-item {
+    border-top: 1px solid #e1f1ff;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    padding: 15px 0;
+  }
+
+  .pricing-features-item:last-child {
+    border-bottom: 1px solid #e1f1ff;
+  }
+
+  .pricing-price {
+    color: #1a1522;
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .pricing-button {
+    border: 1px solid #9dd1ff;
+    border-radius: 10px;
+    color: #348efe;
+    display: inline-block;
+    margin: 25px 0;
+    padding: 15px 35px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 150ms ease-in-out;
+  }
+
+  .pricing-button:hover,
+  .pricing-button:focus {
+    background-color: #e1f1ff;
+  }
+
+  .pricing-button.is-featured {
+    background-color: #48aaff;
+    color: #fff;
+  }
+
+  .pricing-button.is-featured:hover,
+  .pricing-button.is-featured:active {
+    background-color: #269aff;
+  }
+</style>
+{% endblock stylesheets %}
 <!--  -->
 {% block content %}
 <!-- Breadcrumb STARTS -->
@@ -10,38 +172,148 @@ title %} Dashboard {% endblock %}
 <!-- Breadcrumb ENDS -->
 
 <!-- Main Cards STARTS -->
-<<<<<<< HEAD
 <div class="row">
-  <div class="col-12"></div>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 style="text-transform: uppercase">Price Difference</h3>
+        <span class="d-block m-t-5"></span>
+        <div class="card-header-right">
+          <div class="btn-group card-option">
+            <button
+              type="button"
+              class="btn dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="feather icon-more-horizontal"></i>
+            </button>
+            <ul
+              class="list-unstyled card-option dropdown-menu dropdown-menu-right"
+            >
+              <li class="dropdown-item full-card">
+                <a href="#!"
+                  ><span><i class="feather icon-maximize"></i> maximize</span
+                  ><span style="display: none"
+                    ><i class="feather icon-minimize"></i> Restore</span
+                  ></a
+                >
+              </li>
+              <li class="dropdown-item minimize-card">
+                <a href="#!"
+                  ><span><i class="feather icon-minus"></i> collapse</span
+                  ><span style="display: none"
+                    ><i class="feather icon-plus"></i> expand</span
+                  ></a
+                >
+              </li>
+              <li class="dropdown-item reload-card">
+                <a href="#!"><i class="feather icon-refresh-cw"></i> reload</a>
+              </li>
+              <li class="dropdown-item close-card">
+                <a href="#!"><i class="feather icon-trash"></i> remove</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-body row">
+        <!--  -->
+        <section class="differece-list">
+          <div class="background">
+            <div class="container">
+              <div class="panel pricing-table">
+                <div class="pricing-plan">
+                  <img
+                    src="https://s22.postimg.cc/8mv5gn7w1/paper-plane.png"
+                    alt=""
+                    class="pricing-img"
+                  />
+                  <h3 class="pricing-header">Importer To Wholesalers</h3>
+                  <ul class="pricing-features">
+                    <li class="pricing-features-item">
+                      Total Product: <span>{{total_product_to_importers}}</span>
+                    </li>
+                    <li class="pricing-features-item">
+                      Sold: <span>{{sold_to_wholesellers}}</span>
+                    </li>
+                    <li class="pricing-features-item">
+                      Available:
+                      <span
+                        >{{available_in_importer_to_wholeseller_marktet}}</span
+                      >
+                    </li>
+                  </ul>
+                  <span class="pricing-price"></span>
+                  <a href="#/" class="pricing-button">Details</a>
+                </div>
+
+                <div class="pricing-plan">
+                  <img
+                    src="https://s28.postimg.cc/ju5bnc3x9/plane.png"
+                    alt=""
+                    class="pricing-img"
+                  />
+                  <h2 class="pricing-header" style="color: #1a043f">
+                    difference and averages
+                  </h2>
+                  <ul class="pricing-features">
+                    <li class="pricing-features-item">
+                      Average Price of Importer:
+                      <span>৳{{avg_in_imp_to_whlSale}}</span>
+                    </li>
+                    <li class="pricing-features-item">
+                      Difference between two Market:
+                      <span>৳{{difference}}</span>
+                    </li>
+                    <li class="pricing-features-item">
+                      Average Price of Wholeseller:
+                      <span>৳{{avg_in_whlSale_to_rtlr}}</span>
+                    </li>
+                  </ul>
+                  <span
+                    style="font-size: 1.5rem"
+                    class="pricing-price pricing-button is-featured"
+                    >Normal</span
+                  >
+                </div>
+
+                <div class="pricing-plan">
+                  <img
+                    src="https://s21.postimg.cc/tpm0cge4n/space-ship.png"
+                    alt=""
+                    class="pricing-img"
+                  />
+                  <h2 class="pricing-header">Importer to retailers</h2>
+                  <ul class="pricing-features">
+                    <li class="pricing-features-item">
+                      TOTAL PRODUCT:
+                      <span>{{total_product_to_wholesellers}}</span>
+                    </li>
+                    <li class="pricing-features-item">
+                      Sold:
+                      <span>{{sold_to_retailers}}</span>
+                    </li>
+                    <li class="pricing-features-item">
+                      Available:
+                      <span
+                        >{{available_in_wholeseller_to_importer_marktet}}</span
+                      >
+                    </li>
+                  </ul>
+                  <span class="pricing-price"></span>
+                  <a href="#/" class="pricing-button">Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--  -->
+      </div>
+    </div>
+  </div>
 </div>
-=======
-
-<h2>Wholeseller To Importer </h2>
-<P>Total Product of Importers   {{total_product_to_importers}}</P>
-<P>Sold To Wholeselles {{sold_to_wholesellers}}</P>
-<P>Available in Importer To Wholeseller market  {{available_in_importer_to_wholeseller_marktet }} </P>
-
-<h2>difference and averages </h2>
-<P>Average Price of Importer To Wholeseller:   {{avg_in_imp_to_whlSale}}</P>
-<P>difference between two Market:  {{difference}}</P>
-<P>Average Price of Wholeseller to Retailer Market : {{avg_in_whlSale_to_rtlr}}</P>
-
-
-<h2>Importer to Wholeseller</h2>
-<P>Total Product of Wholesellers {{ total_product_to_wholesellers }}</P>
-<P>Sold to retailers {{ sold_to_retailers }}</P>
-
-<P>Available in Wholeseller To Retailer Market {{ available_in_wholeseller_to_importer_marktet }}</P>
->>>>>>> afd8b215793a04d9b6c5295ea46bdcc130d5984c
 <!-- Main Cards ENDS -->
-
-<!-- Main Cards STARTS -->
-<p>{{avg_in_imp_to_whlSale}}</p>
-<p>{{difference}}</p>
-<p>{{avg_in_whlSale_to_rtlr}}</p>
-<!-- Main Cards ENDS -->
-<!-- Products Table -->
-
-<!-- Products Table -->
 
 {% endblock content %}
