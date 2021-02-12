@@ -371,7 +371,6 @@ class SalesRecordView(ListView):
                     context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
             
 
-
             context['product_name'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).values('name').first()['name']
             context['product'] = Product.objects.filter(
@@ -750,7 +749,7 @@ class PendingBuyingRecodrs(ListView):
         else:
             pending_records = SellProduct.objects.filter(
             buyer=self.request.user.trade_license_no, pending=True)
-            
+
         context['pending_records'] = pending_records
         return context
 
