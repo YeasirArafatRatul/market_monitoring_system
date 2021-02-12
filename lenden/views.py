@@ -256,15 +256,6 @@ class ImportRecordView(ListView):
         return context
 
 
-
-
-
-
-
-
-
-
-
 # FROM IMPORTER TO WHOLESELLER
 
 
@@ -294,16 +285,16 @@ class SalesRecordView(ListView):
                 print("TODAYS DATA IS SHOWING")
 
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__day=today)
+                    seller=self.request.user, product=self.id, sell_date__day=today)
 
                 average_price = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__day=today).aggregate(Avg('price'))['price__avg']
+                    seller=self.request.user, product=self.id, sell_date__day=today).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                    owner=self.request.user, product=self.id,sell_date__day=today).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                    owner=self.request.user, product=self.id, sell_date__day=today).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
+                    seller=self.request.user, product=self.id, sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
 
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
@@ -317,19 +308,19 @@ class SalesRecordView(ListView):
                     context['unit'] = unit_for_chalan
                 else:
                     context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
-            
+
             elif time == 'month':
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__month=month)
+                    seller=self.request.user, product=self.id, sell_date__month=month)
 
                 average_price = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__month=month).aggregate(Avg('price'))['price__avg']
+                    seller=self.request.user, product=self.id, sell_date__month=month).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                    owner=self.request.user, product=self.id,sell_date__month=month).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                    owner=self.request.user, product=self.id, sell_date__month=month).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
+                    seller=self.request.user, product=self.id, sell_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
 
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
@@ -343,19 +334,19 @@ class SalesRecordView(ListView):
                     context['unit'] = unit_for_chalan
                 else:
                     context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
-            
+
             else:
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__year=year)
+                    seller=self.request.user, product=self.id, sell_date__year=year)
 
                 average_price = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__year=year).aggregate(Avg('price'))['price__avg']
+                    seller=self.request.user, product=self.id, sell_date__year=year).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                    owner=self.request.user, product=self.id,import_date__year=year).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                    owner=self.request.user, product=self.id, import_date__year=year).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                    seller=self.request.user, product=self.id,sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
+                    seller=self.request.user, product=self.id, sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
 
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
@@ -369,7 +360,6 @@ class SalesRecordView(ListView):
                     context['unit'] = unit_for_chalan
                 else:
                     context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
-            
 
             context['product_name'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).values('name').first()['name']
@@ -388,57 +378,54 @@ class SalesRecordView(ListView):
             if time == 'today':
                 print("TODAYS DATA IS SHOWING")
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                   seller__role = 'importer', product=self.id,sell_date__day=today)
+                    seller__role='importer', product=self.id, sell_date__day=today)
 
                 average_price = SellProduct.objects.filter(
-                    seller__role = 'importer',product=self.id,sell_date__day=today).aggregate(Avg('price'))['price__avg']
+                    seller__role='importer', product=self.id, sell_date__day=today).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                   owner__role = 'importer', product=self.id,import_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
-
+                    owner__role='importer', product=self.id, import_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                     seller__role = 'importer',product=self.id,sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
+                    seller__role='importer', product=self.id, sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
 
-            
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
 
                 if user_product_total_quantity == None:
                     user_product_total_quantity = 0
 
-            
             elif time == 'month':
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                    seller__role = 'importer',product=self.id,sell_date__month=month)
+                    seller__role='importer', product=self.id, sell_date__month=month)
 
                 average_price = SellProduct.objects.filter(
-                    seller__role = 'importer',product=self.id,sell_date__month=month).aggregate(Avg('price'))['price__avg']
+                    seller__role='importer', product=self.id, sell_date__month=month).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                 owner__role = 'importer',product=self.id,import_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
+                    owner__role='importer', product=self.id, import_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                 seller__role = 'importer',product=self.id,sell_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
+                    seller__role='importer', product=self.id, sell_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
 
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
 
                 if user_product_total_quantity == None:
                     user_product_total_quantity = 0
-            
+
             else:
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                   seller__role = 'importer',product=self.id,sell_date__year=year)
+                    seller__role='importer', product=self.id, sell_date__year=year)
 
                 average_price = SellProduct.objects.filter(
-                   seller__role = 'importer', product=self.id,sell_date__year=year).aggregate(Avg('price'))['price__avg']
+                    seller__role='importer', product=self.id, sell_date__year=year).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                   owner__role = 'importer', product=self.id,import_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
+                    owner__role='importer', product=self.id, import_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                  seller__role = 'importer', product=self.id,sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
+                    seller__role='importer', product=self.id, sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
 
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
@@ -446,11 +433,9 @@ class SalesRecordView(ListView):
                 if user_product_total_quantity == None:
                     user_product_total_quantity = 0
 
-
-
-
             if SellProduct.objects.filter(product=self.id).exists():
-                unit_for_chalan = SellProduct.objects.filter(product=self.id).values('unit').first()['unit']
+                unit_for_chalan = SellProduct.objects.filter(
+                    product=self.id).values('unit').first()['unit']
                 context['unit'] = unit_for_chalan
             else:
                 context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
@@ -470,8 +455,6 @@ class SalesRecordView(ListView):
         return context
 
 
-
-
 # SALES RECORD VIEW FOR ADMIN
 
 class SalesRecordViewForAdmin(ListView):
@@ -479,7 +462,6 @@ class SalesRecordViewForAdmin(ListView):
     # USE THE TEMPLATE You want to render
     template_name = 'lenden/sale_products_details_of_wholeseller.html'
     context_object_name = 'chalans'
-
 
     def get_queryset(self):
         self.id = get_object_or_404(Product, id=self.kwargs['pro_id'])
@@ -500,16 +482,16 @@ class SalesRecordViewForAdmin(ListView):
                 print("TODAYS DATA IS SHOWING")
 
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                   seller__role = 'wholeseller', product=self.id,sell_date__day=today)
+                    seller__role='wholeseller', product=self.id, sell_date__day=today)
 
                 average_price = SellProduct.objects.filter(
-                    seller__role = 'wholeseller',  product=self.id,sell_date__day=today).aggregate(Avg('price'))['price__avg']
+                    seller__role='wholeseller',  product=self.id, sell_date__day=today).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                     owner__role = 'wholeseller', product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+                    owner__role='wholeseller', product=self.id).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                      seller__role = 'wholeseller',  product=self.id,sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
+                    seller__role='wholeseller',  product=self.id, sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
 
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
@@ -523,19 +505,19 @@ class SalesRecordViewForAdmin(ListView):
                     context['unit'] = unit_for_chalan
                 else:
                     context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
-            
+
             elif time == 'month':
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                    seller__role = 'wholeseller',  product=self.id,sell_date__month=month)
+                    seller__role='wholeseller',  product=self.id, sell_date__month=month)
 
                 average_price = SellProduct.objects.filter(
-                      seller__role = 'wholeseller',  product=self.id,sell_date__month=month).aggregate(Avg('price'))['price__avg']
+                    seller__role='wholeseller',  product=self.id, sell_date__month=month).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                   owner__role = 'wholeseller',  product=self.id,import_date__month=month).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                    owner__role='wholeseller',  product=self.id, import_date__month=month).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                     seller__role = 'wholeseller',  product=self.id,sell_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
+                    seller__role='wholeseller',  product=self.id, sell_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
 
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
@@ -549,19 +531,19 @@ class SalesRecordViewForAdmin(ListView):
                     context['unit'] = unit_for_chalan
                 else:
                     context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
-            
+
             else:
                 my_sales_for_individual_product = SellProduct.objects.filter(
-                     seller__role = 'wholeseller',  product=self.id,sell_date__year=year)
+                    seller__role='wholeseller',  product=self.id, sell_date__year=year)
 
                 average_price = SellProduct.objects.filter(
-                     seller__role = 'wholeseller', product=self.id,sell_date__year=year).aggregate(Avg('price'))['price__avg']
+                    seller__role='wholeseller', product=self.id, sell_date__year=year).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                     owner__role = 'wholeseller',  product=self.id,import_date__year=year).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                    owner__role='wholeseller',  product=self.id, import_date__year=year).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
-                      seller__role = 'wholeseller',  product=self.id,sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
+                    seller__role='wholeseller',  product=self.id, sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
 
                 if user_total_sell_product_quantity == None:
                     user_total_sell_product_quantity = 0
@@ -575,11 +557,10 @@ class SalesRecordViewForAdmin(ListView):
                     context['unit'] = unit_for_chalan
                 else:
                     context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
-            
 
-            
             if SellProduct.objects.filter(product=self.id).exists():
-                unit_for_chalan = SellProduct.objects.filter(product=self.id).values('unit').first()['unit']
+                unit_for_chalan = SellProduct.objects.filter(
+                    product=self.id).values('unit').first()['unit']
                 context['unit'] = unit_for_chalan
             else:
                 context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
@@ -600,12 +581,6 @@ class SalesRecordViewForAdmin(ListView):
             context['average'] = average_price
             context['sales'] = my_sales_for_individual_product
         return context
-
-
-
-
-
-
 
 
 # TO SAVE a CHALAN object from SELLPRODUCT object:

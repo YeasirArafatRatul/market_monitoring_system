@@ -4,7 +4,101 @@
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
-<!--  -->
+<style>
+  #fb {
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 5px;
+    position: relative;
+    height: 175px;
+    margin-top: 10px;
+  }
+  #fb p {
+    font-family: sans-serif;
+    margin: 0 0 0 10px;
+    line-height: 30px;
+  }
+
+  #fb-top span {
+    color: #4267b2;
+    float: right;
+    margin-right: 10px;
+  }
+  #fb-top {
+    background-color: #efefef;
+    height: 30px;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    border: 1px solid gray;
+  }
+
+  #fb img {
+    position: absolute;
+    left: 10px;
+    top: 52.5px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  #info {
+    position: absolute;
+    left: 150px;
+    top: 75px;
+  }
+
+  #info2 {
+    position: absolute;
+    left: 620px;
+    top: 75px;
+  }
+
+  .info {
+    color: #4267b2;
+    line-height: 25px;
+    font-size: 18px;
+  }
+
+  .info span {
+    color: #111;
+    font-size: 14px;
+  }
+
+  #button-block {
+    position: absolute;
+    right: 10px;
+    top: 85px;
+  }
+
+  #button-block div {
+    display: inline-block;
+  }
+
+  #confirm,
+  #delete {
+    background-color: #4267b2;
+    color: white;
+    padding: 7px;
+    border-radius: 2px;
+    margin-right: 10px;
+    font-family: sans-serif;
+  }
+
+  #delete {
+    color: #222;
+    background-color: #bbb;
+    border: 1px solid #999;
+    padding: 6px;
+    margin-right: 0;
+  }
+
+  #button-block div:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+</style>
 {% endblock stylesheets %}
 <!--  -->
 {% block content %}
@@ -34,10 +128,37 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h3 style="text-transform: uppercase"></h3>
+        <h3 style="text-transform: capitalize">All Pending Requests</h3>
       </div>
       <div class="card-body" style="position: relative">
-        <div id="#line-chart-2" style="min-height: 315px"></div>
+        <div id="fb">
+          <div id="fb-top">
+            <p><b>Selling Requests</b></p>
+          </div>
+          <img
+            src="https://via.placeholder.com/150C/O https://placeholder.com/"
+            height="100"
+            width="100"
+            alt="Image of prodct"
+          />
+
+          <p class="info" id="info">
+            <b>Product Name: Onion</b> <br />
+            <span>Date: 01/02/2021</span>
+          </p>
+          <p class="info" id="info2">
+            <b>Seller: ABC</b> <br /><span>Quantity: 550</span>
+          </p>
+          <div id="button-block">
+            <a href="#" class="btn btn-primary">Confirm</a>
+            <a
+              onclick="alert('Are you sure to delete?')"
+              href="#"
+              class="btn btn-danger"
+              >Delete Request</a
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
