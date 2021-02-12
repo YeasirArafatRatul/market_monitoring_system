@@ -1,15 +1,24 @@
 <div class="col-12 clearfix">
-    <div class="card">
-        <div class="card-header">
-            <h5>All Products</h5>
-            <div class="card-header-right">
-                <div class="btn-group card-option">
-                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="card">
+    <div class="card-header">
+      <h5>All Products</h5>
+      <div class="card-header-right">
+        <div class="btn-group card-option">
+          <button
+            type="button"
+            class="btn dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             <i class="feather icon-more-horizontal"></i>
           </button>
-                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-item full-card">
-                            <a href="#!"><span><i class="feather icon-maximize"></i> maximize</span
+          <ul
+            class="list-unstyled card-option dropdown-menu dropdown-menu-right"
+          >
+            <li class="dropdown-item full-card">
+              <a href="#!"
+                ><span><i class="feather icon-maximize"></i> maximize</span
                 ><span style="display: none"
                   ><i class="feather icon-minimize"></i> Restore</span
                 ></a
@@ -25,35 +34,51 @@
             </li>
             <li class="dropdown-item reload-card">
               <a href="#!"><i class="feather icon-refresh-cw"></i> reload</a>
-                        </li>
-                        <li class="dropdown-item close-card">
-                            <a href="#!"><i class="feather icon-trash"></i> remove</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            </li>
+            <li class="dropdown-item close-card">
+              <a href="#!"><i class="feather icon-trash"></i> remove</a>
+            </li>
+          </ul>
         </div>
-        <div class="card-body row">
-            {% for pro in products %}
-            <div class="col-3">
-                <div class="card">
-                    <div style="
+      </div>
+    </div>
+    <div class="card-body row">
+      {% for pro in products %}
+      <div class="col-3">
+        <div class="card">
+          <div
+            style="
               box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
                 rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
               border-radius: 5px;
-            " class="card-body text-center">
-                        <img style="object-fit: cover" src="{{pro.icon.url}}" class="wid-130 hei-130 img-fluid card-img-top" alt="huey freemen" />
-                        <h4 class="m-t-20">
-                            <span class="text-c-blue">{{pro.name}}</span>
-                        </h4>
-                        <div>
-                            <a href="/import-record/{{pro.id}}/{{ 'today' }}" class="btn btn-primary btn-sm mr-1 btn-round">See Imports</a>
-                            <a href="/sales-record/{{pro.id}}/{{ 'today' }}" class="btn btn-primary btn-sm btn-round">See Sales</a>
-                        </div>
-                    </div>
-                </div>
+            "
+            class="card-body text-center"
+          >
+            <img
+              style="object-fit: cover"
+              src="{{pro.icon.url}}"
+              class="wid-130 hei-130 img-fluid card-img-top"
+              alt="huey freemen"
+            />
+            <h4 class="m-t-20">
+              <span class="text-c-blue">{{pro.name}}</span>
+            </h4>
+            <div>
+              <a
+                href="/import-record/{{pro.id}}/{{ 'today' }}"
+                class="btn btn-primary btn-sm mr-1 btn-round"
+                >See Imports</a
+              >
+              <a
+                href="/sales-record/{{pro.id}}/{{ 'today' }}"
+                class="btn btn-primary btn-sm btn-round"
+                >See Sales</a
+              >
             </div>
-            {% endfor %}
+          </div>
         </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </div>

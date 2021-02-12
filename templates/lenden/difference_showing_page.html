@@ -1,21 +1,26 @@
-{% extends "layouts/base.html" %} {% load static %} {% block title %} Dashboard
-{% endblock %}
+{% load humanize %} {% extends "layouts/base.html" %} {% load static %} {% block
+title %} Dashboard {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %} {% endblock stylesheets %}
 <!--  -->
 {% block content %}
 <!-- Breadcrumb STARTS -->
-
+{% include 'includes/product/breadcrumb.html' %}
 <!-- Breadcrumb ENDS -->
+
 <!-- Main Cards STARTS -->
-<P>{{avg_in_imp_to_whlSale}}</P>
-<P>{{difference}}</P>
-<P>{{avg_in_whlSale_to_rtlr}}</P>
+<div class="row">
+  <div class="col-12"></div>
+</div>
+<!-- Main Cards ENDS -->
+
+<!-- Main Cards STARTS -->
+<p>{{avg_in_imp_to_whlSale}}</p>
+<p>{{difference}}</p>
+<p>{{avg_in_whlSale_to_rtlr}}</p>
 <!-- Main Cards ENDS -->
 <!-- Products Table -->
-
-
 
 <!-- Products Table -->
 
