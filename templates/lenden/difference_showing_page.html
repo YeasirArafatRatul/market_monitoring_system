@@ -110,7 +110,7 @@
   .pricing-header {
     color: rgb(16, 16, 17);
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 
   .pricing-features {
@@ -122,7 +122,7 @@
 
   .pricing-features-item {
     border-top: 1px solid #e1f1ff;
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1.5;
     padding: 15px 0;
     text-transform: capitalize;
@@ -236,16 +236,18 @@
                   <h3 class="pricing-header">Importer To Wholesalers</h3>
                   <ul class="pricing-features">
                     <li class="pricing-features-item">
-                      Average Price of Importer:
+                      Average Selling Price of Importer:
                       <span>৳</span
                       ><span id="avgImToWh">{{avg_in_imp_to_whlSale}}</span>
                     </li>
                     <li class="pricing-features-item">
-                      Total Product:
+                      Total Products:
                       <span id="tProImp">{{total_product_to_importers}}</span>
+                      kg
                     </li>
                     <li class="pricing-features-item">
-                      Sold: <span id="soldToWh">{{sold_to_wholesellers}}</span>
+                      Sold:
+                      <span id="soldToWh">{{sold_to_wholesellers}}</span> kg
                     </li>
 
                     <li class="pricing-features-item">
@@ -253,6 +255,7 @@
                       <span id="availImToWh"
                         >{{available_in_importer_to_wholeseller_marktet}}</span
                       >
+                      kg
                     </li>
                   </ul>
                   <span class="pricing-price"></span>
@@ -306,18 +309,19 @@
                   <h2 class="pricing-header">Wholesalers to retailers</h2>
                   <ul class="pricing-features">
                     <li class="pricing-features-item">
-                      Average Price of Wholeseller: <span>৳</span>
+                      Average Selling Price of Wholeseller: <span>৳ </span>
                       <span id="avgPriceWhl">{{avg_in_whlSale_to_rtlr}}</span>
                     </li>
                     <li class="pricing-features-item">
-                      Total Product:
+                      Total Products:
                       <span id="totalWh"
                         >{{total_product_to_wholesellers}}</span
                       >
+                      kg
                     </li>
                     <li class="pricing-features-item">
                       Sold:
-                      <span id="soldReta">{{sold_to_retailers}}</span>
+                      <span id="soldReta">{{sold_to_retailers}}</span> kg
                     </li>
 
                     <li class="pricing-features-item">
@@ -325,6 +329,7 @@
                       <span id="availWhole">
                         {{available_in_wholeseller_to_importer_marktet}}
                       </span>
+                      kg
                     </li>
                   </ul>
                   <span class="pricing-price"></span>
@@ -340,6 +345,20 @@
   </div>
 </div>
 <!-- Main Cards ENDS -->
+<!-- Product Chart -->
+<div id="product_chart" class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 style="text-transform: uppercase">Bar Chart {{ product.name}}</h3>
+      </div>
+      <div class="card-body" style="position: relative">
+        <div id="#line-chart-2" style="min-height: 315px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Product Chart -->
 
 {% endblock content %}
 <!-- Specific Page JS goes HERE  -->
@@ -394,6 +413,100 @@
     const availWhole = document.getElementById("availWhole");
     const availWholeNum = Number(availWhole.innerText);
     animateValue(availWhole, 0, availWholeNum, 1000);
+  });
+</script>
+
+<script src="{% static 'vendor/js/apexcharts/apexcharts.min.js' %}"></script>
+
+<script>
+  "use strict";
+  $(document).ready(function () {
+    const swapValue = (obj) => {
+      Object.keys(obj).forEach((k) => {
+        if (obj[k] === null) {
+          obj[k] = 0;
+        }
+        obj[k] = obj[k].toFixed(2);
+      });
+      return obj;
+    };
+
+    let cData;
+    let url = `http://${window.location.hostname}:${
+      window.location.port
+    }/api/chalan-chart/${window.location.pathname.split("/")[2]}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        cData = swapValue(data);
+        console.log(cData);
+      });
+
+    setTimeout(function () {
+      $(function () {
+        var options = {
+          chart: {
+            height: 300,
+            type: "bar",
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: "55%",
+                endingShape: "rounded",
+              },
+            },
+            zoom: {
+              enabled: false,
+            },
+          },
+          dataLabels: {
+            enabled: false,
+            width: 2,
+          },
+          stroke: {
+            curve: "straight",
+          },
+          colors: ["#331c52"],
+          fill: {
+            type: "gradient",
+            gradient: {
+              shade: "light",
+            },
+          },
+          series: [
+            {
+              name: `Onion`,
+              data: Object.values(cData),
+            },
+          ],
+          title: {
+            text: "Product Price by Month",
+            align: "left",
+            style: {
+              fontSize: "14px",
+              fontWeight: "bold",
+              fontFamily: undefined,
+              color: "#263238",
+            },
+          },
+          grid: {
+            row: {
+              colors: ["#f3f6ff", "transparent"], // takes an array which will be repeated on columns
+              opacity: 0.5,
+            },
+          },
+          xaxis: {
+            categories: Object.keys(cData),
+          },
+        };
+        var chart = new ApexCharts(
+          document.getElementById("#line-chart-2"),
+          options
+        );
+        chart.render();
+      });
+    }, 700);
   });
 </script>
 
