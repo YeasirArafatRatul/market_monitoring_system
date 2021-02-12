@@ -471,9 +471,6 @@ class SalesRecordView(ListView):
         return context
 
 
-<<<<<<< HEAD
-
-
 
 
 # SALES RECORD VIEW FOR ADMIN
@@ -612,8 +609,6 @@ class SalesRecordViewForAdmin(ListView):
 
 
 
-=======
->>>>>>> 5a883d6fb2bec313ffbc3496503f7816804a33bb
 # TO SAVE a CHALAN object from SELLPRODUCT object:
 class AutomatedChalanProductAddView(LoginRequiredMixin, CreateView):
     form_class = AddChalanForm
@@ -748,8 +743,14 @@ class PendingBuyingRecodrs(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pending_records = SellProduct.objects.filter(
+        if self.request.user.role == '':
+            pending_records = SellProduct.objects.filter(
+             pending=True)
+            print(pending_records)
+        else:
+            pending_records = SellProduct.objects.filter(
             buyer=self.request.user.trade_license_no, pending=True)
+            
         context['pending_records'] = pending_records
         return context
 
