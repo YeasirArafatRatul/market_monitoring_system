@@ -465,11 +465,25 @@
             width: 2,
           },
           stroke: {
-            curve: "straight",
+            show: true,
+            width: 2,
+            colors: ["transparent"],
           },
-          colors: ["#331c52"],
           fill: {
             type: "gradient",
+            gradient: {
+              shade: "light",
+              type: "vertical",
+              shadeIntensity: 0.25,
+              inverseColors: true,
+              opacityFrom: 1,
+              opacityTo: 0.7,
+              stops: [50, 100],
+            },
+          },
+          colors: ["#4099ff"],
+          fill: {
+            type: "t",
             gradient: {
               shade: "light",
             },
