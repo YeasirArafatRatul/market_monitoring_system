@@ -296,7 +296,8 @@ class SalesRecordView(ListView):
 
             context['product_name'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).values('name').first()['name']
-
+            context['product'] = Product.objects.filter(
+                id=self.kwargs['pro_id']).first()
             context['total'] = user_product_total_quantity
             context['sold'] = user_total_sell_product_quantity
             context['available'] = (
@@ -334,7 +335,8 @@ class SalesRecordView(ListView):
 
             context['product_name'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).values('name').first()['name']
-
+            context['product'] = Product.objects.filter(
+                id=self.kwargs['pro_id']).first()
             context['total'] = user_product_total_quantity
             context['sold'] = user_total_sell_product_quantity
             context['available'] = available
