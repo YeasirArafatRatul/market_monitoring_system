@@ -1,8 +1,9 @@
 <!--  -->
+
 <div class="col-md-6 col-xl-3">
   <div class="card bg-c-blue order-card">
     <div class="card-body">
-      <h6 class="text-white">Pending Buying Records</h6>
+      <a href="{% url 'lenden:pending-records' %}"><h6 class="text-white">Pending Buying Records</h6></a> 
       <h2 class="text-right text-white">
         <i class="fa fa-money float-left"></i
         ><span>{{pending_sale_record_of_buyer}}</span>

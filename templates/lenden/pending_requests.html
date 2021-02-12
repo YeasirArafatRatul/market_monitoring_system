@@ -130,27 +130,31 @@
       <div class="card-header">
         <h3 style="text-transform: capitalize">All Pending Requests</h3>
       </div>
+      {% if pending_records %}
+      {% for record in pending_records %}
       <div class="card-body" style="position: relative">
         <div id="fb">
           <div id="fb-top">
-            <p><b>Selling Requests</b></p>
+            <p><b>Pending Transaction</b></p>
           </div>
+       
           <img
-            src="https://via.placeholder.com/150C/O https://placeholder.com/"
+            src="{{ record.product.icon.url }}"
             height="100"
             width="100"
             alt="Image of prodct"
           />
-
           <p class="info" id="info">
-            <b>Product Name: Onion</b> <br />
-            <span>Date: 01/02/2021</span>
+            <b>{{record.product.name}}</b> <br />
+            <span>Date: {{ record.sell_date }} </span>
           </p>
           <p class="info" id="info2">
-            <b>Seller: ABC</b> <br /><span>Quantity: 550</span>
+            <b>Seller: {{ record.seller.username }} </b> <br/><span>Quantity:{{ record.quantity }}-{{record.unit}}</span>
           </p>
+          <p class="info"> Buyer: {{ record.buyer}}</p>
+          {% if request.user.role != '' %}
           <div id="button-block">
-            <a href="#" class="btn btn-primary">Confirm</a>
+            <a href="{% url 'lenden:confirm' record.id %}" class="btn btn-primary">Confirm</a>
             <a
               onclick="alert('Are you sure to delete?')"
               href="#"
@@ -158,8 +162,15 @@
               >Delete Request</a
             >
           </div>
+          {% endif %}
         </div>
       </div>
+      {% endfor %}
+      {% else %}
+      <div class="card-body" style="position: relative">
+        <p style="color: #680000;"> No Pending Transactions </p>
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>

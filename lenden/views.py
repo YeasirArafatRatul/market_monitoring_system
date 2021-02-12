@@ -291,7 +291,7 @@ class SalesRecordView(ListView):
                     seller=self.request.user, product=self.id, sell_date__day=today).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                    owner=self.request.user, product=self.id, sell_date__day=today).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                    owner=self.request.user, product=self.id, import_date__day=today).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
@@ -317,7 +317,7 @@ class SalesRecordView(ListView):
                     seller=self.request.user, product=self.id, sell_date__month=month).aggregate(Avg('price'))['price__avg']
 
                 user_product_total_quantity = Chalan.objects.filter(
-                    owner=self.request.user, product=self.id, sell_date__month=month).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                    owner=self.request.user, product=self.id, import_date__month=month).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
@@ -360,6 +360,10 @@ class SalesRecordView(ListView):
                     context['unit'] = unit_for_chalan
                 else:
                     context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
+
+
+            if average_price == None:
+                average_price = 0
 
             context['product_name'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).values('name').first()['name']
@@ -440,6 +444,9 @@ class SalesRecordView(ListView):
             else:
                 context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
 
+
+            if average_price == None:
+                average_price = 0
             context['product_name'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).values('name').first()['name']
             context['product'] = Product.objects.filter(
@@ -574,52 +581,18 @@ class SalesRecordViewForAdmin(ListView):
             # product = Product.objects.filter(id=self.kwargs['pro_id']).first()
             # print(product.id)
 
+            if average_price == None:
+                average_price = 0
+
             context['total'] = user_product_total_quantity
             context['sold'] = user_total_sell_product_quantity
             context['available'] = (
                 user_product_total_quantity - user_total_sell_product_quantity)
-            context['average'] = average_price
+            context['average'] = f"{average_price:.2f}"
             context['sales'] = my_sales_for_individual_product
         return context
 
 
-# TO SAVE a CHALAN object from SELLPRODUCT object:
-class AutomatedChalanProductAddView(LoginRequiredMixin, CreateView):
-    form_class = AddChalanForm
-    template_name = 'lenden/add_chalan.html'
-    success_url = reverse_lazy('accounts:home')
-
-    def form_valid(self, form):
-        request = self.request
-        form.instance.owner = self.request.user
-        form.save()
-        return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.all()
-        return context
-
-
-def confirm(request, id):
-    obj = SellProduct.objects.get(id=id)
-    # print("HELLLLLLLLLLLLLLLLO")
-    # print(obj.pending)
-    obj.pending = False
-    obj.save(update_fields=["pending"])
-
-    @receiver(post_save, sender=SellProduct)
-    def create_object(sender, instance, created, **kwargs):
-        user = User.objects.get(trade_license_no=instance.buyer)
-        # print(user)
-        if created and instance.pending == False:
-            Chalan.objects.create(owner=user, product=instance.product, quantity=instance.quantity,
-                                  unit=instance.unit, price=instance.price, import_date=instance.sell_date,
-                                  imported_from=instance.seller.username)
-            post_save.connect(create_object, sender=SellProduct)
-
-    create_object(sender=SellProduct, instance=obj, created=True)
-    return HttpResponse("Done")
 
 
 # TO SEE THE DIFFERENCE BETWEEN WHOLESALE MARKET AND LOCAL MARKET
@@ -719,19 +692,56 @@ class PendingBuyingRecodrs(ListView):
         context = super().get_context_data(**kwargs)
         if self.request.user.role == '':
             pending_records = SellProduct.objects.filter(
-             pending=True)
+             pending=True).order_by('-id')
             print(pending_records)
         else:
             pending_records = SellProduct.objects.filter(
-            buyer=self.request.user.trade_license_no, pending=True)
+            buyer=self.request.user.trade_license_no, pending=True).order_by('-id')
 
         context['pending_records'] = pending_records
         return context
 
 
+# TO SAVE a CHALAN object from SELLPRODUCT object:
+class AutomatedChalanProductAddView(LoginRequiredMixin, CreateView):
+    form_class = AddChalanForm
+    template_name = 'lenden/add_chalan.html'
+    success_url = reverse_lazy('accounts:home')
+
+    def form_valid(self, form):
+        request = self.request
+        form.instance.owner = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.all()
+        return context
+
+
+def confirm(request, id):
+    obj = SellProduct.objects.get(id=id)
+    # print("HELLLLLLLLLLLLLLLLO")
+    # print(obj.pending)
+    obj.pending = False
+    obj.save(update_fields=["pending"])
+
+    url = request.META.get("HTTP_REFERER")  # get last url
+    @receiver(post_save, sender=SellProduct)
+    def create_object(sender, instance, created, **kwargs):
+        user = User.objects.get(trade_license_no=instance.buyer)
+        # print(user)
+        if created and instance.pending == False:
+            Chalan.objects.create(owner=user, product=instance.product, quantity=instance.quantity,
+                                  unit=instance.unit, price=instance.price, import_date=instance.sell_date,
+                                  imported_from=instance.seller.username)
+            post_save.connect(create_object, sender=SellProduct)
+
+    create_object(sender=SellProduct, instance=obj, created=True)
+    return redirect(url)
+
 # DJANGO NOTIFICATION MARK AS READ
-
-
 def mark_as_read(request):
     url = request.META.get("HTTP_REFERER")  # get last url
     unread_notifications = Notification.objects.filter(
