@@ -352,3 +352,92 @@ class ListOfUsersView(ListView):
         context = super(ListView, self).get_context_data(**kwargs)
         context['role'] = self.kwargs['role'].capitalize()+'s'
         return context
+
+from django.contrib.auth.decorators import login_required
+@login_required(login_url='/login')
+def profile(request):
+    current_user = request.user
+    profile = UserProfile.objects.get(user_id=current_user.id)
+    print(profile.user.id)
+
+    context = {
+               'profile': profile,
+               }
+    return render(request, 'user_profile.html', context)    
+
+
+
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = 'accounts/user_profile.html'
+    context_object_name = 'user'
+
+   # this function serves the product id
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(User, id=id_)
+
+    def get_context_data(self, **kwargs):
+        id_ = self.kwargs.get("id")
+        current_user = User.objects.get(id=id_)
+        context = super().get_context_data(**kwargs)
+
+
+        #  for PRODUCT SHOWCASING
+        if not current_user.role == '':
+
+            product_from_chalan = Chalan.objects.filter(
+                owner=current_user)
+
+            unique_products = Chalan.objects.filter(owner=current_user).order_by(
+                'product').values('product').distinct()
+
+            # print(unique_products)
+            products = []
+
+            for k in unique_products:
+                query = Product.objects.get(id=k['product'])
+                products.append(query)
+
+            # print(products)
+
+            chalans = Chalan.objects.filter(
+                owner_id=current_user.id).order_by('-id')[:8]
+            pending_sale_record_of_buyer = SellProduct.objects.filter(
+                buyer=current_user.trade_license_no, pending=True).order_by('-created_at').count()
+
+            # print(current_user.trade_license_no)
+
+            pending_sale_record_of_seller = SellProduct.objects.filter(
+                seller=current_user, pending=True).order_by('-created_at').count()
+
+            total_sales = SellProduct.objects.filter(
+                seller=current_user).aggregate(Sum('price'))['price__sum']
+
+            if total_sales == None:
+                total_sales = 0
+
+            number_of_sellings = SellProduct.objects.filter(
+                seller=current_user).count()
+
+            number_of_buyings = SellProduct.objects.filter(
+                buyer=current_user.trade_license_no).count()
+
+            if number_of_buyings == None:
+                number_of_buyings = 0
+            elif number_of_sellings == None:
+                number_of_sellings = 0
+
+            number_of_transactions = number_of_buyings + number_of_sellings
+
+            profile = UserProfile.objects.get(user_id=id_)
+
+            context = {
+                    'products': products,
+                    'profile': profile,
+            }
+            # imports = Chalan.objects.filter(owner=user)
+
+            # context['sales'] = SellProduct.objects.filter(seller=user)
+            return context

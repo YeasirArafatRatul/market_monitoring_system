@@ -233,8 +233,8 @@
 <div class="container">
     <div class="row align-items-stretch">
         <div class="fb-profile">
-            <img align="left" class="fb-image-lg" src="{{ profile.user.userprofile.cover_img.url }}" alt="Cover Image" />
-            <img align="left" class="fb-image-profile thumbnail" src="{{ profile.user.userprofile.image.url  }}" alt="Profile image example" />
+            <!-- <img align="left" class="fb-image-lg" src="{{ profile.user.userprofile.cover_img.url }}" alt="Cover Image" />
+            <img align="left" class="fb-image-profile thumbnail" src="{{ profile.user.userprofile.image.url  }}" alt="Profile image example" /> -->
             <!-- find name -->
             {% if request.user.is_authenticated %}
             <div class="fb-profile-text">
@@ -255,6 +255,13 @@
 
 
             {% endif %}
+            {% for data in products %}
+            <p>{{data.name}}</p>
+            {% endfor %}
+            <!-- <hr>
+            {% for data in sales %}
+            <p>{{data.product.name}}</p>
+            {% endfor %} -->
         </div>
     </div>
 </div>

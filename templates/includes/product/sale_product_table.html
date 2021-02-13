@@ -76,14 +76,14 @@
                     <th>Quantity</th>
                     <th>Unit</th>
                     <th>Price(TK)</th>
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
                     {% for object in sales %}
                     <tr>
                     <td>{{object.sell_date}}</td>
                     <td>{{object.product.name}}</td>
-                    <td>{{object.seller.username}}</td>
+                    <td><a href="{% url 'accounts:user-detail' object.seller.id %}">{{object.seller.username}}</a></td>
                     <td>{{object.buyer}}</td>
                     <!-- <td>{{object.customs_clearance_no}}</td> -->
                     <td>{{object.quantity}}</td>

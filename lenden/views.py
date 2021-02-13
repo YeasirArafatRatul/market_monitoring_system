@@ -289,9 +289,12 @@ class SalesRecordView(ListView):
 
                 average_price = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__day=today).aggregate(Avg('price'))['price__avg']
-
-                user_product_total_quantity = Chalan.objects.filter(
+                if self.request.user.role == 'importer':
+                    user_product_total_quantity = Chalan.objects.filter(
                     owner=self.request.user, product=self.id, import_date__day=today).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                else:
+                     user_product_total_quantity = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id, import_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__day=today).aggregate(Sum('quantity'))['quantity__sum']
@@ -316,8 +319,12 @@ class SalesRecordView(ListView):
                 average_price = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__month=month).aggregate(Avg('price'))['price__avg']
 
-                user_product_total_quantity = Chalan.objects.filter(
+                if self.request.user.role == 'importer':
+                    user_product_total_quantity = Chalan.objects.filter(
                     owner=self.request.user, product=self.id, import_date__month=month).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                else:
+                     user_product_total_quantity = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id, import_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__month=month).aggregate(Sum('quantity'))['quantity__sum']
@@ -342,8 +349,12 @@ class SalesRecordView(ListView):
                 average_price = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__year=year).aggregate(Avg('price'))['price__avg']
 
-                user_product_total_quantity = Chalan.objects.filter(
+                if self.request.user.role == 'importer':
+                    user_product_total_quantity = Chalan.objects.filter(
                     owner=self.request.user, product=self.id, import_date__year=year).exclude(customs_clearance_no=None).aggregate(Sum('quantity'))['quantity__sum']
+                else:
+                     user_product_total_quantity = Chalan.objects.filter(
+                    owner=self.request.user, product=self.id, import_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
 
                 user_total_sell_product_quantity = SellProduct.objects.filter(
                     seller=self.request.user, product=self.id, sell_date__year=year).aggregate(Sum('quantity'))['quantity__sum']
@@ -630,8 +641,8 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
 
         product_total_quantity_to_wholesellers = Chalan.objects.filter(
             product=self.id, owner__role='wholeseller').aggregate(Sum('quantity'))['quantity__sum']
-        sold_product_quantity_to_retailers = Chalan.objects.filter(
-            product=self.id, owner__role='retailer').aggregate(Sum('quantity'))['quantity__sum']
+        sold_product_quantity_to_retailers = SellProduct.objects.filter(
+            product=self.id, seller__role='wholeseller').aggregate(Sum('quantity'))['quantity__sum']
 
         if product_total_quantity_to_wholesellers == None:
             product_total_quantity_to_wholesellers = 0
@@ -649,6 +660,7 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
         # CALCULATING TODAY's Average_price in Wholesaller to retailer market
         average_price_in_wholeseller_to_retailer = SellProduct.objects.filter(
             product=self.id, seller__role='wholeseller', pending=False, sell_date__gte=datetime.date.today()).aggregate(Avg('price'))['price__avg']
+        print("lkasdfjlasjdflksjf;lksadjf",average_price_in_wholeseller_to_retailer)
 
         if average_price_in_importer_to_wholeseller == None:
             average_price_in_importer_to_wholeseller = 0
@@ -675,7 +687,6 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
         context['total_product_to_wholesellers'] = product_total_quantity_to_wholesellers
         context['sold_to_retailers'] = sold_product_quantity_to_retailers
         context['available_in_wholeseller_to_importer_marktet'] = available_in_wholeseller_to_retailer_market
-
         return context
 
 

@@ -4,7 +4,7 @@ from .models import *
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['trade_license_no', 'username', ]
+    list_display = ['trade_license_no','role', 'username', ]
 
 
 admin.site.register(User, UserAdmin)
