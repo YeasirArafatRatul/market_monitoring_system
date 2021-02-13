@@ -330,6 +330,7 @@
                     </li>
                   </ul>
                   <span
+                    id="msg"
                     style="font-size: 1rem"
                     class="badge badge-pill badge-success"
                     >Normal</span
@@ -458,6 +459,22 @@
     const availWhole = document.getElementById("availWhole");
     const availWholeNum = Number(availWhole.innerText);
     animateValue(availWhole, 0, availWholeNum, 1000);
+
+    const messageEl = document.getElementById("msg");
+
+    if (diffNum > 10) {
+      messageEl.textContent = "Unusal";
+      messageEl.classList.remove("badge-success");
+      messageEl.classList.remove("badge-danger");
+      messageEl.classList.add("badge-warning");
+    }
+
+    if (diffNum > 15) {
+      messageEl.textContent = "Critical";
+      messageEl.classList.remove("badge-success");
+      messageEl.classList.remove("badge-warning");
+      messageEl.classList.add("badge-danger");
+    }
   });
 </script>
 
