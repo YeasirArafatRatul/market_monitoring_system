@@ -51,10 +51,14 @@
 
   #info2 {
     position: absolute;
-    left: 620px;
+    left: 450px;
     top: 75px;
   }
-
+  #info3 {
+    position: absolute;
+    left: 850px;
+    top: 90px;
+  }
   .info {
     color: #4267b2;
     line-height: 25px;
@@ -130,14 +134,13 @@
       <div class="card-header">
         <h3 style="text-transform: capitalize">All Pending Requests</h3>
       </div>
-      {% if pending_records %}
-      {% for record in pending_records %}
+      {% if pending_records %} {% for record in pending_records %}
       <div class="card-body" style="position: relative">
         <div id="fb">
           <div id="fb-top">
             <p><b>Pending Transaction</b></p>
           </div>
-       
+
           <img
             src="{{ record.product.icon.url }}"
             height="100"
@@ -149,12 +152,18 @@
             <span>Date: {{ record.sell_date }} </span>
           </p>
           <p class="info" id="info2">
-            <b>Seller: {{ record.seller.username }} </b> <br/><span>Quantity:{{ record.quantity }}-{{record.unit}}</span>
+            <b>Seller: {{ record.seller.username }} </b> <br /><span
+              >Quantity:{{ record.quantity }}-{{record.unit}}</span
+            >
           </p>
-          <p class="info"> Buyer: {{ record.buyer}}</p>
+          <p class="info" id="info3"><b>Buyer: {{ record.buyer}}</b></p>
           {% if request.user.role != '' %}
           <div id="button-block">
-            <a href="{% url 'lenden:confirm' record.id %}" class="btn btn-primary">Confirm</a>
+            <a
+              href="{% url 'lenden:confirm' record.id %}"
+              class="btn btn-primary"
+              >Confirm</a
+            >
             <a
               onclick="alert('Are you sure to delete?')"
               href="#"
@@ -165,11 +174,10 @@
           {% endif %}
         </div>
       </div>
-      {% endfor %}
-      {% else %}
+      {% endfor %} {% else %}
       <div class="card-body" style="position: relative">
-        <p style="color: #680000;"> No Pending Transactions </p>
-        </div>
+        <p style="color: #680000">No Pending Transactions</p>
+      </div>
       {% endif %}
     </div>
   </div>
