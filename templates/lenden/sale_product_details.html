@@ -1,12 +1,44 @@
-{% extends "layouts/base.html" %} {% load static %} {% block title %} Dashboard
-{% endblock %}
+{% extends "layouts/base.html" %} {% load static %}
+<!--  -->
+{% block title %} {% if request.user.role == '' %} Sell Record of
+Importers({{product.name}}) {% else %} Sell Record of 
+{{product.name}} 
+{% endif %} {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %} {% endblock stylesheets %}
 <!--  -->
 {% block content %}
 <!-- Breadcrumb STARTS -->
-{% include 'includes/product/breadcrumb.html' %}
+<div class="page-header">
+  <div class="page-block">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <div class="page-header-title">
+          {% if request.user.role == '' %}
+          <h5 class="m-b-10">Sell Record of Importers({{product.name}})</h5>
+          {% else %}
+          <h5 class="m-b-10">Sell Record of {{product.name}}</h5>
+          {% endif %}
+        </div>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'accounts:home' %}"
+              ><i class="feather icon-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item">
+            {% if request.user.role == '' %}
+            <a href="#">Sell Record of Importers({{product.name}})</a>
+            {% else %}
+            <a href="#">Sell Record of {{product.name}}</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Breadcrumb ENDS -->
 <!-- Main Cards STARTS -->
 <div class="row">{% include 'includes/product/card.html' %}</div>
