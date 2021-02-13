@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{% static '/css/landing_style.css' %}" />
   </head>
   <body>
-    <header style="margin-top: 10px">
+    <header style="margin-top: 20px">
       <h1 style="font-family: 'LANGAR'; margin-bottom: 0; color: #01051b">
         <i class="fa fa-modx"> </i> M.M.S
       </h1>
@@ -28,8 +28,13 @@
         <ul>
           <li><a href="#features-container">Features</a></li>
           <li><a href="#users-container">Users</a></li>
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'accounts:dashboard' %}">Dash Board</a></li>
+          <!-- <li><a href="{% url 'accounts:register' %}">Sign Up</a></li> -->
+          {% else %}
           <li><a href="{% url 'accounts:login' %}">Sign In</a></li>
           <li><a href="{% url 'accounts:register' %}">Sign Up</a></li>
+          {% endif %}
         </ul>
       </nav>
     </header>
@@ -39,16 +44,13 @@
 
         <div class="section-intro">
           <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, non.
+            CENTRALIZED MARKET MONITORING AND DISTRIBUTION SYSTEM FOR BANGLADESH
           </h2>
           <p class="section-text intro-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita
-            explicabo officia vel laboriosam veritatis quaerat fugit hic quam
-            ipsam maiores rem aliquam quasi eum, provident nobis reprehenderit
-            dolor. Ad, similique?
+            Price hike of essential commodities is a “buzz” word which has become the major challenge faced by the people of Bangladesh. Especially, the poorest segment of our country and the limited earners hit hard by the quick movement of price of essential commodities. We see that the main reasons of the problem is syndicate of dishonest traders/distributors. To solve the problem we are going to implement a project called “CENTRALIZED MARKET MONITORING AND DISTRIBUTION SYSTEM FOR BANGLADESH”.  In this project we create a transparent distribution flow to ensure fair price in the local markets of each region of the country. We ensure of stop artificial price hikes of daily necessary items. The main aim of this project is to break the syndicate of dishonest traders and ensure rights of consumer.
           </p>
           <div class="button-group">
-            <button class="btn get-started">Get Started</button>
+            <!-- <button class="btn get-started">Get Started</button> -->
           </div>
         </div>
       </section>
@@ -57,8 +59,7 @@
         <div class="content">
           <h1 class="title">Features of Our Project</h1>
           <p class="desc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit! <br />Lorem
-            ipsum dolor sit amet consectetur adipisicing elit!
+           <br/><br/>
           </p>
 
           <div class="cards">
@@ -70,11 +71,9 @@
                   role="presentation"
                 />
               </div>
-              <div class="card-title">Lorem, ipsum.</div>
+              <div class="card-title"> CENTRALIZED</div>
               <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Obcaecati illo sunt quae mollitia doloribus praesentium
-                doloremque unde earum.
+              The supply chain of a product can be monitored by a central authority.
               </div>
             </div>
             <div class="card">
@@ -85,11 +84,9 @@
                   role="presentation"
                 />
               </div>
-              <div class="card-title">Lorem, ipsum.</div>
+              <div class="card-title">TRANSPARENT</div>
               <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
-                modi sapiente incidunt expedita odio cumque mollitia voluptates,
-                architecto aspernatur quae?
+                All the transactions between traders are visible to the admins.
               </div>
             </div>
             <div class="card">
@@ -100,11 +97,9 @@
                   role="presentation"
                 />
               </div>
-              <div class="card-title">Lorem, ipsum.</div>
+              <div class="card-title">COMPARABLE</div>
               <div class="card-body">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas,
-                dolor assumenda. Aliquid cum quisquam velit pariatur laudantium?
-                Hic, rerum eaque!
+              Two layers of market can be compared.
               </div>
             </div>
           </div>
@@ -115,8 +110,7 @@
         <div class="content">
           <h1 class="title">Users</h1>
           <p class="desc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit! <br />Lorem
-            ipsum dolor sit amet consectetur adipisicing elit!
+            In our System We have 4 different types of users
           </p>
         </div>
         <div class="feature-card__container">
@@ -124,11 +118,10 @@
             <h2 class="feature-card__title">Importer</h2>
             <div class="feature-card__text">
               <ul>
-                <li>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Can Add Record Of His Imports</li>
+                <li>Can Add Record Of His Sales</li>
+                <li>Can See the availabily of his individual product</li>
+                <li>Can see the average price of individual product in the market</li>
               </ul>
             </div>
             <img
@@ -143,12 +136,11 @@
               <div class="feature-card__text">
                 <ul>
                   <li>
-                    Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+                    Admin has the control over the whole environment
                   </li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Admin can see all the transactions among traders</li>
+                  <li>Admin can see the differecne between the two layers of market</li>
+                  <li>Admin can see the status of The Whole Market</li>
                 </ul>
               </div>
               <img
@@ -161,13 +153,9 @@
               <h2 class="feature-card__title">Retailer</h2>
               <div class="feature-card__text">
                 <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
-                  </li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Can Add Record Of His Sales</li>
+                  <li>Can See the availabily of his individual product</li>
+                  <li>Can see the average price of individual product in the market</li>
                 </ul>
               </div>
               <img
@@ -181,11 +169,10 @@
             <h2 class="feature-card__title">Wholesaler</h2>
             <div class="feature-card__text">
               <ul>
-                <li>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
-                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Can Add Record Of His Sales</li>
+                <li>Can Send a sell request</li>
+                <li>Can See the availabily of his individual product</li>
+                <li>Can see the average price of individual product in the market</li>
               </ul>
             </div>
             <img
