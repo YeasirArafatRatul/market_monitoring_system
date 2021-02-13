@@ -390,6 +390,9 @@ class SalesRecordView(ListView):
 
 # IF USER IS ADMIN
         else:
+            total_quantity_of_products = Chalan.objects.filter(owner__role='importer', product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+            total_sold = SellProduct.objects.filter(seller__role='importer', product=self.id).aggregate(Sum('quantity'))['quantity__sum']
+           
             if time == 'today':
                 print("TODAYS DATA IS SHOWING")
                 my_sales_for_individual_product = SellProduct.objects.filter(
@@ -456,17 +459,26 @@ class SalesRecordView(ListView):
                 context['message'] = "NO SELL IS RECORDED FOR THIS PRODUCT"
 
 
+
+
+            if total_quantity_of_products == None:
+                total_quantity_of_products = 0
+
+            if total_sold == None:
+                total_sold = 0
+
             if average_price == None:
                 average_price = 0
-            context['product_name'] = Product.objects.filter(
-                id=self.kwargs['pro_id']).values('name').first()['name']
+
+
+
             context['product'] = Product.objects.filter(
                 id=self.kwargs['pro_id']).first()
 
             context['total'] = user_product_total_quantity
             context['sold'] = user_total_sell_product_quantity
             context['available'] = (
-                user_product_total_quantity - user_total_sell_product_quantity)
+                total_quantity_of_products - total_sold)
             context['average'] = f"{average_price:.2f}"
             context['sales'] = my_sales_for_individual_product
 
