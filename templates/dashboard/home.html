@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+    <!-- Favicon icon -->
+    <link
+      rel="icon"
+      href="{% static 'assets/favicon.ico' %}"
+      type="image/x-icon"
+    />
+    <title>Home | Market Monitoring System</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/landing_style.css' %}" />
+  </head>
+  <body>
+    <header style="margin-top: 10px">
+      <h1 style="font-family: 'LANGAR'; margin-bottom: 0; color: #01051b">
+        <i class="fa fa-modx"> </i> M.M.S
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="#features-container">Features</a></li>
+          <li><a href="#users-container">Users</a></li>
+          <li><a href="{% url 'accounts:login' %}">Sign In</a></li>
+          <li><a href="{% url 'accounts:register' %}">Sign Up</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="hero-container" class="hero-container">
+        <div class="illustration illustration-1"></div>
+
+        <div class="section-intro">
+          <h2>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, non.
+          </h2>
+          <p class="section-text intro-text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita
+            explicabo officia vel laboriosam veritatis quaerat fugit hic quam
+            ipsam maiores rem aliquam quasi eum, provident nobis reprehenderit
+            dolor. Ad, similique?
+          </p>
+          <div class="button-group">
+            <button class="btn get-started">Get Started</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="features-container" class="features-container">
+        <div class="content">
+          <h1 class="title">Features of Our Project</h1>
+          <p class="desc">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit! <br />Lorem
+            ipsum dolor sit amet consectetur adipisicing elit!
+          </p>
+
+          <div class="cards">
+            <div class="card">
+              <div class="card-icon">
+                <img
+                  src="http://127.0.0.1:8000/media/landing_images/icon-brand-recognition.svg"
+                  alt=""
+                  role="presentation"
+                />
+              </div>
+              <div class="card-title">Lorem, ipsum.</div>
+              <div class="card-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Obcaecati illo sunt quae mollitia doloribus praesentium
+                doloremque unde earum.
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-icon">
+                <img
+                  src="http://127.0.0.1:8000/media/landing_images/icon-detailed-records.svg"
+                  alt=""
+                  role="presentation"
+                />
+              </div>
+              <div class="card-title">Lorem, ipsum.</div>
+              <div class="card-body">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
+                modi sapiente incidunt expedita odio cumque mollitia voluptates,
+                architecto aspernatur quae?
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-icon">
+                <img
+                  src="http://127.0.0.1:8000/media/landing_images/icon-fully-customizable.svg"
+                  alt=""
+                  role="presentation"
+                />
+              </div>
+              <div class="card-title">Lorem, ipsum.</div>
+              <div class="card-body">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas,
+                dolor assumenda. Aliquid cum quisquam velit pariatur laudantium?
+                Hic, rerum eaque!
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="users-container" class="users-container">
+        <div class="content">
+          <h1 class="title">Users</h1>
+          <p class="desc">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit! <br />Lorem
+            ipsum dolor sit amet consectetur adipisicing elit!
+          </p>
+        </div>
+        <div class="feature-card__container">
+          <div class="feature-card feature-supervisor">
+            <h2 class="feature-card__title">Importer</h2>
+            <div class="feature-card__text">
+              <ul>
+                <li>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+              </ul>
+            </div>
+            <img
+              class="feature-card__img"
+              src="http://127.0.0.1:8000/media/landing_images/importer.svg"
+              alt="icon-importer"
+            />
+          </div>
+          <div class="feature-card__container--middle">
+            <div class="feature-card feature-team">
+              <h2 class="feature-card__title">Admin</h2>
+              <div class="feature-card__text">
+                <ul>
+                  <li>
+                    Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+                  </li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                </ul>
+              </div>
+              <img
+                class="feature-card__img"
+                src="http://127.0.0.1:8000/media/landing_images/admin.svg"
+                alt="icon-admin"
+              />
+            </div>
+            <div class="feature-card feature-karma">
+              <h2 class="feature-card__title">Retailer</h2>
+              <div class="feature-card__text">
+                <ul>
+                  <li>
+                    Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+                  </li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                </ul>
+              </div>
+              <img
+                class="feature-card__img"
+                src="http://127.0.0.1:8000/media/landing_images/retailer.svg"
+                alt="icon-retailer"
+              />
+            </div>
+          </div>
+          <div class="feature-card feature-calculator">
+            <h2 class="feature-card__title">Wholesaler</h2>
+            <div class="feature-card__text">
+              <ul>
+                <li>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+                <li>Lorem ipsum dolor sit amet.</li>
+              </ul>
+            </div>
+            <img
+              class="feature-card__img"
+              src="http://127.0.0.1:8000/media/landing_images/wholesale.svg"
+              alt="icon-wholesale"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-body-container">
+        <div class="footer-section-contact">
+          <h2 style="font-family: 'LANGAR'; margin-bottom: 0; color: #f1f3ff">
+            <i class="fa fa-modx"> </i> M.M.S
+          </h2>
+          <p>
+            <img
+              src="http://127.0.0.1:8000/media/landing_images/icon-phone.svg"
+              alt=""
+              class="contact-icon"
+            />
+            Phone: +880-182-987-4567
+          </p>
+          <p>
+            <img
+              src="http://127.0.0.1:8000/media/landing_images/icon-email.svg"
+              alt=""
+              class="contact-icon"
+            />
+            admin@mms.com
+          </p>
+        </div>
+        <div class="footer-section-about">
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-section-terms">
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Privacy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section-social">
+          <ul class="social-link-list">
+            <li>
+              <a href="#">
+                <span class="sr-only">Redirects to our facebook page</span>
+                <i class="fa fa-facebook-f"></i
+              ></a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="sr-only">Redirects to our twitter account</span>
+                <i class="fa fa-twitter"></i
+              ></a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="sr-only">Redirects to our instagram account</span>
+                <i class="fa fa-instagram"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
