@@ -672,8 +672,12 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
 
         # print("Difference = ", average_price_in_wholeseller_to_retailer-average_price_in_importer_to_wholeseller)
 
-        context['product'] = Product.objects.filter(
+        product = Product.objects.filter(
             id=self.kwargs['pro_id']).first()
+   
+        context['unit'] = SellProduct.objects.filter(product=self.id).values('unit').first()['unit']
+      
+
 
         context['avg_in_imp_to_whlSale'] = average_price_in_importer_to_wholeseller
         context['avg_in_whlSale_to_rtlr'] = average_price_in_wholeseller_to_retailer
@@ -687,6 +691,7 @@ class DifferenceBetweenWholeSaleRetailerMarketView(ListView):
         context['total_product_to_wholesellers'] = product_total_quantity_to_wholesellers
         context['sold_to_retailers'] = sold_product_quantity_to_retailers
         context['available_in_wholeseller_to_importer_marktet'] = available_in_wholeseller_to_retailer_market
+        context['product'] = product
         return context
 
 

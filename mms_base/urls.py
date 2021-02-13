@@ -22,6 +22,7 @@ from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('',home,name='home'),
     path('', include('accounts.urls')),
     path('', include('lenden.urls')),
     path('', include('admin_site.urls')),

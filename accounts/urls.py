@@ -10,7 +10,8 @@ app_name = "accounts"
 
 urlpatterns = [
     path('', home, name='home'),
-    path('home/', home, name='home'),
+    path('dashboard', dashboard, name='home'),
+   
     path('register/', UserRegisterView.as_view(),
          name='register'),
 

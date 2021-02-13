@@ -22,9 +22,11 @@ from lenden.models import Product
 from lenden.forms import *
 from django.db.models import Count, Max
 
+def home(request):
+    return render(request,'dashboard/home.html')
 
 @login_required(login_url='/login')
-def home(request):
+def dashboard(request):
     current_user = request.user
     profile = UserProfile.objects.get(user_id=current_user.id)
 
@@ -148,7 +150,7 @@ def home(request):
             'products': products,
         }
 
-    return render(request, 'dashboard/index.html', context)
+    return render(request, 'dashboard/dashboard.html', context)
 
 
 # class HomeView(FormView, ListView):

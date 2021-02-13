@@ -271,11 +271,11 @@
                     <li class="pricing-features-item">
                       Total Products:
                       <span id="tProImp">{{total_product_to_importers}}</span>
-                      kg
+                      {{ unit }}
                     </li>
                     <li class="pricing-features-item">
                       Sold:
-                      <span id="soldToWh">{{sold_to_wholesellers}}</span> kg
+                      <span id="soldToWh">{{sold_to_wholesellers}}</span> {{ unit }}
                     </li>
 
                     <li class="pricing-features-item">
@@ -283,7 +283,7 @@
                       <span id="availImToWh"
                         >{{available_in_importer_to_wholeseller_marktet}}</span
                       >
-                      kg
+                      {{ unit }}
                     </li>
                   </ul>
                   <span class="pricing-price"></span>
@@ -354,19 +354,19 @@
                       <span id="totalWh"
                         >{{total_product_to_wholesellers}}</span
                       >
-                      kg
+                      {{ unit }}
                     </li>
                     <li class="pricing-features-item">
                       Sold:
-                      <span id="soldReta">{{sold_to_retailers}}</span> kg
+                      <span id="soldReta">{{sold_to_retailers}}</span> {{ unit }}
                     </li>
 
                     <li class="pricing-features-item">
                       Available:
                       <span id="availWhole">
-                        {{available_in_wholeseller_to_importer_marktet}}
+                        {{available_in_wholeseller_to_importer_market}}
                       </span>
-                      kg
+                      {{ unit }}
                     </li>
                   </ul>
                   <span class="pricing-price"></span>

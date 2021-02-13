@@ -68,7 +68,7 @@
                     <table class="table table-hover m-b-0 text-center">
                     <thead>
                         <tr>
-                    <th>Import Date</th>
+                    <th>Date</th>
                     <th>Product Name</th>
                     <th>Seller</th>
                     <th>Buyer</th>
@@ -128,7 +128,7 @@
                     <table class="table table-hover m-b-0 text-center">
                     <thead>
                         <tr>
-                    <th>Import Date</th>
+                    <th>Date</th>
                     <th>Product Name</th>
                     <th>Seller</th>
                     <th>Buyer</th>
@@ -143,7 +143,7 @@
                     <tr>
                     <td>{{object.sell_date}}</td>
                     <td>{{object.product.name}}</td>
-                    <td>{{object.seller.username}}</td>
+                    <td><a href="{% url 'accounts:user-detail' object.seller.id %}">{{object.seller.username}}</a></td>
                     <td>{{object.buyer}}</td>
                     <!-- <td>{{object.customs_clearance_no}}</td> -->
                     <td>{{object.quantity}}</td>
@@ -187,7 +187,7 @@
                     <table class="table table-hover m-b-0 text-center">
                     <thead>
                     <tr>
-                       <th>Import Date</th>
+                       <th>Date</th>
                     <th>Product Name</th>
                     <th>Seller</th>
                     <th>Buyer</th>
@@ -202,7 +202,7 @@
                     <tr>
                     <td>{{object.sell_date}}</td>
                     <td>{{object.product.name}}</td>
-                    <td>{{object.seller.username}}</td>
+                    <td><a href="{% url 'accounts:user-detail' object.seller.id %}">{{object.seller.username}}</a></td>
                     <td>{{object.buyer}}</td>
                     <!-- <td>{{object.customs_clearance_no}}</td> -->
                     <td>{{object.quantity}}</td>
