@@ -4,6 +4,11 @@
       <div class="col-md-12">
         <div class="page-header-title">
           <h5 class="m-b-10">Product Details</h5>
+          <div>
+            {% if request.user.role == 'importer' and not request.user.is_admin %}
+            <a class="btn btn-primary" href="{% url 'lenden:add-chalan' %}">Add Chalan Record </a> {% endif %} {% if request.user.role == 'importer' or request.user.role == 'wholeseller' or request.user.role == 'retailer' %}
+            <a class="btn btn-info" href="{% url 'lenden:add-sales' %}">Add Sale Record</a> {% endif %}
+        </div>
         </div>
         <ul class="breadcrumb">
           <li class="breadcrumb-item">

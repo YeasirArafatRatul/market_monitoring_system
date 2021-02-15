@@ -29,7 +29,7 @@
           <li><a href="#features-container">Features</a></li>
           <li><a href="#users-container">Users</a></li>
           {% if request.user.is_authenticated %}
-          <li><a href="{% url 'accounts:dashboard' %}">Dash Board</a></li>
+          <li><a href="{% url 'accounts:home' %}">Dash Board</a></li>
           <!-- <li><a href="{% url 'accounts:register' %}">Sign Up</a></li> -->
           {% else %}
           <li><a href="{% url 'accounts:login' %}">Sign In</a></li>

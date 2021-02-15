@@ -221,10 +221,10 @@ class UserRegisterView(CreateView):
 #  LOGIN - LOGOUT
 # ---------------------------------------------------------------
 
-class CustomLoginView(SuccessMessageMixin, LoginView):
-    template_name = 'accounts/login.html'
-    success_url = reverse_lazy('home')
-    success_message = "Welcome To Market Monitoring System"
+# class CustomLoginView(SuccessMessageMixin, LoginView):
+#     template_name = 'accounts/login.html'
+#     success_url = reverse_lazy('dashboard')
+#     success_message = "Welcome To Market Monitoring System"
 
 
 class LoginView(FormView):

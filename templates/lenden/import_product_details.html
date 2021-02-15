@@ -29,6 +29,11 @@ of {{product.name}} {% endblock %}
               {% endif %} Record of {{product.name}}</a
             >
           </li>
+          <!-- <div>
+            {% if request.user.role == 'importer' and not request.user.is_admin %}
+            <a class="btn btn-primary" href="{% url 'lenden:add-chalan' %}">Add Chalan Record </a> {% endif %} {% if request.user.role == 'importer' or request.user.role == 'wholeseller' or request.user.role == 'retailer' %}
+            <a class="btn btn-info" href="{% url 'lenden:add-sales' %}">Add Sale Record</a> {% endif %}
+        </div> -->
         </ul>
       </div>
     </div>
