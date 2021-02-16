@@ -68,6 +68,16 @@ button {
   border-radius: 5px;
 }
 
+.section-intro h2 {
+  text-align: center;
+}
+
+.intro-text {
+  font-size: 15px;
+  line-height: 25px;
+  text-align: center;
+}
+
 .hero-container {
   display: flex;
   flex-direction: row-reverse;
@@ -298,7 +308,9 @@ button {
 footer {
   background-color: var(--very-dark-blue);
   color: white;
-  padding: 5em 0;
+  padding-top: 3em;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 footer ul {
@@ -506,4 +518,15 @@ footer ul li {
   .feature-card__text {
     font-size: 0.82rem;
   }
+}
+
+.copyright {
+  display: flex;
+  justify-content: center;
+}
+
+.copyright p {
+  font-size: 0.9rem;
+  padding: 31px;
+  margin-top: 10px;
 }
